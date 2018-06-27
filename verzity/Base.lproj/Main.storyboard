@@ -328,6 +328,9 @@
                                     <constraint firstAttribute="width" constant="24" id="kcv-gp-JP9"/>
                                 </constraints>
                                 <state key="normal" image="ic_visitar_default"/>
+                                <connections>
+                                    <action selector="on_click_university:" destination="7Le-CF-h0V" eventType="touchUpInside" id="pzR-1c-AEr"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Xl-Dp-YYq">
                                 <rect key="frame" x="46" y="408" width="234" height="18"/>
@@ -360,6 +363,9 @@
                                     <constraint firstAttribute="width" constant="24" id="usN-hH-IpY"/>
                                 </constraints>
                                 <state key="normal" image="ic_visitar_default"/>
+                                <connections>
+                                    <action selector="on_click_file:" destination="7Le-CF-h0V" eventType="touchUpInside" id="Blc-ZI-6aa"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -396,6 +402,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CiU-IF-iVp"/>
                     </view>
+                    <connections>
+                        <outlet property="btn_file" destination="JoU-bh-EXW" id="f9Z-9L-3aq"/>
+                        <outlet property="btn_university" destination="3sM-Kb-0eM" id="F4E-Nl-Up1"/>
+                        <outlet property="detail_description" destination="e2G-bQ-Jbp" id="Yzx-Go-4KQ"/>
+                        <outlet property="detail_file" destination="8Xl-Dp-YYq" id="MDU-LD-NBp"/>
+                        <outlet property="detail_name" destination="OfA-EQ-BNK" id="eNX-gc-ibi"/>
+                        <outlet property="detail_title" destination="RLz-CY-UTO" id="GRT-BN-S3L"/>
+                        <outlet property="image" destination="5vO-yp-wuf" id="e9I-bF-ioT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ymy-Yp-esY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

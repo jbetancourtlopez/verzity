@@ -67,32 +67,20 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func GetCardGeneral(status: Int, response: AnyObject){
         var json = JSON(response)
-        
         if status == 1{
             list_data = json["Data"].arrayValue as Array as AnyObject
             items = json["Data"].arrayValue as NSArray
-            //hiddenGifIndicator(view: self.view)
             tableView.reloadData()
-        }else{
-            //hiddenGifIndicator(view: self.view)
-            
-            /*
-            let okAction = UIAlertAction(title: "reintentar", style: .cancel) { _ -> Void in
-                self.usuarioController.getClubs(doneFunction: self.getClubs)
-                self.showAlert_Indicator("", message: "Obteniendo clubs...\n\n\n")
-            }
-            self.showAlert("Error", message: response as! String, okAction: okAction, cancelAction: nil, automatic: false)
-             */
         }
- 
+        hiddenGifIndicator(view: self.view)
     }
     
-    
-    
-    
     //Table View. -------------------
-    
     func numberOfSections(in tableView: UITableView) -> Int {
+        if self.items.count == 0 {
+            empty_data_tableview(tableView: tableView)
+            return 0
+        }
         return self.items.count
     }
     
@@ -149,10 +137,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         if type == "coupons" {
             title = item["nbCupon"].stringValue
             name = "Vencimiento"
-            
             let feInicio = (item["feInicio"].stringValue).components(separatedBy: "T")
             let feFin = (item["feFin"].stringValue).components(separatedBy: "T")
-            
             lblDescription = "\(feInicio[0]) - \(feFin[0])"
             pathImage = ""
         }
@@ -167,22 +153,24 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         cell.name.text = name
         cell.lblDescription.text = lblDescription
         
+        cell.btnShowMore.addTarget(self, action: #selector(self.on_click_show_more), for:.touchUpInside)
+        cell.btnShowMore.tag = indexPath.section
+        
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
+   @objc func on_click_show_more(sender: UIButton){
+        let index = sender.tag
         switch String(type) {
         case "becas":
             print("becas")
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailBecasViewControllerID") as! DetailBecasViewController
+            vc.detail = items[index] as AnyObject
             self.show(vc, sender: nil)
             break
-
         case "financing":
             print("financing")
-     
+            
             break
         case "coupons":
             print("coupons")
@@ -190,11 +178,13 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             //vc.type = menu_selected!
             self.show(vc, sender: nil)
             break
-
         default:
             break
         }
+    
     }
+    
+   
     
     
 

@@ -19,4 +19,5 @@ struct Colors{
     static let green_dark = UIColor(red: 0.0/255.0, green: 96.0/255.0, blue: 15.0/255.0, alpha: 1.0) // # 00600F
     static let gray = UIColor(red: 88.0/255.0, green: 89.0/255.0, blue: 91.0/255.0, alpha: 1.0) // #58595B
     static let white = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0) // #58595B
+    static let black = UIColor(red: 0.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0) // #00000
 }

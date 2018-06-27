@@ -4,13 +4,12 @@
 //
 //  Created by Jossue Betancourt on 26/06/18.
 //  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
 
 import UIKit
 import SwiftyJSON
 import Kingfisher
 
-class ListUniversitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     var webServiceController = WebServiceController()  //WebServiceController()
@@ -23,39 +22,58 @@ class ListUniversitiesViewController: UIViewController, UITableViewDelegate, UIT
         tableView.dataSource = self
         type = String(type)
         
-        // Cargamos las Universidades
-        let array_parameter = ["": ""]
-        let parameter_json = JSON(array_parameter)
-        let parameter_json_string = parameter_json.rawString()
-        webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: GetListGeneral)
+        setup_ux()
+        load_data()
         
-        self.navigationItem.backBarButtonItem?.title = ""
+      
+        
+        
+        
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Universidades"
+        if  type == "find_favorit" {
+            self.title = "Favoritos"
+        } else if type == "find_university" {
+            self.title = "Universidades"
+        }
+    }
+    
+    func load_data(){
+        
+        if  type == "find_favorit" {
+            items = [
+                [
+                    "idUniversida" : 40,
+                    "nbUniversidad" : "Dw Medios",
+                    "pathLogo" : "Jossue",
+                ],
+            ]
+          hiddenGifIndicator(view: self.view)
+        } else if type == "find_university" {
+            let array_parameter = ["": ""]
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: GetListGeneral)
+        }
     }
     
     func GetListGeneral(status: Int, response: AnyObject){
         var json = JSON(response)
-        
         if status == 1{
             items = json["Data"].arrayValue as NSArray
-            //hiddenGifIndicator(view: self.view)
             tableView.reloadData()
-        }else{
-            //hiddenGifIndicator(view: self.view)
-            
-            /*
-             let okAction = UIAlertAction(title: "reintentar", style: .cancel) { _ -> Void in
-             self.usuarioController.getClubs(doneFunction: self.getClubs)
-             self.showAlert_Indicator("", message: "Obteniendo clubs...\n\n\n")
-             }
-             self.showAlert("Error", message: response as! String, okAction: okAction, cancelAction: nil, automatic: false)
-             */
         }
+        hiddenGifIndicator(view: self.view)
         
     }
+    
+    func setup_ux(){
+        self.navigationItem.leftBarButtonItem?.title = ""
+        showGifIndicator(view: self.view)
+    }
+    
     
     //Table View. -------------------
     
@@ -103,7 +121,8 @@ class ListUniversitiesViewController: UIViewController, UITableViewDelegate, UIT
         
         let university = items[indexPath.section]
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversityViewControllerID") as! DetailUniversityViewController
-        vc.university = university as AnyObject
+        let university_json = JSON(university)
+        vc.idUniversidad = university_json["idUniversidad"].intValue
         self.show(vc, sender: nil)
     }
     

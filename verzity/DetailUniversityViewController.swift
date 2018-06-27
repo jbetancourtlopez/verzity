@@ -12,8 +12,6 @@ import Kingfisher
 
 class DetailUniversityViewController: BaseViewController {
 
-     var university: AnyObject!
-    
     @IBOutlet var description_university: UILabel!
     @IBOutlet var name_universitity: UILabel!
     
@@ -30,17 +28,14 @@ class DetailUniversityViewController: BaseViewController {
     // Email
     @IBOutlet var image_email: UIImageView!
     @IBOutlet var label_email: UITextView!
-    
     // Video
     @IBOutlet var image_video: UIImageView!
     @IBOutlet var label_video: UITextView!
     @IBOutlet var button_video: UIButton!
-    
     // Beca
     @IBOutlet var image_beca: UIImageView!
     @IBOutlet var label_beca: UITextView!
     @IBOutlet var button_beca: UIButton!
-    
     // Financiamiento
     @IBOutlet var image_financing: UIImageView!
     @IBOutlet var label_financing: UITextView!
@@ -49,7 +44,9 @@ class DetailUniversityViewController: BaseViewController {
     var swipeGesture  = UISwipeGestureRecognizer()
     var webServiceController = WebServiceController()
     var list_images: NSArray = []
-     var count_current: Int!
+    var count_current: Int!
+    var idUniversidad: Int!
+    var detail_data: AnyObject!
     
     @IBOutlet var page_control: UIPageControl!
     @IBOutlet var image_slider: UIImageView!
@@ -57,10 +54,15 @@ class DetailUniversityViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        university = university as AnyObject
-        debugPrint(university)
+        idUniversidad = idUniversidad as Int
         setup_ux()
-        set_data()
+        
+        // Cargamos los datos
+        let array_parameter = ["idUniversidad": idUniversidad]
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.GetDetallesUniversidad(parameters: parameter_json_string!, doneFunction: getData)
+      
         
         //Gestos
         count_current = 1
@@ -76,20 +78,16 @@ class DetailUniversityViewController: BaseViewController {
 
     }
     
-    func load_images(idUniversidad:Int){
-        let array_parameter = ["idUniversidad": idUniversidad]
-        let parameter_json = JSON(array_parameter)
-        let parameter_json_string = parameter_json.rawString()
-        webServiceController.GetDetallesUniversidad(parameters: parameter_json_string!, doneFunction: getDetalleImagenes)
-    }
-    
-    func getDetalleImagenes(status: Int, response: AnyObject){
+   
+    func getData(status: Int, response: AnyObject){
         var json = JSON(response)
         if status == 1{
+            self.detail_data = JSON(json["Data"]) as AnyObject
             let data = JSON(json["Data"])
             self.list_images = data["FotosUniversidades"].arrayValue as NSArray
             self.page_control.numberOfPages = self.list_images.count
             set_image_slider()
+            set_data()
         }else{
             // Mensaje de Error
         }
@@ -98,10 +96,8 @@ class DetailUniversityViewController: BaseViewController {
     
     
     // FotosUniversidades
-    
     @objc func swipwView(_ sender : UISwipeGestureRecognizer){
         UIView.animate(withDuration: 1.0) {
-            
             
             if sender.direction == .left {
                 if (self.count_current >= (self.list_images.count - 1)){
@@ -120,11 +116,7 @@ class DetailUniversityViewController: BaseViewController {
             }
             
             self.page_control.currentPage = self.count_current
-            
             self.set_image_slider()
-            
-            
-            
             self.image_slider.layoutIfNeeded()
             self.image_slider.setNeedsDisplay()
         }
@@ -185,7 +177,7 @@ class DetailUniversityViewController: BaseViewController {
     }
     
     func set_data(){
-        var university_json = JSON(university)
+        var university_json = JSON(self.detail_data)
         var address = JSON(university_json["Direcciones"])
         
         name_universitity.text = university_json["nbUniversidad"].stringValue
@@ -198,7 +190,7 @@ class DetailUniversityViewController: BaseViewController {
         label_beca.text = "Ver becas"
         label_financing.text = "Ver financiamientos"
         
-        load_images(idUniversidad: university_json["idUniversidad"].intValue)
+        //load_images(idUniversidad: university_json["idUniversidad"].intValue)
     }
 
 
