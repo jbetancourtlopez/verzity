@@ -525,7 +525,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BS7-u9-3mL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-311.25" y="-903.16901408450701"/>
+            <point key="canvasLocation" x="-311" y="-867"/>
         </scene>
         <!--Find Map View Controller-->
         <scene sceneID="V5v-DV-Tuj">
@@ -554,7 +554,72 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eWV-NC-8QM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="551.25" y="-903.16901408450701"/>
+            <point key="canvasLocation" x="1331" y="-867"/>
+        </scene>
+        <!--List Academics View Controller-->
+        <scene sceneID="a2y-32-VSF">
+            <objects>
+                <viewController storyboardIdentifier="ListAcademicsViewControllerID" id="ZiO-Sl-Jpn" customClass="ListAcademicsViewController" customModule="verzity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hvk-iN-kOO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2e9-bv-C6H">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="42" id="X2i-Vp-DHD">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="42"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X2i-Vp-DHD" id="leM-pa-c95">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="41.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nct-vT-hBe">
+                                                    <rect key="frame" x="63" y="10" width="249" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="maY-eT-XP1">
+                                                    <rect key="frame" x="8" y="5" width="49" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="47" id="Lfb-jO-TsS"/>
+                                                        <constraint firstAttribute="height" constant="31" id="kNR-lD-sLd"/>
+                                                    </constraints>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nct-vT-hBe" firstAttribute="top" secondItem="leM-pa-c95" secondAttribute="top" constant="10" id="AFd-2C-1EL"/>
+                                                <constraint firstAttribute="trailing" secondItem="nct-vT-hBe" secondAttribute="trailing" constant="8" id="FnI-Iv-2s4"/>
+                                                <constraint firstItem="maY-eT-XP1" firstAttribute="leading" secondItem="leM-pa-c95" secondAttribute="leading" constant="8" id="Hgb-xS-KdB"/>
+                                                <constraint firstItem="nct-vT-hBe" firstAttribute="leading" secondItem="maY-eT-XP1" secondAttribute="trailing" constant="8" id="JBH-SP-l7m"/>
+                                                <constraint firstAttribute="bottom" secondItem="maY-eT-XP1" secondAttribute="bottom" constant="5.5" id="aGG-cK-1Q8"/>
+                                                <constraint firstAttribute="bottom" secondItem="nct-vT-hBe" secondAttribute="bottom" constant="10.5" id="clY-av-YaW"/>
+                                                <constraint firstItem="nct-vT-hBe" firstAttribute="leading" secondItem="maY-eT-XP1" secondAttribute="trailing" constant="8" id="pNv-kD-LP0"/>
+                                                <constraint firstItem="maY-eT-XP1" firstAttribute="top" secondItem="leM-pa-c95" secondAttribute="top" constant="5" id="qH6-eL-Ahd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2e9-bv-C6H" firstAttribute="trailing" secondItem="lhY-PL-X4T" secondAttribute="trailing" id="EFj-Pq-m5A"/>
+                            <constraint firstItem="2e9-bv-C6H" firstAttribute="leading" secondItem="lhY-PL-X4T" secondAttribute="leading" id="Jkr-Y7-cmy"/>
+                            <constraint firstItem="2e9-bv-C6H" firstAttribute="top" secondItem="lhY-PL-X4T" secondAttribute="top" id="Ojx-G7-rJh"/>
+                            <constraint firstItem="2e9-bv-C6H" firstAttribute="bottom" secondItem="lhY-PL-X4T" secondAttribute="bottom" id="vyQ-7l-E9F"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lhY-PL-X4T"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="2e9-bv-C6H" id="PMI-Fp-3yi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="paf-uR-HDX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2146.875" y="-867.25352112676057"/>
         </scene>
         <!--List Universities View Controller-->
         <scene sceneID="qrd-xw-SNM">
@@ -639,7 +704,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0jg-I8-CjS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1196.25" y="-910.56338028169012"/>
+            <point key="canvasLocation" x="549" y="-867"/>
         </scene>
         <!--Detail University View Controller-->
         <scene sceneID="L2d-vW-4n8">
@@ -1011,7 +1076,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZN7-bN-d20" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1194.375" y="-118.30985915492958"/>
+            <point key="canvasLocation" x="2869" y="-1628"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="6ib-LU-0Tg">
