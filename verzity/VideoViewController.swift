@@ -56,16 +56,22 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
         
         
         
-   
+        /*
         // https://www.youtube.com/watch?v=X3wwI1NDeKc
+        let url_string = "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
         
-        let video_url = NSURL(string: "http://www.youtube.com/watch?v=X3wwI1NDeKc")
+        let video_url = NSURL(string: url_string)
         let avPlayer = AVPlayer(url: video_url as! URL)
         cell.playerView?.playerLayer.player = avPlayer
         cell.playerView.player?.play()
+        */
+        
+        // http://prismasoft.mx/
+        // http://www.youtube.com/embed/X3wwI1NDeKc
+        let url = URL(string: "https://www.youtube.com/embed/X3wwI1NDeKc/")
+        cell.webView.loadRequest(URLRequest(url: url!))
  
- 
-    
+    //https://www.youtube.com/watch?v=RmHqOSrkZnk
         
             
         //title =

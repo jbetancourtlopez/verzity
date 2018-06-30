@@ -40,6 +40,7 @@ class VideoTableViewCell: UITableViewCell{
     @IBOutlet var playerView: PlayerViewClass!
     @IBOutlet var video_description: UITextView!
     
+    @IBOutlet var webView: UIWebView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

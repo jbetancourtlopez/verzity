@@ -1134,10 +1134,6 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFR-CI-wO4" customClass="PlayerViewClass" customModule="verzity" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="29" width="320" height="190"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </view>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UNg-bs-WZX">
                                                     <rect key="frame" x="0.0" y="218" width="320" height="54"/>
                                                     <constraints>
@@ -1148,27 +1144,43 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFR-CI-wO4">
+                                                    <rect key="frame" x="0.0" y="28" width="320" height="190"/>
+                                                    <subviews>
+                                                        <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ji-9e-edH">
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
+                                                            <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </webView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="4Ji-9e-edH" firstAttribute="top" secondItem="EFR-CI-wO4" secondAttribute="top" id="3YX-hT-4vV"/>
+                                                        <constraint firstAttribute="bottom" secondItem="4Ji-9e-edH" secondAttribute="bottom" id="H3c-LJ-XNi"/>
+                                                        <constraint firstItem="4Ji-9e-edH" firstAttribute="leading" secondItem="EFR-CI-wO4" secondAttribute="leading" id="fyM-zP-gKK"/>
+                                                        <constraint firstAttribute="trailing" secondItem="4Ji-9e-edH" secondAttribute="trailing" id="lBx-OO-vXj"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" red="0.21960784310000001" green="0.5568627451" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="Ba0-wG-Jv0" secondAttribute="trailing" constant="8" id="3ue-gA-xPe"/>
                                                 <constraint firstAttribute="bottom" secondItem="UNg-bs-WZX" secondAttribute="bottom" id="7E4-1o-f8H"/>
-                                                <constraint firstItem="EFR-CI-wO4" firstAttribute="top" secondItem="Ba0-wG-Jv0" secondAttribute="bottom" constant="1" id="Ay8-xc-GXJ"/>
+                                                <constraint firstItem="EFR-CI-wO4" firstAttribute="top" secondItem="Ba0-wG-Jv0" secondAttribute="bottom" id="Ay8-xc-GXJ"/>
                                                 <constraint firstItem="EFR-CI-wO4" firstAttribute="leading" secondItem="UNg-bs-WZX" secondAttribute="leading" id="N6R-n2-FAz"/>
                                                 <constraint firstItem="Ba0-wG-Jv0" firstAttribute="leading" secondItem="tVw-Mi-xV2" secondAttribute="leading" constant="8" id="NVx-hF-OEY"/>
                                                 <constraint firstItem="UNg-bs-WZX" firstAttribute="top" secondItem="Ba0-wG-Jv0" secondAttribute="bottom" constant="190" id="W1A-bh-H3u"/>
-                                                <constraint firstAttribute="bottom" secondItem="EFR-CI-wO4" secondAttribute="bottom" constant="52.5" id="YEQ-1R-90g"/>
+                                                <constraint firstAttribute="bottom" secondItem="EFR-CI-wO4" secondAttribute="bottom" constant="53.5" id="YEQ-1R-90g"/>
                                                 <constraint firstItem="EFR-CI-wO4" firstAttribute="trailing" secondItem="UNg-bs-WZX" secondAttribute="trailing" id="eIy-Iy-zF4"/>
                                                 <constraint firstItem="UNg-bs-WZX" firstAttribute="leading" secondItem="tVw-Mi-xV2" secondAttribute="leading" id="iLt-MO-Pm4"/>
                                                 <constraint firstItem="Ba0-wG-Jv0" firstAttribute="top" secondItem="tVw-Mi-xV2" secondAttribute="top" constant="8" id="l85-uo-maZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="UNg-bs-WZX" secondAttribute="trailing" id="nUz-ff-Kca"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="EFR-CI-wO4" secondAttribute="bottom" constant="42" id="o7N-Nd-gqu"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="EFR-CI-wO4" secondAttribute="bottom" constant="43" id="o7N-Nd-gqu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="playerView" destination="EFR-CI-wO4" id="dC3-Ix-qFK"/>
                                             <outlet property="title" destination="Ba0-wG-Jv0" id="OYa-EV-kG0"/>
                                             <outlet property="video_description" destination="UNg-bs-WZX" id="Rkk-y7-Wlw"/>
+                                            <outlet property="webView" destination="4Ji-9e-edH" id="Qwo-DB-N7X"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
