@@ -147,6 +147,10 @@ class DetailUniversityViewController: BaseViewController {
     
     @IBAction func on_click_video(_ sender: Any) {
         print("video")
+        var university_json = JSON(self.detail_data)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "VideoViewControllerID") as! VideoViewController
+        vc.idUniversidad = university_json["idUniversidad"].intValue
+        self.show(vc, sender: nil)
     }
     
     @IBAction func on_click_map(_ sender: Any) {

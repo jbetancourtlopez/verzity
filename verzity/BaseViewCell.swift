@@ -18,6 +18,34 @@ class ListTableViewCell: UITableViewCell{
     }
 }
 
+class AcademicsTableViewCell: UITableViewCell{
+    
+ 
+    @IBOutlet var name: UILabel!
+    @IBOutlet var swich_item: UISwitch!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class HeaderTableViewCell: UITableViewCell {
+    @IBOutlet var title: UILabel!
+}
+
+
+class VideoTableViewCell: UITableViewCell{
+
+    @IBOutlet var title: UILabel!
+    @IBOutlet var playerView: PlayerViewClass!
+    @IBOutlet var video_description: UITextView!
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
 class CardTableViewCell: UITableViewCell{
     
     @IBOutlet weak var title: UILabel!

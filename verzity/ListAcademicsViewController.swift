@@ -38,12 +38,7 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     func GetList(status: Int, response: AnyObject){
         var json = JSON(response)
         if status == 1{
-            //debugPrint(json)
-            
-            
             items = json["Data"].arrayValue as NSArray
-            
-            
             for item in items{
                 
                 var item_json = JSON(item)
@@ -51,28 +46,27 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
                 
                 let indice = validar_seccion(idCatNivelEstudios: Int64(catNivel["idCatNivelEstudios"].intValue))
                 if indice >= 0 {
-                    
-                    
+                    let item_licensature_all = [
+                        "idLicenciatura": 0,
+                        "nbLicenciatura": "Todos"
+                        ] as [String : Any]
+ 
                     let item_licensature = [
                         "idLicenciatura": item_json["idLicenciatura"].intValue,
                         "nbLicenciatura": item_json["nbLicenciatura"].stringValue
                         ] as [String : Any]
                     
                     let section_aux = sections[indice] as! NSDictionary
-                    print("section_aux")
-                    debugPrint(section_aux)
                     var list_licensature_aux = section_aux["list_licensature"] as! [Any]
-                    print("list_licensature_aux")
-                    debugPrint(list_licensature_aux)
+                    /*if  list_licensature_aux.count > 1{
+                        list_licensature_aux.append(item_licensature_all)
+                    }else{
+                        
+                    }*/
                     list_licensature_aux.append(item_licensature)  // adding(item_licensature)
                     
-                    print("list_licensature_aux add")
-                    debugPrint(list_licensature_aux)
-                    
-                    print("-------------------")
-                    
                     let oldNivel:NSDictionary = [
-                            "nbNivelEstudios":catNivel["nbNivelEstudios"].stringValue,
+                            "nbNivelEstudios": "\(catNivel["nbNivelEstudios"].stringValue)",
                             "idCatNivelEstudios":catNivel["idCatNivelEstudios"].intValue,
                             "list_licensature": list_licensature_aux
                         ]
@@ -85,30 +79,25 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
                         "idCatNivelEstudios":catNivel["idCatNivelEstudios"].intValue,
                         "list_licensature": [
                                                 [
+                                                    "idLicenciatura": 0,
+                                                    "nbLicenciatura": "Todos"
+                                                ],
+                                                [
                                                     "idLicenciatura": item_json["idLicenciatura"].intValue,
                                                     "nbLicenciatura": item_json["nbLicenciatura"].stringValue
                                                     
                                                 ]
                                             ]
                     ]
-                    
                     sections.add(newNivel)
-
                 }
-                
-                
-                
-                
-                
             }
             
-            debugPrint(sections)
-            
-            
-            
-            //tableView.reloadData()
         }
+        debugPrint(sections)
+        tableView.reloadData()
         hiddenGifIndicator(view: self.view)
+        
     }
     
     func  validar_seccion( idCatNivelEstudios: Int64) -> Int{
@@ -125,48 +114,65 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     
     func setup_ux(){
         self.navigationItem.leftBarButtonItem?.title = ""
-        showGifIndicator(view: self.view)
+        //showGifIndicator(view: self.view)
     }
     
     //Table View. -------------------
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.items.count
+        print("Count Sections: \(self.sections.count)")
+        return self.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        let section_item = JSON(sections[section])
+        let count = section_item["list_licensature"].count
+        print("Count Rows in Section: \(count)")
+        return count
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let section_item = JSON(sections[section])
+        let title = section_item["nbNivelEstudios"].stringValue
+        print("Title: \(title)")
+        return  "Seccion \(title)"
+        
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let header = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as! HeaderTableViewCell
+        
+        
+        let section_item = JSON(sections[section])
+        let title = section_item["nbNivelEstudios"].stringValue
+        print("Title: \(title)")
+        
+        header.title.text = title
+        header.backgroundColor = Colors.green_dark
+        return header
     }
     
     // Set the spacing between sections
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 5
-    }
     
-    // Make the background color show through
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = UIColor.clear
-        return headerView
-    }
+    
+    /*
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 5.0
+    }*/
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        let item_academics = JSON(items[indexPath.section])
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AcademicsTableViewCell
+        let section_item = JSON(sections[indexPath.section])
+        let rows = section_item["list_licensature"].arrayValue
+        let row = JSON(rows[indexPath.row])
+
+        cell.name.text = row["nbLicenciatura"].stringValue
         
-        /*
-        //Nombre
-        cell.name.text  = item_university["nbUniversidad"].stringValue
-        // Imagen
-        var pathImage = item_university["pathLogo"].stringValue
-        pathImage = pathImage.replacingOccurrences(of: "~", with: "")
-        pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
-        let URL = Foundation.URL(string: url)
-        let image_default = UIImage(named: "default.png")
-        cell.icon.kf.setImage(with: URL, placeholder: image_default)
-         */
+        //
+        cell.layer.borderWidth = 3
+        cell.clipsToBounds = true
         
         return cell
         
