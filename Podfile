@@ -7,8 +7,8 @@ target 'verzity' do
   	pod 'Alamofire', '~> 4.7'
   	pod 'SwiftyJSON', '~> 4.0'
   	pod 'Kingfisher', '~> 4.0'
-  	pod 'SDWebImage', '~> 4.0'
-  	#pod 'RealmSwift',
+  	#pod 'SDWebImage', '~> 4.0'
+  	pod 'RealmSwift'
     pod 'FloatableTextField'
   	pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
   	pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'

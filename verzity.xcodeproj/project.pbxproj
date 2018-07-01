@@ -57,6 +57,7 @@
 		9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */; };
 		9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69420E7337A004D7FC7 /* VideoViewController.swift */; };
 		92E544C720DAD10F0062A9CA /* CheckboxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E544C620DAD10F0062A9CA /* CheckboxButton.swift */; };
+		92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */; };
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +114,7 @@
 		9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewClass.swift; sourceTree = "<group>"; };
 		9276B69420E7337A004D7FC7 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		92E544C620DAD10F0062A9CA /* CheckboxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxButton.swift; sourceTree = "<group>"; };
+		92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAcademicViewController.swift; sourceTree = "<group>"; };
 		94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_verzity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				924132F020E34EE800CEBC81 /* DetailBecasViewController.swift */,
 				924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
+				92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -387,7 +390,8 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FloatableTextField/FloatableTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
@@ -397,7 +401,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FloatableTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
@@ -429,6 +434,7 @@
 				9267011F20D8462400E638A1 /* verzity.xcdatamodeld in Sources */,
 				924132F120E34EE800CEBC81 /* DetailBecasViewController.swift in Sources */,
 				924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */,
+				92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */,
 				924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */,
 				9267013F20D84AD000E638A1 /* Colors.swift in Sources */,
 				9205102420E1FA9C00234F16 /* Menus.swift in Sources */,

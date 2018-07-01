@@ -30,9 +30,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         // Cargamos los datos dependiendo de la Vista
     
         switch String(type) {
-        case "find_university": //Promociones
-            print("find_university")
-            break
         case "becas":
             let array_parameter = ["": ""]
             let parameter_json = JSON(array_parameter)
@@ -181,11 +178,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         default:
             break
         }
-    
     }
-    
-   
-    
-    
 
 }

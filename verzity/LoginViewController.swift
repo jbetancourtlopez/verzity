@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
+import SwiftyJSON
 
 class LoginViewController: BaseViewController {
 
@@ -16,6 +19,8 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak var btnHere: UILabel!
     @IBOutlet weak var btnRegister: UILabel!
     
+    var webServiceController = WebServiceController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,19 +28,43 @@ class LoginViewController: BaseViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_forget))
         btnForget.isUserInteractionEnabled = true
         btnForget.addGestureRecognizer(tap)
+        
+        // Here Event
+        let tap_here = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_here))
+        btnHere.isUserInteractionEnabled = true
+        btnHere.addGestureRecognizer(tap_here)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setSettings(key: "profile_menu", value: "")
+        setSettings(key: "nbCompleto", value: "")
+        setSettings(key: "desCorreo", value: "")
     }
     
     
     @IBAction func on_click_login(_ sender: Any) {
-        
+        /*
         _ = self.navigationController?.popToRootViewController(animated: false)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
         UIApplication.shared.keyWindow?.rootViewController = vc
-        
+         */
     }
     
-   
+    @objc func on_click_here(sender:UITapGestureRecognizer) {
+        print("AQUI")
+        let cvDispositivo =  UIDevice.current.identifierForVendor!.uuidString
+        
+        let array_parameter = [
+            "cvFirebase": Config.cvFirebase,
+            "cvDispositivo": cvDispositivo
+        ]
+        
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.IngresarAppUniversitario(parameters: parameter_json_string!, doneFunction: sigin_academic)
+        
+    }
     
     @objc func on_click_forget(sender:UITapGestureRecognizer) {
         print("Recuperar contraseña")
@@ -44,6 +73,32 @@ class LoginViewController: BaseViewController {
         customAlert.definesPresentationContext = true
         customAlert.delegate = self
         self.present(customAlert, animated: true, completion: nil)
+    }
+    
+    func sigin_academic(status: Int, response: AnyObject){
+        var json = JSON(response)
+        
+        if status == 1{
+            let data = json["Data"].rawValue // arrayValue as Array as AnyObject
+            var data_json = JSON(data)
+            
+            let persona_json = JSON(data_json["Personas"])
+            
+            let nbCompleto = persona_json["nbCompleto"].stringValue
+            let desCorreo = persona_json["desCorreo"].stringValue
+            
+            setSettings(key: "profile_menu", value: "profile_academic")
+            setSettings(key: "nbCompleto", value: nbCompleto)
+            setSettings(key: "desCorreo", value: desCorreo)
+            
+            
+            _ = self.navigationController?.popToRootViewController(animated: false)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
+            UIApplication.shared.keyWindow?.rootViewController = vc
+            
+        }
+        
         
     }
 
@@ -57,12 +112,10 @@ class LoginViewController: BaseViewController {
         self.navigationController!.navigationBar.topItem!.title = ""
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
-    
 
 }
 
 extension LoginViewController: ForgetViewControllerDelegate {
-    
     func okButtonTapped(textFieldValue: String) {
         print("TextField has value: \(textFieldValue)")
     }

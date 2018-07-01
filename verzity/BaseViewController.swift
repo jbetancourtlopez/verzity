@@ -116,6 +116,17 @@ class BaseViewController: UIViewController {
         view.isUserInteractionEnabled = true
     }
     
+    // guardar datos de persistentes -----------------------
+    let defaults:UserDefaults = UserDefaults.standard
+    
+    func setSettings(key:String, value:String){
+        defaults.set(value, forKey: key)
+        defaults.synchronize()
+    }
+    
+    func getSettings(key:String) -> String{
+        return defaults.string(forKey: key)!
+    }
     
     //Gif Loading
     func showGifIndicator(view: UIView){

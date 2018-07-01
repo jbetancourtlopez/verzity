@@ -68,10 +68,10 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
         
         // http://prismasoft.mx/
         // http://www.youtube.com/embed/X3wwI1NDeKc
-        let url = URL(string: "https://www.youtube.com/embed/X3wwI1NDeKc/")
+        //http://www.youtube.com/embed/C0Z6tJdeQ_E
+        let url = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
         cell.webView.loadRequest(URLRequest(url: url!))
  
-    //https://www.youtube.com/watch?v=RmHqOSrkZnk
         
             
         //title =

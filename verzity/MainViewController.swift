@@ -13,16 +13,16 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var sidebarView: SidebarView!
     var blackScreen: UIView!
     @IBOutlet weak var tableView: UITableView!
-    
+    var profile_menu:String = ""
     let menu_main = Menus.menu_main
+    weak var delegate:SidebarViewDelegate?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         setup_ux()
-        
-        self.navigationItem.backBarButtonItem?.title = ""
     }
 
     //On_click_Side_Menu
@@ -37,11 +37,7 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     //On_click_Logout
     @IBAction func on_click_logout(_ sender: Any) {
-        print("Salir")
-        _ = self.navigationController?.popToRootViewController(animated: false)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController
-        UIApplication.shared.keyWindow?.rootViewController = vc
+        
     }
     
     //Table View. -------
@@ -69,16 +65,14 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        
         let name = menu_main[indexPath.section]["name"]
-        let image = menu_main[indexPath.section]["image"] as! String
+        let image = menu_main[indexPath.section]["image"]
         
         cell.name.text = name
-        cell.icon.image = UIImage(named: image)
+        cell.icon.image = UIImage(named: image!)
         
         cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
         cell.icon.tintColor = Colors.green_dark
-        
         return cell
     }
     
@@ -130,6 +124,9 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func setup_ux(){
+        
+        self.navigationItem.backBarButtonItem?.title = ""
+        
         //SideBar
         sidebarView=SidebarView(frame: CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height))
         sidebarView.delegate=self
@@ -145,6 +142,13 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let tapGestRecognizer = UITapGestureRecognizer(target: self, action: #selector(blackScreenTapAction(sender:)))
         blackScreen.addGestureRecognizer(tapGestRecognizer)
     }
+    
+    func sigout(){
+        _ = self.navigationController?.popToRootViewController(animated: false)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController
+        UIApplication.shared.keyWindow?.rootViewController = vc
+    }
 }
 
 extension MainViewController: SidebarViewDelegate {
@@ -156,9 +160,7 @@ extension MainViewController: SidebarViewDelegate {
         UIView.animate(withDuration: 0.3) {
             self.sidebarView.frame=CGRect(x: 0, y: 0, width: 0, height: self.sidebarView.frame.height)
         }
-        
         let menu_side_selected = JSON(item)
-        
         switch String(menu_side_selected["type"].stringValue) {
             case "profile_representative": //Promociones
                 print("profile_representative")
@@ -171,10 +173,18 @@ extension MainViewController: SidebarViewDelegate {
                 break
             case "coupons":
                 print("coupons")
-
                 break
-            case "travel":
-                print("travel")
+            case "home_university":
+                print("home_university Action")
+                break
+            case "profile_university":
+                print("profile_university Action")
+                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+                self.show(vc, sender: nil)
+                break
+            case "sigout":
+                print("Salir")
+                sigout()
                 break
             default:
                 break
@@ -190,29 +200,6 @@ extension MainViewController: SidebarViewDelegate {
         //self.sidebarView.layer.addSublayer(gl)
          */
         
-        /*
-        switch row {
-        case .editProfile:
-             print("Profile")
-            //let vc=EditProfileVC()
-            //self.navigationController?.pushViewController(vc, animated: true)
-        case .messages:
-            print("Messages")
-        case .contact:
-            print("Contact")
-        case .settings:
-            print("Settings")
-        case .history:
-            print("History")
-        case .help:
-            print("Help")
-        case .signOut:
-            print("Sign out")
-        case .none:
-            break
-            //        default:  //Default will never be executed
-            //            break
-        }
-         */
+   
     }
 }
