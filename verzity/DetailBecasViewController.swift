@@ -21,6 +21,7 @@ class DetailBecasViewController: BaseViewController {
     @IBOutlet var detail_file: UILabel!
     @IBOutlet var btn_university: UIButton!
     @IBOutlet var btn_file: UIButton!
+    var webServiceController = WebServiceController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,35 @@ class DetailBecasViewController: BaseViewController {
         openUrl(scheme: url)
     }
     
+    @IBAction func on_click_postulate(_ sender: Any) {
+        let idPersona = Int(getSettings(key: "idPersona"))
+        if  (idPersona! > 0){
+            showGifIndicator(view: self.view)
+            
+            // FIX - Armar los parametros
+            let array_parameter = ["": ""]
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            webServiceController.PostularseBeca(parameters: parameter_json_string!, doneFunction: PostularseBeca)
+            
+        }else{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+            self.show(vc, sender: nil)
+        }
+    }
+    
+    func PostularseBeca(status: Int, response: AnyObject){
+        var json = JSON(response)
+        if status == 1{
+            let message = json["Mensaje"].stringValue
+            updateAlert(title: "Error", message: message, automatic: true)
+        }else{
+            updateAlert(title: "Error", message: response as! String, automatic: true)
+        }
+        hiddenGifIndicator(view: self.view)
+        
+    }
+    
     func set_data(){
         debugPrint(self.detail)
         var detail = JSON(self.detail)
@@ -51,6 +81,10 @@ class DetailBecasViewController: BaseViewController {
         detail_title.text = detail["nbBeca"].stringValue
         detail_name.text = detail["nbUniversidad"].stringValue
         detail_description.text = detail["desBeca"].stringValue
+        
+        let amountOfLinesToBeShown:CGFloat = 6
+        let maxHeight:CGFloat = detail_description.font!.lineHeight * amountOfLinesToBeShown
+        detail_description.sizeThatFits(CGSize(width: detail_description.frame.size.width, height:maxHeight))
         detail_file.text = "Descargar archivo adjunto"
         
          // Imagen

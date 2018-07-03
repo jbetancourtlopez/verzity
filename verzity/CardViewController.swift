@@ -15,7 +15,7 @@ import Kingfisher
 class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    let menu_main = Menus.menu_main
+    //let menu_main = Menus.menu_main
     var webServiceController = WebServiceController()  //WebServiceController()
     var type: String = ""
     var list_data: AnyObject!

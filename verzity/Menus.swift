@@ -10,7 +10,22 @@ import UIKit
 
 struct Menus{
   
-    static let menu_main = [
+    static let menu_main_university = [
+        [
+            "name":"Paquetes",
+            "image":"ic_action_financiamiento.png",
+            "type": "package"
+        ],
+        [
+            "name":"Postulados",
+            "image":"ic_action_financiamiento.png",
+            "type": "postulate"
+        ],
+       
+        
+    ]
+    
+    static let menu_main_academic = [
         [
             "name":"Buscar universidades",
             "image":"ic_telefono.png",
@@ -108,7 +123,7 @@ struct Menus{
         [
             "name":"Mensajes",
             "image":"ic_action_notifications.png",
-            "type": "notifications_representative"
+            "type": "notifications"
         ],
         [
             "name":"Cerrar sesión",

@@ -9,7 +9,7 @@
 import UIKit
 import SystemConfiguration
 
-class BaseViewController: UIViewController {
+class BaseViewController: UIViewController, UITextFieldDelegate{
     var alert = UIAlertController()
     var alert_indicator = UIAlertController()
     var activeField: UITextField?
@@ -81,6 +81,8 @@ class BaseViewController: UIViewController {
     func updateAlert(title: String, message: String, automatic: Bool){
         alert.title = title
         alert.message = message
+        self.present(alert, animated: true, completion: nil)
+        
         if automatic{
             Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(BaseViewController.dismissAlert), userInfo: nil, repeats: false)
         }

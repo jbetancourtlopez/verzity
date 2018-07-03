@@ -285,6 +285,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     
     // IngresarUniversitario
+    /*
     func IngresarUniversitario(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         let url =  "\(Config.desRutaWebServices)\(Singleton.IngresarUniversitario)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
@@ -301,7 +302,7 @@ class WebServiceController: AlamofireWebServiceController{
                 doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
             }
         }
-    }
+    }*/
     
     
     // IngresarAppUniversidad

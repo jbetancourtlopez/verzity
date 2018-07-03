@@ -43,12 +43,12 @@ class LoginViewController: BaseViewController {
     
     
     @IBAction func on_click_login(_ sender: Any) {
-        /*
+        setSettings(key: "profile_menu", value: "profile_university")
+
         _ = self.navigationController?.popToRootViewController(animated: false)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
         UIApplication.shared.keyWindow?.rootViewController = vc
-         */
     }
     
     @objc func on_click_here(sender:UITapGestureRecognizer) {
@@ -66,6 +66,46 @@ class LoginViewController: BaseViewController {
         
     }
     
+    func sigin_academic(status: Int, response: AnyObject){
+        var json = JSON(response)
+        
+        if status == 1{
+            let data = json["Data"].rawValue
+            var data_json = JSON(data)
+            
+            debugPrint(data_json)
+            
+            let persona_json = JSON(data_json["Personas"])
+            
+            var nbCompleto = persona_json["nbCompleto"].stringValue
+            var desCorreo = persona_json["desCorreo"].stringValue
+            let idPersona = persona_json["idPersona"].stringValue
+            
+            if nbCompleto == "temp" {
+                nbCompleto = ""
+            }
+            
+            if desCorreo == "temp@email.com" {
+                desCorreo = ""
+            }
+            
+            setSettings(key: "persona", value: data_json["Personas"].stringValue)
+            setSettings(key: "profile_menu", value: "profile_academic")
+            setSettings(key: "nbCompleto", value: nbCompleto)
+            setSettings(key: "desCorreo", value: desCorreo)
+            setSettings(key: "idPersona", value: idPersona)
+            
+            
+            _ = self.navigationController?.popToRootViewController(animated: false)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }else{
+           updateAlert(title: "Error", message: response as! String, automatic: true)
+        }
+        
+        
+    }
     @objc func on_click_forget(sender:UITapGestureRecognizer) {
         print("Recuperar contraseña")
         let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "ForgetViewControllerID") as! ForgetViewController
@@ -75,32 +115,7 @@ class LoginViewController: BaseViewController {
         self.present(customAlert, animated: true, completion: nil)
     }
     
-    func sigin_academic(status: Int, response: AnyObject){
-        var json = JSON(response)
-        
-        if status == 1{
-            let data = json["Data"].rawValue // arrayValue as Array as AnyObject
-            var data_json = JSON(data)
-            
-            let persona_json = JSON(data_json["Personas"])
-            
-            let nbCompleto = persona_json["nbCompleto"].stringValue
-            let desCorreo = persona_json["desCorreo"].stringValue
-            
-            setSettings(key: "profile_menu", value: "profile_academic")
-            setSettings(key: "nbCompleto", value: nbCompleto)
-            setSettings(key: "desCorreo", value: desCorreo)
-            
-            
-            _ = self.navigationController?.popToRootViewController(animated: false)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
-            UIApplication.shared.keyWindow?.rootViewController = vc
-            
-        }
-        
-        
-    }
+ 
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

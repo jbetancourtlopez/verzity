@@ -14,7 +14,7 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var blackScreen: UIView!
     @IBOutlet weak var tableView: UITableView!
     var profile_menu:String = ""
-    let menu_main = Menus.menu_main
+    var menu_main = Menus.menu_main_academic
     weak var delegate:SidebarViewDelegate?
     
     
@@ -23,6 +23,14 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
         setup_ux()
+        
+        profile_menu = getSettings(key: "profile_menu")
+        
+        if profile_menu == "profile_academic" {
+            menu_main = Menus.menu_main_academic  as [AnyObject] as! [[String : String]]
+        }else if profile_menu == "profile_university" {
+            menu_main = Menus.menu_main_university as [AnyObject] as! [[String : String]]
+        }
     }
 
     //On_click_Side_Menu
@@ -35,10 +43,7 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    //On_click_Logout
-    @IBAction func on_click_logout(_ sender: Any) {
-        
-    }
+   
     
     //Table View. -------
     
@@ -107,6 +112,23 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "travel": //Eventos
             print("travel")
+            let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
+            self.show(vc, sender: nil)
+            
+            //updateAlert(title: "", message: "En proceso ...", automatic: true)
+            break
+        case "package": //Eventos
+            print("package")
+            /*
+            let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
+            self.show(vc, sender: nil)
+             */
+            break
+        case "postulate": //Eventos
+            print("postulate")
+            /*let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
+            self.show(vc, sender: nil)
+             */
             break
         default:
             break
@@ -165,20 +187,19 @@ extension MainViewController: SidebarViewDelegate {
             case "profile_representative": //Promociones
                 print("profile_representative")
                 break
-            case "becas":
-                print("becas")
-                break
-            case "financing":
-                print("financing")
-                break
-            case "coupons":
-                print("coupons")
-                break
-            case "home_university":
-                print("home_university Action")
+            case "profile_university":
+                print("profile_university")
                 break
             case "profile_university":
-                print("profile_university Action")
+                print("profile_university")
+                break
+            case "notifications":
+                print("notifications")
+                let vc = storyboard?.instantiateViewController(withIdentifier: "NotificationsViewControllerID") as! NotificationsViewController
+                self.show(vc, sender: nil)
+                break
+            case "profile_university":
+                print("profile_university")
                 let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
                 self.show(vc, sender: nil)
                 break

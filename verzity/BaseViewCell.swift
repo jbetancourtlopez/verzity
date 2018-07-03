@@ -19,7 +19,6 @@ class ListTableViewCell: UITableViewCell{
 }
 
 class AcademicsTableViewCell: UITableViewCell{
-    
  
     @IBOutlet var name: UILabel!
     @IBOutlet var swich_item: UISwitch!
@@ -28,6 +27,18 @@ class AcademicsTableViewCell: UITableViewCell{
         super.awakeFromNib()
     }
 }
+
+class NotificationsTableViewCell: UITableViewCell{
+    
+    @IBOutlet var image_notification: UIImageView!
+    @IBOutlet var title_notification: UITextView!
+    @IBOutlet var description_notificaction: UITextView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
 
 class HeaderTableViewCell: UITableViewCell {
     @IBOutlet var title: UILabel!
