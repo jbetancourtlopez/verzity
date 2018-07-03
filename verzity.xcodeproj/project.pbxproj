@@ -60,6 +60,7 @@
 		92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */; };
 		92E698C120EAFE8E00F69FCD /* QrCouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */; };
 		92E698C320EB146400F69FCD /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698C220EB146400F69FCD /* NotificationsViewController.swift */; };
+		92E698C520EB291000F69FCD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698C420EB291000F69FCD /* DetailViewController.swift */; };
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +120,7 @@
 		92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAcademicViewController.swift; sourceTree = "<group>"; };
 		92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCouponViewController.swift; sourceTree = "<group>"; };
 		92E698C220EB146400F69FCD /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		92E698C420EB291000F69FCD /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_verzity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */,
 				92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */,
 				92E698C220EB146400F69FCD /* NotificationsViewController.swift */,
+				92E698C420EB291000F69FCD /* DetailViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92E698C520EB291000F69FCD /* DetailViewController.swift in Sources */,
 				92E698C120EAFE8E00F69FCD /* QrCouponViewController.swift in Sources */,
 				92E544C720DAD10F0062A9CA /* CheckboxButton.swift in Sources */,
 				92682D2420DB749A00E6C4A8 /* BaseViewCell.swift in Sources */,
