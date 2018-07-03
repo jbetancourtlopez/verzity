@@ -119,16 +119,17 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "package": //Eventos
             print("package")
-            /*
-            let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "PackagesViewControllerID") as! PackagesViewController
             self.show(vc, sender: nil)
-             */
+ 
             break
         case "postulate": //Eventos
             print("postulate")
-            /*let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
             self.show(vc, sender: nil)
-             */
+ 
             break
         default:
             break
@@ -190,15 +191,12 @@ extension MainViewController: SidebarViewDelegate {
             case "profile_university":
                 print("profile_university")
                 break
-            case "profile_university":
-                print("profile_university")
-                break
             case "notifications":
                 print("notifications")
                 let vc = storyboard?.instantiateViewController(withIdentifier: "NotificationsViewControllerID") as! NotificationsViewController
                 self.show(vc, sender: nil)
                 break
-            case "profile_university":
+            case "profile_academic":
                 print("profile_university")
                 let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
                 self.show(vc, sender: nil)

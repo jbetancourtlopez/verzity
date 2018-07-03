@@ -119,21 +119,18 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("Count Sections: \(self.sections.count)")
         return self.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let section_item = JSON(sections[section])
         let count = section_item["list_licensature"].count
-        print("Count Rows in Section: \(count)")
         return count
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let section_item = JSON(sections[section])
         let title = section_item["nbNivelEstudios"].stringValue
-        print("Title: \(title)")
         return  "Seccion \(title)"
         
     }
@@ -141,7 +138,6 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let header = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as! HeaderTableViewCell
-        
         
         let section_item = JSON(sections[section])
         let title = section_item["nbNivelEstudios"].stringValue
@@ -152,30 +148,16 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
         return header
     }
     
-    // Set the spacing between sections
-    
-    
-    /*
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 5.0
-    }*/
-
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AcademicsTableViewCell
         let section_item = JSON(sections[indexPath.section])
         let rows = section_item["list_licensature"].arrayValue
         let row = JSON(rows[indexPath.row])
-
         cell.name.text = row["nbLicenciatura"].stringValue
-        
-        //
         cell.layer.borderWidth = 3
         cell.clipsToBounds = true
-        
         return cell
-        
     }
 
     

@@ -39,6 +39,19 @@ class NotificationsTableViewCell: UITableViewCell{
     }
 }
 
+class PostuladosTableViewCell: UITableViewCell{
+    
+
+    @IBOutlet var postulate_name_academic: UILabel!
+    @IBOutlet var postulate_date: UILabel!
+    @IBOutlet var postulate_day: UILabel!
+    @IBOutlet var postulate_university: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
 
 class HeaderTableViewCell: UITableViewCell {
     @IBOutlet var title: UILabel!

@@ -93,7 +93,7 @@ struct Menus{
         [
             "name":"Ver Perfil universitario",
             "image":"ic_action_ic_school.png",
-            "type": "profile_university"
+            "type": "profile_academic"
         ],
         [
             "name":"Cerrar sesión",
