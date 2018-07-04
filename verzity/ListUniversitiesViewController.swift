@@ -9,8 +9,9 @@ import UIKit
 import SwiftyJSON
 import Kingfisher
 
-class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var webServiceController = WebServiceController()  //WebServiceController()
     var type: String = ""
@@ -18,23 +19,42 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         type = String(type)
-        
+        setup_table()
+        setup_search_bar()
         setup_ux()
+        alterLayout()
         load_data()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+
+    func setup_table(){
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    func setup_search_bar(){
+        searchBar.delegate = self
+    }
+    
+    func alterLayout(){
+        //tableView.tableHeaderView = UIView()
+    }
+    
+    func setup_ux(){
+        
+        // Title
         if  type == "find_favorit" {
             self.title = "Favoritos"
         } else if type == "find_university" {
             self.title = "Universidades"
         }
+        
+        self.navigationItem.leftBarButtonItem?.title = ""
+        showGifIndicator(view: self.view)
     }
     
-    func load_data(){
+    func load_data(name_university: String = ""){
         
         if  type == "find_favorit" {
             items = [
@@ -46,7 +66,12 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             ]
           hiddenGifIndicator(view: self.view)
         } else if type == "find_university" {
-            let array_parameter = ["": ""]
+            
+            var array_parameter = ["": ""]
+            if  name_university != "" {
+                array_parameter = ["nombreUniversidad": name_university]
+            }
+            
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: GetListGeneral)
@@ -63,9 +88,11 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         
     }
     
-    func setup_ux(){
-        self.navigationItem.leftBarButtonItem?.title = ""
-        showGifIndicator(view: self.view)
+  
+    
+    // Search Bar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        load_data(name_university: searchText)
     }
     
     

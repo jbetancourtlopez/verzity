@@ -973,9 +973,14 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dNj-ur-omz">
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="XBt-sC-p6e">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cell_find_university" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="64" id="UtS-h8-XMW" customClass="ListTableViewCell" customModule="verzity" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="64"/>
+                                        <rect key="frame" x="0.0" y="72" width="320" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UtS-h8-XMW" id="A8P-Fn-whV">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
@@ -1040,6 +1045,7 @@
                         <viewLayoutGuide key="safeArea" id="Zij-YM-Cpv"/>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="XBt-sC-p6e" id="I4M-dg-AhJ"/>
                         <outlet property="tableView" destination="dNj-ur-omz" id="eUP-95-HOx"/>
                     </connections>
                 </viewController>
