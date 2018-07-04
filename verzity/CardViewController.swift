@@ -31,36 +31,41 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
         switch String(type) {
         case "becas":
+            self.title = "Becas"
+            
             let array_parameter = ["": ""]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetBecasVigentes(parameters: parameter_json_string!, doneFunction: GetCardGeneral)
             break
-        case "financing": //comunicados
+        case "financing":
             print("financing")
+            
+            self.title = "Financiamiento"
+            
             let array_parameter = ["": ""]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetFinanciamientosVigentes(parameters: parameter_json_string!, doneFunction: GetCardGeneral)
             break
-        case "coupons": //Eventos
+        case "coupons":
+            
+            self.title = "Cupones"
+            
             let array_parameter = ["": ""]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetCuponesVigentes(parameters: parameter_json_string!, doneFunction: GetCardGeneral)
             break
-        case "travel": //Eventos
+        case "travel":
+            self.title = "Viajes"
+            
             print("travel")
             break
         default:
             break
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-         self.title = "Becas"
-    }
-    
     
     func GetCardGeneral(status: Int, response: AnyObject){
         var json = JSON(response)
@@ -107,7 +112,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
         // Becas
         if type == "becas" {
-            
             title = item["nbBeca"].stringValue
             name = "Autor"
             var universidad = JSON(item["Universidades"])
@@ -115,19 +119,16 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             pathImage = item["pathImagen"].stringValue
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-            
         }
         
         // Financiamiento
         if type == "financing" {
-            
             title = item["nbFinanciamiento"].stringValue
             name = "Autor"
             lblDescription = item["desFinancimiento"].stringValue
             pathImage = item["pathArchivo"].stringValue
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-            
         }
         
         //Cupones

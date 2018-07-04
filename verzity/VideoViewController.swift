@@ -49,12 +49,8 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! VideoTableViewCell
-        
         var item = JSON(items[indexPath.row])
-        
-        
         
         /*
         // https://www.youtube.com/watch?v=X3wwI1NDeKc

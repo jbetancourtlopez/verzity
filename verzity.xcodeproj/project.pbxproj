@@ -60,6 +60,7 @@
 		92DD410620EBC90D0035EF4E /* PackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410520EBC90D0035EF4E /* PackagesViewController.swift */; };
 		92DD410820EC11560035EF4E /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410720EC11560035EF4E /* Dates.swift */; };
 		92DD410A20EC218F0035EF4E /* PayPal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 92DD410920EC218D0035EF4E /* PayPal.jpg */; };
+		92DD410C20EC753C0035EF4E /* UniversityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */; };
 		92E544C720DAD10F0062A9CA /* CheckboxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E544C620DAD10F0062A9CA /* CheckboxButton.swift */; };
 		92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */; };
 		92E698C120EAFE8E00F69FCD /* QrCouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */; };
@@ -124,6 +125,7 @@
 		92DD410520EBC90D0035EF4E /* PackagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesViewController.swift; sourceTree = "<group>"; };
 		92DD410720EC11560035EF4E /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
 		92DD410920EC218D0035EF4E /* PayPal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PayPal.jpg; sourceTree = "<group>"; };
+		92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityTableViewController.swift; sourceTree = "<group>"; };
 		92E544C620DAD10F0062A9CA /* CheckboxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxButton.swift; sourceTree = "<group>"; };
 		92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAcademicViewController.swift; sourceTree = "<group>"; };
 		92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCouponViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				92E698C420EB291000F69FCD /* DetailViewController.swift */,
 				92DD410320EBC8EE0035EF4E /* PostuladoViewController.swift */,
 				92DD410520EBC90D0035EF4E /* PackagesViewController.swift */,
+				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				92682D2220DB740500E6C4A8 /* BaseTableViewController.swift in Sources */,
 				924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */,
 				924132E520E2881300CEBC81 /* FindMapViewController.swift in Sources */,
+				92DD410C20EC753C0035EF4E /* UniversityTableViewController.swift in Sources */,
 				9267014F20D9E4DA00E638A1 /* RegisterViewController.swift in Sources */,
 				92682D3620DC317900E6C4A8 /* WebServiceController.swift in Sources */,
 				9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */,

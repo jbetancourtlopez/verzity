@@ -57,6 +57,24 @@ class HeaderTableViewCell: UITableViewCell {
     @IBOutlet var title: UILabel!
 }
 
+class PackageTableViewCell: UITableViewCell {
+
+    @IBOutlet var title_top: UILabel!
+    
+    @IBOutlet var label_financing: UILabel!
+    @IBOutlet var price: UILabel!
+    
+    @IBOutlet var swich_beca: UISwitch!
+    @IBOutlet var swich_financing: UISwitch!
+    @IBOutlet var description_package: UILabel!
+    @IBOutlet var label_postulacion: UILabel!
+    @IBOutlet var swich_postulacion: UISwitch!
+    @IBOutlet var button_buy: UIButton!
+    @IBOutlet var label_beca: UILabel!
+    @IBOutlet var vigency: UILabel!
+}
+
+
 
 class VideoTableViewCell: UITableViewCell{
 
