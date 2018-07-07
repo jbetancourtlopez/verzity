@@ -19,6 +19,9 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       // let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
+        // self.view.addGestureRecognizer(tap)
     }
     
     // Abrir el navegador
@@ -38,7 +41,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     }
     
     //Tabla Vacia
-    func empty_data_tableview(tableView: UITableView, string: String? = "Ups! No encontramos elementos."){
+    func empty_data_tableview(tableView: UITableView, string: String? = "No se encontrarón elementos."){
         let view: UIView     = UIView(frame: CGRect(x: 0, y: 0, width: 21, height: 21))
         let title: UILabel     = UILabel(frame: CGRect(x: 0, y:(tableView.frame.size.height/2), width: self.view.frame.width, height: 21))
         let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (self.view.frame.width/2) - 30, y: (tableView.frame.height/2) - 65, width: 60, height: 60))
@@ -55,12 +58,13 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     }
     
     //Mensaje
-    func showMessage(title:String)->Void{
-        let alertView:UIAlertView = UIAlertView()
-        alertView.title = title
-        //alertView.delegate = self
-        alertView.addButton(withTitle: "OK")
-        alertView.show()
+    func showMessage(title:String, automatic: Bool)->Void{
+        alert.title = title
+        self.present(alert, animated: true, completion: nil)
+        
+        if automatic{
+            Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(BaseViewController.dismissAlert), userInfo: nil, repeats: false)
+        }
     }
     
     // Alerts
@@ -127,7 +131,10 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     }
     
     func getSettings(key:String) -> String{
-        return defaults.string(forKey: key)!
+        if  let value = defaults.string(forKey: key) as? String {
+            return value
+        }
+        return ""
     }
     
     //Gif Loading
@@ -139,10 +146,10 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         let advTimeGif = UIImage.gifImageWithData(imageData!)
         let imageLoading = UIImageView(image: advTimeGif)
         
-        imageLoading.frame = CGRect(x: (viewLoading.frame.size.width/2) - 100, y: (viewLoading.frame.height/2)-100, width: 200, height: 200)
+        imageLoading.frame = CGRect(x: (viewLoading.frame.size.width/2) - 50, y: (viewLoading.frame.height/2)-50, width: 100, height: 100)
         imageLoading.backgroundColor = Colors.green_dark
         imageLoading.layer.cornerRadius = 8.0
-        imageLoading.contentMode = .scaleAspectFit
+        imageLoading.contentMode = .scaleAspectFill//.scaleAspectFit
         viewLoading.addSubview(imageLoading)
         view.addSubview(viewLoading)
     }
@@ -152,6 +159,75 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
             viewLoading.removeFromSuperview()
             viewLoading = nil
         }
+    }
+    
+    //Teclado
+    
+    
+    
+    
+    
+    @objc func dismissKey() {
+        self.view.endEditing(true)
+    }
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeField = textField
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeField = nil
+    }
+    func registerForKeyboardNotifications(scrollView: UIScrollView){
+        self.scrollView_ = scrollView
+        NotificationCenter.default.addObserver(self, selector: #selector(BaseViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(BaseViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWasShown(_ notification: Notification)
+    {
+        self.scrollView_?.isScrollEnabled = true
+        let info : NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+        
+        self.scrollView_?.contentInset = contentInsets
+        self.scrollView_?.scrollIndicatorInsets = contentInsets
+        
+        var aRect : CGRect = self.view.frame
+        aRect.size.height -= keyboardSize!.height
+        if activeField != nil {
+            if (!aRect.contains(activeField!.frame.origin))
+            {
+                self.scrollView_?.scrollRectToVisible(activeField!.frame, animated: true)
+            }
+        }
+    }
+    
+    @objc func keyboardWillBeHidden(_ notification: Notification)
+    {
+        let contentInsets = UIEdgeInsets.zero
+        scrollView_?.contentInset = contentInsets
+        scrollView_?.scrollIndicatorInsets = contentInsets
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func setGestureRecognizerHiddenKeyboard(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(BaseViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+        self.scrollView_?.isScrollEnabled = true
     }
     
 }

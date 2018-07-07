@@ -79,12 +79,14 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
+         print("wananananaanan" )
+        /*
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
         self.show(vc, sender: nil)
+         */
  
     }
+
 
 
 

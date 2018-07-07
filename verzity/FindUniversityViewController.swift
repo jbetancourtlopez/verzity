@@ -53,7 +53,6 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
         // Abrir Modal
         debugPrint(items[updateCounter])
-        showMessage(title: "Prueba")
     }
     
     func getBanners(status: Int, response: AnyObject){

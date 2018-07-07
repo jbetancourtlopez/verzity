@@ -12,7 +12,8 @@ struct Config{
     static var desRutaMultimedia = "http://verzity.dwmedios.com/SITE/"
     static var cvPaypal : String?
     static var config_data = "http://www.dwmedios.com/UrlAppVerzity.json"
-    static var cvFirebase = "dSxkibvCFHw:APA91bGXp6EtCEN2GF_5YHiSWYKM_zsmXlzogCvGpaeBJv5pQAAByATYY-Bo4ziPEuB568bHd1cfwznGgQvzX61wniBaa_rbz23KpwqBQ-p7vvybq7cZNNNQNZ_DDV60xV4smL3DUe-T"
+    static var cvFirebase = "Fix"
+    static var UID = UIDevice.current.identifierForVendor!.uuidString
 }
 
 struct Strings {

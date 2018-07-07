@@ -14,6 +14,11 @@ class DetailBecasViewController: BaseViewController {
 
     var detail: AnyObject!
     
+    @IBOutlet var icon_file_right: UIButton!
+    @IBOutlet var icon_person_rigth: UIButton!
+    
+    @IBOutlet var icon_file: UIImageView!
+    @IBOutlet var icon_person: UIImageView!
     @IBOutlet var detail_title: UILabel!
     @IBOutlet var image: UIImageView!
     @IBOutlet var detail_name: UILabel!
@@ -30,7 +35,8 @@ class DetailBecasViewController: BaseViewController {
     }
     
     @IBAction func on_click_university(_ sender: Any) {
-         var detail = JSON(self.detail)
+        print("Universidad")
+        var detail = JSON(self.detail)
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversityViewControllerID") as! DetailUniversityViewController
         vc.idUniversidad = detail["idUniversidad"].intValue
         self.show(vc, sender: nil)
@@ -42,7 +48,11 @@ class DetailBecasViewController: BaseViewController {
         file_path = file_path.replacingOccurrences(of: "~", with: "")
         file_path = file_path.replacingOccurrences(of: "\\", with: "")
         let url =  "\(String(describing: Config.desRutaMultimedia))\(file_path)"
-        openUrl(scheme: url)
+        
+        if  !file_path.isEmpty{
+            openUrl(scheme: url)
+        }
+        
     }
     
     @IBAction func on_click_postulate(_ sender: Any) {
@@ -66,9 +76,9 @@ class DetailBecasViewController: BaseViewController {
         var json = JSON(response)
         if status == 1{
             let message = json["Mensaje"].stringValue
-            updateAlert(title: "Error", message: message, automatic: true)
+            showMessage(title: message, automatic: true)
         }else{
-            updateAlert(title: "Error", message: response as! String, automatic: true)
+            showMessage(title: response as! String, automatic: true)
         }
         hiddenGifIndicator(view: self.view)
         
@@ -77,15 +87,34 @@ class DetailBecasViewController: BaseViewController {
     func set_data(){
         debugPrint(self.detail)
         var detail = JSON(self.detail)
+        var file_path = detail["desRutaArchivo"].stringValue
+        
+        var universidad = JSON(detail["Universidades"])
         
         detail_title.text = detail["nbBeca"].stringValue
-        detail_name.text = detail["nbUniversidad"].stringValue
+        detail_name.text = universidad["nbUniversidad"].stringValue
         detail_description.text = detail["desBeca"].stringValue
         
         let amountOfLinesToBeShown:CGFloat = 6
         let maxHeight:CGFloat = detail_description.font!.lineHeight * amountOfLinesToBeShown
         detail_description.sizeThatFits(CGSize(width: detail_description.frame.size.width, height:maxHeight))
-        detail_file.text = "Descargar archivo adjunto"
+        if  !file_path.isEmpty{
+             detail_file.text = "Descargar archivo adjunto"
+        }else{
+             detail_file.text = "No se encontró archivo adjunto"
+        }
+       
+        
+        icon_file.image = icon_file.image?.withRenderingMode(.alwaysTemplate)
+        icon_file.tintColor = Colors.gray
+        
+        //icon_file_right.image = icon_file_right.image?.withRenderingMode(.alwaysTemplate)
+        icon_file_right.tintColor = Colors.gray
+        
+        //icon_person_rigth.image = icon_person_rigth.image?.withRenderingMode(.alwaysTemplate)
+        icon_person_rigth.tintColor = Colors.gray
+        
+
         
          // Imagen
          var pathImage = detail["pathImagen"].stringValue

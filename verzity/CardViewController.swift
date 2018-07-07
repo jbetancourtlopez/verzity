@@ -15,9 +15,9 @@ import Kingfisher
 class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    //let menu_main = Menus.menu_main
-    var webServiceController = WebServiceController()  //WebServiceController()
+    var webServiceController = WebServiceController()
     var type: String = ""
+    var idUniversidad = 0
     var list_data: AnyObject!
     var items:NSArray = []
 
@@ -26,32 +26,33 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
         type = String(type)
+        idUniversidad = idUniversidad as Int
         
-        // Cargamos los datos dependiendo de la Vista
+        load_data(type:type)
+        
+    }
     
+    func load_data(type: String){
+        showGifIndicator(view: self.view)
+        
         switch String(type) {
         case "becas":
             self.title = "Becas"
-            
-            let array_parameter = ["": ""]
+            let array_parameter = ["idUniversidad": idUniversidad]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetBecasVigentes(parameters: parameter_json_string!, doneFunction: GetCardGeneral)
             break
         case "financing":
             print("financing")
-            
             self.title = "Financiamiento"
-            
-            let array_parameter = ["": ""]
+            let array_parameter = ["idUniversidad": idUniversidad]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetFinanciamientosVigentes(parameters: parameter_json_string!, doneFunction: GetCardGeneral)
             break
         case "coupons":
-            
             self.title = "Cupones"
-            
             let array_parameter = ["": ""]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
@@ -73,6 +74,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             list_data = json["Data"].arrayValue as Array as AnyObject
             items = json["Data"].arrayValue as NSArray
             tableView.reloadData()
+        }else{
+            showMessage(title: response as! String, automatic: true)
         }
         hiddenGifIndicator(view: self.view)
     }
@@ -105,6 +108,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CardTableViewCell
         var item = JSON(items[indexPath.section])
+        debugPrint(item)
         var title = ""
         var name = ""
         var lblDescription = ""
@@ -138,7 +142,13 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             let feInicio = (item["feInicio"].stringValue).components(separatedBy: "T")
             let feFin = (item["feFin"].stringValue).components(separatedBy: "T")
             lblDescription = "\(feInicio[0]) - \(feFin[0])"
-            pathImage = ""
+            
+            var imagenesCupones = item["ImagenesCupones"].arrayValue
+            var cuponImagen = JSON(imagenesCupones[0])
+            
+            pathImage = cuponImagen["desRutaFoto"].stringValue
+            pathImage = pathImage.replacingOccurrences(of: "~", with: "")
+            pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
         }
         
         // ------
@@ -167,13 +177,16 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             self.show(vc, sender: nil)
             break
         case "financing":
-            print("financing")
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailFinanciamientoViewControllerID") as! DetailFinanciamientoViewController
+            //vc.detail = items[index] as AnyObject
+            self.show(vc, sender: nil)
             
             break
         case "coupons":
             print("coupons")
-            let vc = storyboard?.instantiateViewController(withIdentifier: "CardViewControllerID") as! CardViewController
-            //vc.type = menu_selected!
+            let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
+            var item = JSON(items[index])
+            vc.idCupon = item["idCupon"].intValue
             self.show(vc, sender: nil)
             break
         default:

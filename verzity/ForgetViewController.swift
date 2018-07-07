@@ -6,6 +6,7 @@
 //  Copyright © 2018 Jossue Betancourt. All rights reserved.
 //
 import UIKit
+import SwiftyJSON
 
 class ForgetViewController: BaseViewController {
     
@@ -13,6 +14,8 @@ class ForgetViewController: BaseViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var okButton: UIButton!
+    
+    var webServiceController = WebServiceController()
     
     var delegate: ForgetViewControllerDelegate?
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
@@ -59,6 +62,8 @@ class ForgetViewController: BaseViewController {
         email.resignFirstResponder()
         delegate?.okButtonTapped(textFieldValue: email.text!)
         self.dismiss(animated: true, completion: nil)
+        
+        
     }
     
    

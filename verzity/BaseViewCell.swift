@@ -79,10 +79,11 @@ class PackageTableViewCell: UITableViewCell {
 class VideoTableViewCell: UITableViewCell{
 
     @IBOutlet var title: UILabel!
-    @IBOutlet var playerView: PlayerViewClass!
     @IBOutlet var video_description: UITextView!
+    @IBOutlet var viewYoutube: YTPlayerView!
     
-    @IBOutlet var webView: UIWebView!
+    @IBOutlet var playerView: PlayerViewClass!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

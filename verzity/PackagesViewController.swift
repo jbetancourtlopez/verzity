@@ -51,10 +51,11 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {
-        if self.items.count == 0 {
+       
+        /*if self.items.count == 0 {
             empty_data_tableview(tableView: tableView)
             return 0
-        }
+        }*/
         
         return 3//self.items.count
     }

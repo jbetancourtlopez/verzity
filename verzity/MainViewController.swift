@@ -17,7 +17,6 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var menu_main = Menus.menu_main_academic
     weak var delegate:SidebarViewDelegate?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -40,10 +39,10 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             self.sidebarView.frame=CGRect(x: 0, y: 0, width: 250, height: self.sidebarView.frame.height)
         }) { (complete) in
             self.blackScreen.frame=CGRect(x: self.sidebarView.frame.width, y: 0, width: self.view.frame.width-self.sidebarView.frame.width, height: self.view.bounds.height+100)
+            self.sidebarView.myTableView.reloadData()
+            
         }
     }
-    
-   
     
     //Table View. -------
     
@@ -84,7 +83,7 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let menu_selected = menu_main[indexPath.section]["type"]
-        
+        print(menu_selected)
         switch String(menu_selected!) {
         case "find_university": //Promociones
             print("find_university")
@@ -112,21 +111,22 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "travel": //Eventos
             print("travel")
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ExampleViewControllerID") as! ExampleViewController
+            self.show(vc, sender: nil)
+            /*
             let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
             self.show(vc, sender: nil)
-            
-            //updateAlert(title: "", message: "En proceso ...", automatic: true)
+            */
+            //showMessage(title: "", automatic: true)
             break
         case "package": //Eventos
             print("package")
-            
             let vc = storyboard?.instantiateViewController(withIdentifier: "PackagesViewControllerID") as! PackagesViewController
             self.show(vc, sender: nil)
  
             break
         case "postulate": //Eventos
             print("postulate")
-            
             let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
             self.show(vc, sender: nil)
  

@@ -56,6 +56,12 @@
 		92682D3820DD62A700E6C4A8 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 92682D3720DD62A700E6C4A8 /* default.png */; };
 		9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */; };
 		9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69420E7337A004D7FC7 /* VideoViewController.swift */; };
+		92A64B7420EE78B500E96152 /* ic_telefono_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */; };
+		92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7520EE8A3B00E96152 /* StringsLabel.swift */; };
+		92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7720EE8D8300E96152 /* FormValidate.swift */; };
+		92A64B7E20EFE8AD00E96152 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7C20EFE8AB00E96152 /* YTPlayerView.m */; };
+		92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7F20EFF33700E96152 /* ExampleViewController.swift */; };
+		92A64B8220F087E400E96152 /* DetailFinanciamientoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */; };
 		92DD410420EBC8EE0035EF4E /* PostuladoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410320EBC8EE0035EF4E /* PostuladoViewController.swift */; };
 		92DD410620EBC90D0035EF4E /* PackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410520EBC90D0035EF4E /* PackagesViewController.swift */; };
 		92DD410820EC11560035EF4E /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410720EC11560035EF4E /* Dates.swift */; };
@@ -121,6 +127,14 @@
 		92682D3720DD62A700E6C4A8 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewClass.swift; sourceTree = "<group>"; };
 		9276B69420E7337A004D7FC7 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_telefono_gray.png; sourceTree = "<group>"; };
+		92A64B7520EE8A3B00E96152 /* StringsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsLabel.swift; sourceTree = "<group>"; };
+		92A64B7720EE8D8300E96152 /* FormValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidate.swift; sourceTree = "<group>"; };
+		92A64B7B20EFE8A900E96152 /* verzity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "verzity-Bridging-Header.h"; sourceTree = "<group>"; };
+		92A64B7C20EFE8AB00E96152 /* YTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YTPlayerView.m; path = "../../../../Downloads/youtube-ios-player-helper-master/Classes/YTPlayerView.m"; sourceTree = "<group>"; };
+		92A64B7D20EFE8AC00E96152 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YTPlayerView.h; path = "../../../../Downloads/youtube-ios-player-helper-master/Classes/YTPlayerView.h"; sourceTree = "<group>"; };
+		92A64B7F20EFF33700E96152 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
+		92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFinanciamientoViewController.swift; sourceTree = "<group>"; };
 		92DD410320EBC8EE0035EF4E /* PostuladoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostuladoViewController.swift; sourceTree = "<group>"; };
 		92DD410520EBC90D0035EF4E /* PackagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesViewController.swift; sourceTree = "<group>"; };
 		92DD410720EC11560035EF4E /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
@@ -169,8 +183,11 @@
 			isa = PBXGroup;
 			children = (
 				924132F420E4296C00CEBC81 /* iOSImageGif.swift */,
+				92A64B7D20EFE8AC00E96152 /* YTPlayerView.h */,
+				92A64B7C20EFE8AB00E96152 /* YTPlayerView.m */,
 				924132F720E42E4F00CEBC81 /* Reachability.swift */,
 				9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */,
+				92A64B7B20EFE8A900E96152 /* verzity-Bridging-Header.h */,
 			);
 			path = system;
 			sourceTree = "<group>";
@@ -248,6 +265,8 @@
 				92DD410320EBC8EE0035EF4E /* PostuladoViewController.swift */,
 				92DD410520EBC90D0035EF4E /* PackagesViewController.swift */,
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
+				92A64B7F20EFF33700E96152 /* ExampleViewController.swift */,
+				92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -270,6 +289,8 @@
 				92682D2120DB740500E6C4A8 /* BaseTableViewController.swift */,
 				92682D2320DB749A00E6C4A8 /* BaseViewCell.swift */,
 				92DD410720EC11560035EF4E /* Dates.swift */,
+				92A64B7520EE8A3B00E96152 /* StringsLabel.swift */,
+				92A64B7720EE8D8300E96152 /* FormValidate.swift */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -288,6 +309,7 @@
 				92DD410920EC218D0035EF4E /* PayPal.jpg */,
 				9267015520DAB3D700E638A1 /* ic_telefono.png */,
 				9267015220DA9AFC00E638A1 /* ic_user_gray.png */,
+				92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */,
 				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
 				92682D2B20DB8E1800E6C4A8 /* ic_menu.png */,
 				92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */,
@@ -333,6 +355,7 @@
 				TargetAttributes = {
 					9267011220D8462400E638A1 = {
 						CreatedOnToolsVersion = 9.4;
+						LastSwiftMigration = 0940;
 					};
 				};
 			};
@@ -359,6 +382,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92A64B7420EE78B500E96152 /* ic_telefono_gray.png in Resources */,
 				9267014B20D9994800E638A1 /* ic_action_mail.png in Resources */,
 				924132EB20E2B6A300CEBC81 /* CustomView.xib in Resources */,
 				9267015720DAB3D900E638A1 /* ic_action_ic_contrasea.png in Resources */,
@@ -420,6 +444,7 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -431,6 +456,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -457,6 +483,7 @@
 				924132E520E2881300CEBC81 /* FindMapViewController.swift in Sources */,
 				92DD410C20EC753C0035EF4E /* UniversityTableViewController.swift in Sources */,
 				9267014F20D9E4DA00E638A1 /* RegisterViewController.swift in Sources */,
+				92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */,
 				92682D3620DC317900E6C4A8 /* WebServiceController.swift in Sources */,
 				9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */,
 				92DD410420EBC8EE0035EF4E /* PostuladoViewController.swift in Sources */,
@@ -468,6 +495,8 @@
 				92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */,
 				924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */,
 				9267013F20D84AD000E638A1 /* Colors.swift in Sources */,
+				92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */,
+				92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */,
 				9205102420E1FA9C00234F16 /* Menus.swift in Sources */,
 				924132EF20E2F7AE00CEBC81 /* DetailUniversityViewController.swift in Sources */,
 				92682D2020DB4E4600E6C4A8 /* SidebarView.swift in Sources */,
@@ -477,9 +506,11 @@
 				9267014920D98EFB00E638A1 /* ForgetViewController.swift in Sources */,
 				92682D3220DC038300E6C4A8 /* CardViewController.swift in Sources */,
 				9267011920D8462400E638A1 /* LoginViewController.swift in Sources */,
+				92A64B8220F087E400E96152 /* DetailFinanciamientoViewController.swift in Sources */,
 				9267014D20D99C9F00E638A1 /* ForgetViewControllerDelegate.swift in Sources */,
 				9267011720D8462400E638A1 /* AppDelegate.swift in Sources */,
 				92DD410620EBC90D0035EF4E /* PackagesViewController.swift in Sources */,
+				92A64B7E20EFE8AD00E96152 /* YTPlayerView.m in Sources */,
 				92682D3420DC22FC00E6C4A8 /* AlamofireWebServiceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,6 +656,7 @@
 			baseConfigurationReference = 9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZQWELP4PCB;
 				INFOPLIST_FILE = verzity/Info.plist;
@@ -635,6 +667,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dwmedios.verzity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "verzity/system/verzity-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -645,6 +679,7 @@
 			baseConfigurationReference = F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZQWELP4PCB;
 				INFOPLIST_FILE = verzity/Info.plist;
@@ -655,6 +690,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dwmedios.verzity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "verzity/system/verzity-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

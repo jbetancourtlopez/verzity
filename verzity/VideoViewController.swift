@@ -49,28 +49,50 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! VideoTableViewCell
+        
         var item = JSON(items[indexPath.row])
+        var video = item["desRutaVideo"].stringValue
+        var cell_name = ""
+        if video.isEmpty {
+            cell_name = "cell_youtube"
+        }else{
+            cell_name = "cell_player"
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cell_name, for: indexPath) as! VideoTableViewCell
+        
+        if cell_name == "cell_youtube"{
+            cell.viewYoutube.load(withVideoId: item["urlVideo"].stringValue)
+            cell.viewYoutube.playVideo()
+            
+        }else{
+            
+            //Video de Ruta
+            // https://www.youtube.com/watch?v=X3wwI1NDeKc
+            //"https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+            let url_string = item["desRutaVideo"].stringValue
+            
+            let video_url = NSURL(string: url_string)
+            let avPlayer = AVPlayer(url: video_url as! URL)
+            cell.playerView?.playerLayer.player = avPlayer
+            cell.playerView.player?.play()
+        }
+       
         
         /*
-        // https://www.youtube.com/watch?v=X3wwI1NDeKc
-        let url_string = "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
         
-        let video_url = NSURL(string: url_string)
-        let avPlayer = AVPlayer(url: video_url as! URL)
-        cell.playerView?.playerLayer.player = avPlayer
-        cell.playerView.player?.play()
         */
-        
+        /*
         // http://prismasoft.mx/
         // http://www.youtube.com/embed/X3wwI1NDeKc
         //http://www.youtube.com/embed/C0Z6tJdeQ_E
         let url = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
-        cell.webView.loadRequest(URLRequest(url: url!))
- 
+        cell.webView.loadRequest(URLRequest(url: url!))*/
         
-            
-        //title =
+        //Video de Youtube
+        
+        
+        
         
         cell.title.text = item["nbVideo"].stringValue
         cell.video_description.text = item["desVideo"].stringValue

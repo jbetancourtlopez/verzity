@@ -51,6 +51,8 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
         myTableView.bounces=false
         myTableView.showsVerticalScrollIndicator=false
         myTableView.backgroundColor = UIColor.clear
+        
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,14 +80,14 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
             // Nombre
             let cellLbl = UILabel(frame: CGRect(x: 15, y: 115, width: 250, height: 30))
             cell.addSubview(cellLbl)
-            cellLbl.text = getSettings_sidebar(key: "nbCompleto")
+            cellLbl.text = getSettings_sidebar(key: "name_profile")
             cellLbl.font=UIFont.systemFont(ofSize: 17)
             cellLbl.textColor=UIColor.white
             
             // Correo
             let cellLblCorreo = UILabel(frame: CGRect(x: 15, y: 145, width: 250, height: 30))
             cell.addSubview(cellLblCorreo)
-            cellLblCorreo.text = getSettings_sidebar(key: "desCorreo")
+            cellLblCorreo.text = getSettings_sidebar(key: "email_profile")
             cellLblCorreo.font=UIFont.systemFont(ofSize: 15)
             cellLblCorreo.textColor=UIColor.white
             
@@ -185,7 +187,10 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func getSettings_sidebar(key:String) -> String{
-        return defaults.string(forKey: key)!
+        if  let value = defaults.string(forKey: key) as? String {
+            return value
+        }
+        return ""
     }
     
     required init?(coder aDecoder: NSCoder) {
