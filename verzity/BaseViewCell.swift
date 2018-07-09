@@ -21,7 +21,7 @@ class ListTableViewCell: UITableViewCell{
 class AcademicsTableViewCell: UITableViewCell{
  
     @IBOutlet var name: UILabel!
-    @IBOutlet var swich_item: UISwitch!
+    @IBOutlet var swich_item: CustomSwich!
     
     override func awakeFromNib() {
         super.awakeFromNib()

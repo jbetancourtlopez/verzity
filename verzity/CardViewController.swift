@@ -82,11 +82,13 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {
-        if self.items.count == 0 {
+       if self.items.count == 0 {
             empty_data_tableview(tableView: tableView)
             return 0
+        }else{
+            tableView.backgroundView = nil
+            return self.items.count
         }
-        return self.items.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,7 +180,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "financing":
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailFinanciamientoViewControllerID") as! DetailFinanciamientoViewController
-            //vc.detail = items[index] as AnyObject
+            vc.detail = items[index] as AnyObject
             self.show(vc, sender: nil)
             
             break

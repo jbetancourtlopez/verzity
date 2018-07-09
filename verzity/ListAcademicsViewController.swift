@@ -18,6 +18,8 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     var items:NSArray = []
     var sections: NSMutableArray = []
     
+    var button_find = UIBarButtonItem()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +31,7 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     func load_data(){
+        showGifIndicator(view: self.view)
         let array_parameter = ["": ""]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
@@ -46,23 +49,19 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
                 
                 let indice = validar_seccion(idCatNivelEstudios: Int64(catNivel["idCatNivelEstudios"].intValue))
                 if indice >= 0 {
-                    let item_licensature_all = [
-                        "idLicenciatura": 0,
-                        "nbLicenciatura": "Todos"
-                        ] as [String : Any]
- 
+
                     let item_licensature = [
                         "idLicenciatura": item_json["idLicenciatura"].intValue,
-                        "nbLicenciatura": item_json["nbLicenciatura"].stringValue
+                        "nbLicenciatura": item_json["nbLicenciatura"].stringValue,
+                        "is_checked": 0
                         ] as [String : Any]
                     
                     let section_aux = sections[indice] as! NSDictionary
                     var list_licensature_aux = section_aux["list_licensature"] as! [Any]
-                    /*if  list_licensature_aux.count > 1{
-                        list_licensature_aux.append(item_licensature_all)
-                    }else{
-                        
-                    }*/
+                    
+                    //list_licensature_aux[0] = item_licensature
+                     
+                    
                     list_licensature_aux.append(item_licensature)  // adding(item_licensature)
                     
                     let oldNivel:NSDictionary = [
@@ -80,11 +79,13 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
                         "list_licensature": [
                                                 [
                                                     "idLicenciatura": 0,
-                                                    "nbLicenciatura": "Todos"
+                                                    "nbLicenciatura": "Todos",
+                                                    "is_checked": 0
                                                 ],
                                                 [
                                                     "idLicenciatura": item_json["idLicenciatura"].intValue,
-                                                    "nbLicenciatura": item_json["nbLicenciatura"].stringValue
+                                                    "nbLicenciatura": item_json["nbLicenciatura"].stringValue,
+                                                    "is_checked": 0
                                                     
                                                 ]
                                             ]
@@ -113,8 +114,20 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     func setup_ux(){
+        
+        let image = UIImage(named: "ic_action_search")?.withRenderingMode(.alwaysOriginal)
+        button_find = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(on_click_find))
+        
         self.navigationItem.leftBarButtonItem?.title = ""
-        //showGifIndicator(view: self.view)
+        self.navigationItem.rightBarButtonItem = nil
+        //
+    }
+    
+    @objc func on_click_find(sender: AnyObject) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ListUniversitiesViewControllerID") as! ListUniversitiesViewController
+        vc.type = "find_university"
+        //vc.licenciaturas =
+        self.show(vc, sender: nil)
     }
     
     //Table View. -------------------
@@ -132,7 +145,6 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
         let section_item = JSON(sections[section])
         let title = section_item["nbNivelEstudios"].stringValue
         return  "Seccion \(title)"
-        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -157,9 +169,103 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
         cell.name.text = row["nbLicenciatura"].stringValue
         cell.layer.borderWidth = 3
         cell.clipsToBounds = true
+        
+        // Swicth
+        cell.swich_item.setOn(false, animated: true)
+        if row["is_checked"].intValue == 1{
+            cell.swich_item.setOn(true, animated: true)
+        }
+        
+        cell.swich_item.row = indexPath.row
+        cell.swich_item.section = indexPath.section
+        
+        cell.swich_item.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
         return cell
     }
+    
+     @objc func switchChanged(_ sender : CustomSwich!){
+        set_active_swich(row: sender.row, section: sender.section, sender : sender!)
+    }
+    
+    func set_active_swich(row:Int, section:Int, sender : CustomSwich!){
+        //       print("The switch is \(sender.isOn ? "ON" : "OFF")")
+        
+        //print("Antes")
+        //debugPrint(sections)
+        let section_aux = sections[section] as! NSDictionary
+        var list_licensature_aux = section_aux["list_licensature"] as! [Any]
+        
+        var is_checked = 0
+        if sender.isOn{
+            is_checked = 1
+        }
+        
+        var updatate_item_licensature = JSON(list_licensature_aux[row])
+        let item_licensature = [
+            "idLicenciatura": updatate_item_licensature["idLicenciatura"].intValue,
+            "nbLicenciatura": updatate_item_licensature["nbLicenciatura"].stringValue,
+            "is_checked": is_checked
+            ] as [String : Any]
+        list_licensature_aux[row] = item_licensature
+        
+        // Si el Swich es el de TODOS
+        if updatate_item_licensature["idLicenciatura"].intValue == 0 {
+            
+            print(list_licensature_aux.count)
+            
+            for i in 0 ..< list_licensature_aux.count{
+                
+                var updatate_item_licensature_for = JSON(list_licensature_aux[i])
+                let item_licensature_for = [
+                    "idLicenciatura": updatate_item_licensature_for["idLicenciatura"].intValue,
+                    "nbLicenciatura": updatate_item_licensature_for["nbLicenciatura"].stringValue,
+                    "is_checked": is_checked
+                    ] as [String : Any]
+                list_licensature_aux[i] = item_licensature_for
+            }
+            
+            tableView.reloadData()
+        }
+        
+        
+        
+        let oldNivel:NSDictionary = [
+            "nbNivelEstudios": section_aux["nbNivelEstudios"] as! String,
+            "idCatNivelEstudios": section_aux["idCatNivelEstudios"] as! Int,
+            "list_licensature": list_licensature_aux
+        ]
+        sections[section] = oldNivel
+        
+        //print("Despues")
+        //debugPrint(sections)
+        
+        if validate_any_swich_active() > 0{
+            self.navigationItem.rightBarButtonItem = button_find
+        }
+        else{
+            self.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
 
+    func validate_any_swich_active()-> Int{
+        var is_any_swich_active = 0
+        for section_i in 0 ..< sections.count{
+            
+            var section_item = sections[section_i] as! NSDictionary
+            var list_licensature_aux = section_item["list_licensature"] as! [Any]
+            
+            for row_i in 0 ..< list_licensature_aux.count{
+                
+                var row_item = JSON(list_licensature_aux[row_i])
+                if  row_item["is_checked"].intValue == 1{
+                    is_any_swich_active = is_any_swich_active + 1
+                }
+            }
+        }
+        
+        return is_any_swich_active
+    }
     
 
 

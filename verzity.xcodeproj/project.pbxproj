@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9205102220E1AB7D00234F16 /* ic_user_profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9205102120E1AB7C00234F16 /* ic_user_profile.jpg */; };
 		9205102420E1FA9C00234F16 /* Menus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9205102320E1FA9C00234F16 /* Menus.swift */; };
+		922892AB20F2B3260021DB32 /* CustomSwich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922892AA20F2B3260021DB32 /* CustomSwich.swift */; };
+		922892AD20F2DE5C0021DB32 /* ic_user_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 922892AC20F2DE5B0021DB32 /* ic_user_profile.png */; };
 		924132DF20E27A5200CEBC81 /* logo_verde.png in Resources */ = {isa = PBXBuildFile; fileRef = 924132DE20E27A5200CEBC81 /* logo_verde.png */; };
 		924132E120E27A9600CEBC81 /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 924132E020E27A9500CEBC81 /* logo_white.png */; };
 		924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */; };
@@ -76,8 +77,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9205102120E1AB7C00234F16 /* ic_user_profile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ic_user_profile.jpg; sourceTree = "<group>"; };
 		9205102320E1FA9C00234F16 /* Menus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menus.swift; sourceTree = "<group>"; };
+		922892AA20F2B3260021DB32 /* CustomSwich.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwich.swift; sourceTree = "<group>"; };
+		922892AC20F2DE5B0021DB32 /* ic_user_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_user_profile.png; sourceTree = "<group>"; };
 		924132DE20E27A5200CEBC81 /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_verde.png; path = "../../../Documentacion Verzity/Logotipo/logo_verde.png"; sourceTree = "<group>"; };
 		924132E020E27A9500CEBC81 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_white.png; path = "../../../Documentacion Verzity/Logotipo/logo_white.png"; sourceTree = "<group>"; };
 		924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUniversityViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				924132F720E42E4F00CEBC81 /* Reachability.swift */,
 				9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */,
 				92A64B7B20EFE8A900E96152 /* verzity-Bridging-Header.h */,
+				922892AA20F2B3260021DB32 /* CustomSwich.swift */,
 			);
 			path = system;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				9267015420DAB3D600E638A1 /* ic_action_ic_contrasea.png */,
 				92682D2520DB7B9D00E6C4A8 /* loading.gif */,
 				9267015620DAB3D800E638A1 /* ic_action_mail_gray.png */,
+				922892AC20F2DE5B0021DB32 /* ic_user_profile.png */,
 				924132E020E27A9500CEBC81 /* logo_white.png */,
 				924132F220E422EB00CEBC81 /* loading_data.gif */,
 				92DD410920EC218D0035EF4E /* PayPal.jpg */,
@@ -313,7 +317,6 @@
 				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
 				92682D2B20DB8E1800E6C4A8 /* ic_menu.png */,
 				92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */,
-				9205102120E1AB7C00234F16 /* ic_user_profile.jpg */,
 				9267015020D9F76A00E638A1 /* back_white.png */,
 				9267014620D8B9A200E638A1 /* logo_white.png */,
 				9267014420D8B98C00E638A1 /* logo_verde.png */,
@@ -395,9 +398,9 @@
 				9267012120D8462600E638A1 /* Assets.xcassets in Resources */,
 				924132DF20E27A5200CEBC81 /* logo_verde.png in Resources */,
 				9267015820DAB3D900E638A1 /* ic_telefono.png in Resources */,
-				9205102220E1AB7D00234F16 /* ic_user_profile.jpg in Resources */,
 				9267011C20D8462400E638A1 /* Main.storyboard in Resources */,
 				92682D2D20DB8E1900E6C4A8 /* ic_menu.png in Resources */,
+				922892AD20F2DE5C0021DB32 /* ic_user_profile.png in Resources */,
 				92682D2A20DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png in Resources */,
 				924132F320E422EC00CEBC81 /* loading_data.gif in Resources */,
 				9267015120D9F76C00E638A1 /* back_white.png in Resources */,
@@ -492,6 +495,7 @@
 				9267011F20D8462400E638A1 /* verzity.xcdatamodeld in Sources */,
 				924132F120E34EE800CEBC81 /* DetailBecasViewController.swift in Sources */,
 				924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */,
+				922892AB20F2B3260021DB32 /* CustomSwich.swift in Sources */,
 				92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */,
 				924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */,
 				9267013F20D84AD000E638A1 /* Colors.swift in Sources */,

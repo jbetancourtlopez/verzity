@@ -32,6 +32,20 @@ class DetailBecasViewController: BaseViewController {
         super.viewDidLoad()
         detail = detail as AnyObject
         set_data();
+        setup_ux()
+    }
+    
+    func setup_ux(){
+    
+        let image_visitar_web  = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
+        let image_file_download  = UIImage(named: "ic_file_download")?.withRenderingMode(.alwaysTemplate)
+    
+        btn_university.setImage(image_visitar_web, for: .normal)
+        btn_university.tintColor = Colors.gray
+        
+        btn_file.setImage(image_file_download, for: .normal)
+        btn_file.tintColor = Colors.gray
+    
     }
     
     @IBAction func on_click_university(_ sender: Any) {
@@ -52,7 +66,6 @@ class DetailBecasViewController: BaseViewController {
         if  !file_path.isEmpty{
             openUrl(scheme: url)
         }
-        
     }
     
     @IBAction func on_click_postulate(_ sender: Any) {
@@ -81,7 +94,6 @@ class DetailBecasViewController: BaseViewController {
             showMessage(title: response as! String, automatic: true)
         }
         hiddenGifIndicator(view: self.view)
-        
     }
     
     func set_data(){
@@ -104,7 +116,6 @@ class DetailBecasViewController: BaseViewController {
              detail_file.text = "No se encontró archivo adjunto"
         }
        
-        
         icon_file.image = icon_file.image?.withRenderingMode(.alwaysTemplate)
         icon_file.tintColor = Colors.gray
         
@@ -113,8 +124,6 @@ class DetailBecasViewController: BaseViewController {
         
         //icon_person_rigth.image = icon_person_rigth.image?.withRenderingMode(.alwaysTemplate)
         icon_person_rigth.tintColor = Colors.gray
-        
-
         
          // Imagen
          var pathImage = detail["pathImagen"].stringValue

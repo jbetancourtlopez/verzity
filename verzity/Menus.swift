@@ -28,7 +28,7 @@ struct Menus{
     static let menu_main_academic = [
         [
             "name":"Buscar universidades",
-            "image":"ic_telefono.png",
+            "image":"ic_searc_right.png",
             "type": "find_university"
         ],
         [
@@ -62,12 +62,12 @@ struct Menus{
         ],
         [
             "name":"Programas académicos",
-            "image":"ic_telefono.png",
+            "image":"ic_mortarboard.png",
             "type": "find_academics"
         ],
         [
             "name":"Cerca de mi",
-            "image":"ic_telefono.png",
+            "image":"ic_gps.png",
             "type": "find_next_to_me"
         ],
         [
@@ -77,7 +77,7 @@ struct Menus{
         ],
         [
             "name":"Favoritos",
-            "image":"ic_telefono.png",
+            "image":"ic_action_star_border.png",
             "type": "find_favorit"
         ]
         

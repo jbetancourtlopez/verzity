@@ -15,6 +15,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     @IBOutlet var page_control: UIPageControl!
     @IBOutlet var image: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var container_image: UIView!
     
      var webServiceController = WebServiceController()
     let menu_main = Menus.menu_find_university
@@ -32,6 +33,8 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         self.title = "Buscar universidades"
         updateCounter = 1
         self.navigationItem.backBarButtonItem?.title = ""
+        container_image.isHidden = true
+        
         
         // Cargamos los Banners
          showGifIndicator(view: self.view)
@@ -52,7 +55,12 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
         // Abrir Modal
-        debugPrint(items[updateCounter])
+        if items.count > 0 {
+            debugPrint(items[updateCounter])
+        }else{
+            print("Error")
+        }
+        
     }
     
     func getBanners(status: Int, response: AnyObject){
@@ -63,6 +71,10 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             items = json["Data"].arrayValue as NSArray
             updateTimer()
             timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(FindUniversityViewController.updateTimer), userInfo: nil, repeats: true)
+        }
+        
+        if  items.count > 0{
+           container_image.isHidden = false
         }
         hiddenGifIndicator(view: self.view)
     }

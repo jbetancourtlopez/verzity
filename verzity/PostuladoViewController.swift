@@ -102,7 +102,13 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.list_sections.count
+        if self.list_sections.count == 0 {
+            empty_data_tableview(tableView: tableView)
+            return 0
+        }else{
+            tableView.backgroundView = nil
+            return self.list_sections.count
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

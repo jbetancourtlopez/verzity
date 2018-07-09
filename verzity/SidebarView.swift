@@ -74,7 +74,7 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
             cellImg.layer.cornerRadius = 50
             cellImg.layer.masksToBounds=true
             cellImg.contentMode = .scaleAspectFill
-            cellImg.image=#imageLiteral(resourceName: "ic_user_profile.jpg")
+            cellImg.image = UIImage(named: "ic_user_profile")
             cell.addSubview(cellImg)
             
             // Nombre

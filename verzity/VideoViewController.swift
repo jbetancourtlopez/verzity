@@ -45,7 +45,13 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
     
     // Table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        if self.items.count == 0 {
+            empty_data_tableview(tableView: tableView)
+            return 0
+        }else{
+            tableView.backgroundView = nil
+            return self.items.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

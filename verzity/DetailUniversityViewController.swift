@@ -260,6 +260,7 @@ class DetailUniversityViewController: BaseViewController {
     func setup_ux(){
         
         let image_visitar_web  = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
+        
         // Favorito
         let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
         button_favorit.setImage(image, for: .normal)

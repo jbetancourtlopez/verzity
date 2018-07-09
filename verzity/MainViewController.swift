@@ -111,13 +111,15 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "travel": //Eventos
             print("travel")
+            /*
             let vc = storyboard?.instantiateViewController(withIdentifier: "ExampleViewControllerID") as! ExampleViewController
             self.show(vc, sender: nil)
+             */
             /*
             let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
             self.show(vc, sender: nil)
             */
-            //showMessage(title: "", automatic: true)
+            showMessage(title: "En proceso ...", automatic: true)
             break
         case "package": //Eventos
             print("package")
@@ -127,6 +129,7 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "postulate": //Eventos
             print("postulate")
+            
             let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
             self.show(vc, sender: nil)
  

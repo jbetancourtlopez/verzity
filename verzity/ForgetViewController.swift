@@ -63,7 +63,6 @@ class ForgetViewController: BaseViewController {
         delegate?.okButtonTapped(textFieldValue: email.text!)
         self.dismiss(animated: true, completion: nil)
         
-        
     }
     
    

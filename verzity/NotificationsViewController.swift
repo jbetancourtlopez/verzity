@@ -46,7 +46,13 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     //Table View. -------------------
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        if self.items.count == 0 {
+            empty_data_tableview(tableView: tableView)
+            return 0
+        }else{
+            tableView.backgroundView = nil
+            return  self.items.count
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

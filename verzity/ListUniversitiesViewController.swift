@@ -16,6 +16,7 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     var webServiceController = WebServiceController()  //WebServiceController()
     var type: String = ""
     var items:NSArray = []
+    var list_licenciaturas:NSArray = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,7 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             self.title = "Universidades"
         }
         
+        
         self.navigationItem.leftBarButtonItem?.title = ""
         showGifIndicator(view: self.view)
     }
@@ -57,19 +59,28 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     func load_data(name_university: String = ""){
         
         if  type == "find_favorit" {
-            items = [
-                [
-                    "idUniversida" : 40,
-                    "nbUniversidad" : "Dw Medios",
-                    "pathLogo" : "Jossue",
-                ],
-            ]
+            let idPersona = getSettings(key: "idPersona")
+            let array_parameter = ["idPersona": idPersona]
+          
+            debugPrint(array_parameter)
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            webServiceController.GetFavoritos(parameters: parameter_json_string!, doneFunction: GetListGeneral)
+            
+            
           hiddenGifIndicator(view: self.view)
         } else if type == "find_university" {
             
             var array_parameter = ["": ""]
             if  name_university != "" {
                 array_parameter = ["nombreUniversidad": name_university]
+            }
+            
+            if list_licenciaturas.count > 0{
+                array_parameter = [
+                    "nombreUniversidad": name_university,
+                    "licenciaturas": list_licenciaturas
+                    ] as! [String : String]
             }
             
             let parameter_json = JSON(array_parameter)
@@ -80,15 +91,16 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     
     func GetListGeneral(status: Int, response: AnyObject){
         var json = JSON(response)
+        debugPrint(json)
         if status == 1{
             items = json["Data"].arrayValue as NSArray
-            tableView.reloadData()
+        }else{
+            items = []
         }
+        tableView.reloadData()
         hiddenGifIndicator(view: self.view)
         
     }
-    
-  
     
     // Search Bar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -99,7 +111,14 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     //Table View. -------------------
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.items.count
+        if self.items.count == 0 {
+            empty_data_tableview(tableView: tableView)
+            return 0
+        }else{
+            tableView.backgroundView = nil
+            return self.items.count
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
