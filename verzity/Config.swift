@@ -51,6 +51,12 @@ final class Singleton {
     static let ConsultarNotificaciones = "ConsultarNotificaciones"
     static let GetDetalleNotificacion = "GetDetalleNotificacion"
     static let CanjearCupon = "CanjearCupon"
+    static let RecuperarContrasenia = "RecuperarContrasenia"
+    static let GetPaquetesDisponibles = "GetPaquetesDisponibles"
+    static let GetPaises = "GetPaises"
+    static let BuscarCodigoPostal = "BuscarCodigoPostal"
+    static let EditarPerfil = "EditarPerfil"
+    static let PostularseUniversidad = "PostularseUniversidad"
     
     
 }

@@ -74,7 +74,14 @@ class DetailBecasViewController: BaseViewController {
             showGifIndicator(view: self.view)
             
             // FIX - Armar los parametros
-            let array_parameter = ["": ""]
+            var detail = JSON(self.detail)
+            let idPersona = getSettings(key: "idPersona")
+            let array_parameter = [
+                "idPersona": Int(idPersona)!,
+                "idBeca": detail["idBeca"].intValue
+                ] as [String : Any]
+            
+            debugPrint(array_parameter)
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.PostularseBeca(parameters: parameter_json_string!, doneFunction: PostularseBeca)

@@ -115,10 +115,6 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
                 ] as [String : Any]
             
             
-           
-            
-            present(alertController, animated: true, completion: nil)
-            
             
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
@@ -135,6 +131,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             let alertController = UIAlertController(title: "Atención", message: "Se enviará la información para que sea verificada por el administrador, por favor espere el correo de confirmación del registro de la universidad.", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
             alertController.addAction(defaultAction)
+             present(alertController, animated: true, completion: nil)
         }else {
             showMessage(title: response as! String, automatic: true)
         }

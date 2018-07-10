@@ -16,6 +16,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     @IBOutlet var image: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var container_image: UIView!
+    @IBOutlet var contrains_height: NSLayoutConstraint!
     
      var webServiceController = WebServiceController()
     let menu_main = Menus.menu_find_university
@@ -33,7 +34,6 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         self.title = "Buscar universidades"
         updateCounter = 1
         self.navigationItem.backBarButtonItem?.title = ""
-        container_image.isHidden = true
         
         
         // Cargamos los Banners
@@ -53,18 +53,45 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         self.navigationItem.leftBarButtonItem?.title = ""
     }
     
+    // Evento al hacer click sobre un Banner
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
-        // Abrir Modal
+        
         if items.count > 0 {
-            debugPrint(items[updateCounter])
+            
+            // Registramos la Visista
+            showGifIndicator(view: self.view)
+            var  banner_item = JSON(items[updateCounter])
+            let array_parameter = [
+                "idBanner": banner_item["idBanner"].intValue,
+                "idPersona": getSettings(key: "idPersona")
+                
+                ] as [String : Any]
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            webServiceController.RegistrarVisitaBanners(parameters: parameter_json_string!, doneFunction: RegistrarVisitaBanners)
+            
+           
         }else{
             print("Error")
         }
-        
+    }
+    
+    func RegistrarVisitaBanners(status: Int, response: AnyObject){
+        hiddenGifIndicator(view: self.view)
+        if status == 1{
+            var  banner_item = JSON(items[updateCounter])
+            let url = banner_item["desSitioWeb"].stringValue
+            if FormValidate.validateUrl(urlString: url as NSString){
+                openUrl(scheme: url)
+            }else{
+                showMessage(title: "No cuenta con sitio web.", automatic: true)
+            }
+        }
     }
     
     func getBanners(status: Int, response: AnyObject){
         var json = JSON(response)
+        debugPrint(json)
         if status == 1{
              hiddenGifIndicator(view: self.view)
             list_data = json["Data"].arrayValue as Array as AnyObject
@@ -73,8 +100,9 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(FindUniversityViewController.updateTimer), userInfo: nil, repeats: true)
         }
         
-        if  items.count > 0{
-           container_image.isHidden = false
+        if  items.count == 0{
+            container_image.isHidden = true
+            contrains_height.constant = 0
         }
         hiddenGifIndicator(view: self.view)
     }

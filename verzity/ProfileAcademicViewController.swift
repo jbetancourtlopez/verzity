@@ -17,6 +17,8 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     @IBOutlet var import_image: UIButton!
     @IBOutlet var countryPickerView: UIPickerView!
     
+ 
+    @IBOutlet var icon_country: UIImageView!
     
     @IBOutlet var name_profile: FloatableTextField!
     @IBOutlet var phone_profile: FloatableTextField!
@@ -26,29 +28,85 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     @IBOutlet var municipio_profile: FloatableTextField!
     @IBOutlet var email_profile: FloatableTextField!
     @IBOutlet var state_profile: FloatableTextField!
-    let countries = ["Mexico", "Francia", "Argentina"]
-    var is_mexico = 1;
     
+    var webServiceController = WebServiceController()
+    var countries:NSArray = []
+    var is_mexico = 1;
+    var name_country = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
         setup_textfield()
-        cp_profile.addTarget(self, action: "cpDidChange:", for: UIControlEvents.editingChanged)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
-        self.view.addGestureRecognizer(tap)
-        
-        // Get Data Preferencias
         get_data_profile()
-
+        load_countries()
     }
     
     @objc func cpDidChange(_ textField: UITextField) {
-        print("Cambio")
+        print("Change CP")
+        let cp = textField.text
+        if (cp?.count)! >= 5{
+            showGifIndicator(view: self.view)
+            let array_parameter = ["Cp_CodigoPostal": cp_profile.text!]
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            webServiceController.BuscarCodigoPostal(parameters: parameter_json_string!, doneFunction: BuscarCodigoPostal)
+        }
     }
     
+    func BuscarCodigoPostal(status: Int, response: AnyObject){
+        var json = JSON(response)
+        debugPrint(json)
+        if status == 1{
+            let list_cp = json["Data"].arrayValue as NSArray
+            if  list_cp.count > 0 {
+                let item_cp = JSON(list_cp[0])
+                city_profile.text = item_cp["Cp_Ciudad"].stringValue
+                municipio_profile.text = item_cp["Cp_Municipio"].stringValue
+                state_profile.text = item_cp["Cp_Estado"].stringValue
+            }else{
+                city_profile.text = ""
+                municipio_profile.text =  ""
+                state_profile.text = ""
+            }
+        }else{
+            showMessage(title: response as! String, automatic: true)
+        }
+        hiddenGifIndicator(view: self.view)
+    }
     
+    func load_countries(){
+        print("Carga de oaises")
+        let array_parameter = ["": ""]
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.GetPaises(parameters: parameter_json_string!, doneFunction: GetPaises)
+    }
+    
+    func GetPaises(status: Int, response: AnyObject){
+        var json = JSON(response)
+        if status == 1{
+            countries = json["Data"].arrayValue as NSArray
+        }else{
+            countries = []
+            showMessage(title: response as! String, automatic: true)
+        }
+        countryPickerView.reloadAllComponents()
+        // Establesco el Pais Seleccionado
+        let selected_name_country = getSettings(key: "nbPais") //"México"
+        for i in 0 ..< countries.count{
+            var item_country_json = JSON(countries[i])
+            let name_country = item_country_json["nbPais"].stringValue
+            self.name_country = name_country
+            let isEqual = (selected_name_country == name_country)
+            if isEqual {
+                countryPickerView.selectRow(i, inComponent:0, animated:true)
+            }
+        }
+        hiddenGifIndicator(view: self.view)
+    }
+    
+    // Cargar Imagen
     @IBAction func import_image(_ sender: Any) {
         let image = UIImagePickerController()
         image.delegate = self
@@ -71,31 +129,74 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     
     @IBAction func on_click_continue(_ sender: Any) {
         print("Continuar")
+        
         if validate_form() == 0 {
-            
-            setSettings(key: "name_profile", value: name_profile.text!)
-            setSettings(key: "phone_profile", value: phone_profile.text!)
-            setSettings(key: "cp_profile", value: cp_profile.text!)
-            setSettings(key: "description_profile", value: description_profile.text!)
-            setSettings(key: "city_profile", value: city_profile.text!)
-            setSettings(key: "municipio_profile", value: municipio_profile.text!)
-            setSettings(key: "email_profile", value: email_profile.text!)
-            setSettings(key: "state_profile", value: state_profile.text!)
-            
-            showMessage(title: StringsLabel.operation_complete, automatic: true)
+            let array_parameter = [
+                "desCorreo": email_profile.text!,
+                "Direcciones": [
+                    "nbCiudad": city_profile.text!,
+                    "numCodigoPostal":  cp_profile.text!,
+                    "desDireccion": description_profile.text!,
+                    "nbEstado": state_profile.text!,
+                    "nbPais": name_country,
+                    "nbMunicipio": municipio_profile.text!,
+                    "idDireccion": 0
+                ],
+                "desTelefono": phone_profile.text!,
+                "nbCompleto": name_profile.text!,
+                "idDireccion": 0,
+                "idPersona": getSettings(key: "idPersona")
+            ] as [String : Any]
+        
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            webServiceController.EditarPerfil(parameters: parameter_json_string!, doneFunction: EditarPerfil)
         }
         
+    }
+    
+    func EditarPerfil(status: Int, response: AnyObject){
+        var json = JSON(response)
+        debugPrint(json)
+        if status == 1{
+            debugPrint(json)
+            showMessage(title: json["Mensaje"].stringValue, automatic: true)
+            
+            var data = JSON(json["Data"])
+            // Actulizo la persistencia
+          
+            //Persona
+            setSettings(key: "name_profile", value: data["nbCompleto"].stringValue)
+            setSettings(key: "email_profile", value: data["desCorreo"].stringValue)
+            setSettings(key: "phone_profile", value: data["desTelefono"].stringValue)
+            
+            // Direcciones
+            let direcciones = JSON(data["Direcciones"])
+            setSettings(key: "idDireccion", value: direcciones["idDireccion"].stringValue)
+            setSettings(key: "nbPais", value: direcciones["nbPais"].stringValue)
+            setSettings(key: "cp_profile", value: direcciones["numCodigoPostal"].stringValue)
+            setSettings(key: "city_profile", value: direcciones["nbCiudad"].stringValue)
+            setSettings(key: "municipio_profile", value: direcciones["nbMunicipio"].stringValue)
+            setSettings(key: "state_profile", value: direcciones["nbEstado"].stringValue)
+            setSettings(key: "description_profile", value: direcciones["desDireccion"].stringValue)
+            
+        }else{
+            showMessage(title: response as! String, automatic: true)
+        }
+        hiddenGifIndicator(view: self.view)
     }
     
     func get_data_profile(){
         name_profile.text = getSettings(key: "name_profile")
         phone_profile.text = getSettings(key: "phone_profile")
+        email_profile.text = getSettings(key: "email_profile")
+        
+        // Direcciones
         cp_profile.text = getSettings(key: "cp_profile")
-        description_profile.text = getSettings(key: "description_profile")
         city_profile.text = getSettings(key: "city_profile")
         municipio_profile.text = getSettings(key: "municipio_profile")
-        email_profile.text = getSettings(key: "email_profile")
         state_profile.text = getSettings(key: "state_profile")
+        description_profile.text = getSettings(key: "description_profile")
     }
     
     func setup_ux(){
@@ -114,6 +215,11 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         municipio_profile.floatableDelegate = self
         email_profile.floatableDelegate = self
         state_profile.floatableDelegate = self
+        
+        // on_change_code_postal
+        cp_profile.addTarget(self, action: #selector(ProfileAcademicViewController.cpDidChange(_:)), for: UIControlEvents.editingChanged)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
+        self.view.addGestureRecognizer(tap)
     }
     
     // Picker View
@@ -126,19 +232,21 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-       return  countries[row]
+        var item_country_json = JSON(countries[row])
+        return  item_country_json["nbPais"].stringValue
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("Seleccionado")
-        if  countries[row] != "Mexico"{
+        
+        var item_country_json = JSON(countries[row])
+        self.name_country = item_country_json["nbPais"].stringValue
+        if  name_country != "México" {
             cp_profile.isHidden = true
             state_profile.isHidden = true
             municipio_profile.isHidden = true
             city_profile.isHidden = true
             topContraintDescription.constant = -260
             is_mexico = 0
-            
         }else{
             cp_profile.isHidden = false
             state_profile.isHidden = false
@@ -149,7 +257,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         }
     }
     
-    
+    //Validar Formulario
     func validate_form()-> Int{
         
         var count_error:Int = 0

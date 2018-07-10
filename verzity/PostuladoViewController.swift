@@ -47,13 +47,10 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         if status == 1{
             items = json["Data"].arrayValue as NSArray
             
-          
             for item in items{
                 
                 var item_json = JSON(item)
                 let nombreSeccion = item_json["NombreSeccion"].stringValue
-                
-              
                 
                 if  !item_json["licenciatura"].isEmpty {
                     print("Entro a Licenciatura")
@@ -81,7 +78,6 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
                         ] as [String : Any]
                     list_financing.append(item)
                 }
-           
             }
             
             list_postulate.append(list_licensature)
@@ -140,11 +136,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         var postulate_date_array = fecha_postulacion.components(separatedBy: "T")
         
         cell.postulate_date.text = postulate_date_array[0]
-        
-        
         cell.postulate_day.text = get_day_of_week(today: postulate_date_array[0])
-        
-        
         cell.postulate_name_academic.text = person["nbCompleto"].stringValue
         
         var postulate_name = ""

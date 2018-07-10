@@ -29,16 +29,16 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     }
     
     func load_data(){
-        let array_parameter = ["idUniversidad": 4]
+        let array_parameter = ["": ""]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.GetPostulados(parameters: parameter_json_string!, doneFunction: GetList)
+        webServiceController.GetPaquetesDisponibles(parameters: parameter_json_string!, doneFunction: GetPaquetesDisponibles)
     }
     
-    func GetList(status: Int, response: AnyObject){
+    func GetPaquetesDisponibles(status: Int, response: AnyObject){
         var json = JSON(response)
         if status == 1{
-        
+            items = json["Data"].arrayValue as NSArray
         }
         tableView.reloadData()
         hiddenGifIndicator(view: self.view)
@@ -51,7 +51,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {
-       
         if self.items.count == 0 {
             empty_data_tableview(tableView: tableView)
             return 0
@@ -81,9 +80,47 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PackageTableViewCell
         
         
+        var item = JSON(items[indexPath.section])
+        
         //Evento al Boton
         cell.button_buy.addTarget(self, action: #selector(self.on_click_buy), for:.touchUpInside)
         cell.button_buy.tag = indexPath.section
+        
+        // Precio
+        cell.price.text = "\(Double(item["dcCosto"].intValue))"
+        
+        cell.title_top.text = item["nbPaquete"].stringValue
+        cell.vigency.text = "\(item["dcDiasVigencia"].stringValue) días de vigencia. "
+        cell.description_package.text = item["desPaquete"].stringValue
+        
+        // Swich
+        cell.label_beca.text = "Aplica becas"
+        cell.swich_beca.isOn = item["fgAplicaBecas"].boolValue
+        
+        cell.label_financing.text = "Aplica financiamiento"
+        cell.swich_financing.isOn = item["fgAplicaFinanciamiento"].boolValue
+        
+        cell.label_postulacion.text = "Aplica postulación"
+        cell.swich_postulacion.isOn = item["fgAplicaPostulacion"].boolValue
+        
+       
+        /*
+        
+        "idPaquete": 11,
+        "cvPaquete": "CV007",
+        "nbPaquete": "PAQUETE 007",
+        "desPaquete": "ESTE ES UN PAQUETE DE PRUEBA",
+        "dcDiasVigencia": 10,
+        "fgAplicaBecas": true,
+        "fgAplicaFinanciamiento": false,
+        "fgAplicaPostulacion": false,
+        "dcCosto": 1.0,
+        "feRegistro": "2018-04-23T18:53:07.133",
+        "idEstatus": 0,
+        "Estatus": null,
+        "VentasPaquetes": []
+ */
+
         
         // setup_ux
         cell.clipsToBounds = true

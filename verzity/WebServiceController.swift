@@ -205,7 +205,7 @@ class WebServiceController: AlamofireWebServiceController{
         }
     }
     
-    // RegistrarVisitaBanners
+    // 2.12 RegistrarVisitaBanners
     func RegistrarVisitaBanners(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         let url =  "\(Config.desRutaWebServices)\(Singleton.RegistrarVisitaBanners)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
@@ -223,6 +223,7 @@ class WebServiceController: AlamofireWebServiceController{
             }
         }
     }
+    
     
     // GetBannersVigentes
     func GetBannersVigentes(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
@@ -459,6 +460,126 @@ class WebServiceController: AlamofireWebServiceController{
         }
     }
     
+    // RecuperarContrasenia
+    func RecuperarContrasenia(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Config.desRutaWebServices)\(Singleton.RecuperarContrasenia)"
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+    
+    // 2.29 GetPaises
+    func GetPaises(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Config.desRutaWebServices)\(Singleton.GetPaises)"
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+    
+
+    
+    // 2.30 BuscarCodigoPostal
+    func BuscarCodigoPostal(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Config.desRutaWebServices)\(Singleton.BuscarCodigoPostal)"
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+    
+    // 2.31 EditarPerfil
+    func EditarPerfil(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Config.desRutaWebServices)\(Singleton.EditarPerfil)"
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+    
+    
+    //2.32 PostularseUniversidad
+    func PostularseUniversidad(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Config.desRutaWebServices)\(Singleton.PostularseUniversidad)"
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+    
+    
+    //2.33 GetPaquetesDisponibles
+    func GetPaquetesDisponibles(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Config.desRutaWebServices)\(Singleton.GetPaquetesDisponibles)"
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+    
+    
+
     
     // ----------------------------
     
@@ -480,6 +601,8 @@ class WebServiceController: AlamofireWebServiceController{
             }
         }
     }
+    
+    
     
     
     

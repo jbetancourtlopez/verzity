@@ -24,13 +24,22 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         
         setup_ux()
         
-        let array_parameter = ["": ""]
+        let array_parameter = [
+            "desCorreo": "marco.yam.catina@gmail.com",
+            "idPersona": 86,
+            "idDireccion": 75,
+            "nbCompleto": "Marco Yam Cetina",
+            "desTelefono": "9971419990"
+            ] as [String : Any]
+        
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.GetCuponesVigentes(parameters: parameter_json_string!, doneFunction: GetCardGeneral)
+        webServiceController.GetCuponesVigentes(parameters: parameter_json_string!, doneFunction: ConsultarNotificaciones)
+
+        //webServiceController.ConsultarNotificaciones(parameters: parameter_json_string!, doneFunction: ConsultarNotificaciones)
     }
     
-    func GetCardGeneral(status: Int, response: AnyObject){
+    func ConsultarNotificaciones(status: Int, response: AnyObject){
         var json = JSON(response)
         if status == 1{
             items = json["Data"].arrayValue as NSArray
@@ -74,11 +83,16 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! NotificationsTableViewCell
-        //var item = JSON(items[indexPath.section])
-     
+        var item = JSON(items[indexPath.section])
+        /*
+        cell.title_notification.text = item["desAsunto"].stringValue
+        cell.description_notificaction.text = item["desMensaje"].stringValue
+        */
         
+        //Icono
         cell.image_notification.image = cell.image_notification.image?.withRenderingMode(.alwaysTemplate)
         cell.image_notification.tintColor = Colors.green_dark
+ 
         
         return cell
         
@@ -86,10 +100,11 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          print("wananananaanan" )
-        /*
+        
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
+        vc.idNotificacion = 1
         self.show(vc, sender: nil)
-         */
+ 
  
     }
 

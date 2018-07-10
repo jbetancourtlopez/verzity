@@ -60,4 +60,10 @@ class FormValidate{
         let numberFiltered = compSepByCharInSet.joined(separator: "")
         return numberFiltered
     }
+    
+    // Validat URL
+    static func validateUrl (urlString: NSString) -> Bool {
+        let urlRegEx = "((?:http|https)://)?(?:www\\.)?[\\w\\d\\-_]+\\.\\w{2,3}(\\.\\w{2})?(/(?<=/)(?:[\\w\\d\\-./_]+)?)?"
+        return NSPredicate(format: "SELF MATCHES %@", urlRegEx).evaluate(with: urlString)
+    }
 }
