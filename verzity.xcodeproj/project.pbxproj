@@ -13,6 +13,12 @@
 		92226FD820F4367700ED30E0 /* ic_action_ciudad_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */; };
 		92226FDA20F4371600ED30E0 /* ic_school_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD920F4371300ED30E0 /* ic_school_gray.png */; };
 		92226FDE20F465C600ED30E0 /* ProfileUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92226FDD20F465C600ED30E0 /* ProfileUniversityViewController.swift */; };
+		92226FE020F54FC800ED30E0 /* EmptySegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92226FDF20F54FC700ED30E0 /* EmptySegue.swift */; };
+		92226FE320F5517000ED30E0 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92226FE220F5517000ED30E0 /* ContainerViewController.swift */; };
+		92226FE520F59E4E00ED30E0 /* FirstFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92226FE420F59E4E00ED30E0 /* FirstFormViewController.swift */; };
+		92226FE720F59E6000ED30E0 /* SecondFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92226FE620F59E6000ED30E0 /* SecondFormViewController.swift */; };
+		92226FE920F5E03100ED30E0 /* ic_action_descripcion_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FE820F5E02F00ED30E0 /* ic_action_descripcion_gray.png */; };
+		92226FEB20F5E07900ED30E0 /* ic_action_web_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */; };
 		922892AB20F2B3260021DB32 /* CustomSwich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922892AA20F2B3260021DB32 /* CustomSwich.swift */; };
 		922892AD20F2DE5C0021DB32 /* ic_user_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 922892AC20F2DE5B0021DB32 /* ic_user_profile.png */; };
 		924132DF20E27A5200CEBC81 /* logo_verde.png in Resources */ = {isa = PBXBuildFile; fileRef = 924132DE20E27A5200CEBC81 /* logo_verde.png */; };
@@ -88,6 +94,12 @@
 		92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_ciudad_gray.png; sourceTree = "<group>"; };
 		92226FD920F4371300ED30E0 /* ic_school_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_school_gray.png; sourceTree = "<group>"; };
 		92226FDD20F465C600ED30E0 /* ProfileUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUniversityViewController.swift; sourceTree = "<group>"; };
+		92226FDF20F54FC700ED30E0 /* EmptySegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySegue.swift; sourceTree = "<group>"; };
+		92226FE220F5517000ED30E0 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		92226FE420F59E4E00ED30E0 /* FirstFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstFormViewController.swift; sourceTree = "<group>"; };
+		92226FE620F59E6000ED30E0 /* SecondFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondFormViewController.swift; sourceTree = "<group>"; };
+		92226FE820F5E02F00ED30E0 /* ic_action_descripcion_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_descripcion_gray.png; sourceTree = "<group>"; };
+		92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_web_gray.png; sourceTree = "<group>"; };
 		922892AA20F2B3260021DB32 /* CustomSwich.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwich.swift; sourceTree = "<group>"; };
 		922892AC20F2DE5B0021DB32 /* ic_user_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_user_profile.png; sourceTree = "<group>"; };
 		924132DE20E27A5200CEBC81 /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_verde.png; path = "../../../Documentacion Verzity/Logotipo/logo_verde.png"; sourceTree = "<group>"; };
@@ -191,6 +203,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		92226FE120F5513F00ED30E0 /* ContainerView */ = {
+			isa = PBXGroup;
+			children = (
+				92226FDF20F54FC700ED30E0 /* EmptySegue.swift */,
+				92226FE220F5517000ED30E0 /* ContainerViewController.swift */,
+				92226FE420F59E4E00ED30E0 /* FirstFormViewController.swift */,
+				92226FE620F59E6000ED30E0 /* SecondFormViewController.swift */,
+			);
+			name = ContainerView;
+			sourceTree = "<group>";
+		};
 		924132F620E42E1500CEBC81 /* system */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +279,7 @@
 		9267012E20D8468D00E638A1 /* viewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				92226FE120F5513F00ED30E0 /* ContainerView */,
 				92682D3120DC038300E6C4A8 /* CardViewController.swift */,
 				924132E620E2B42F00CEBC81 /* CustomView.swift */,
 				924132F020E34EE800CEBC81 /* DetailBecasViewController.swift */,
@@ -312,29 +336,31 @@
 		9267013B20D84A5E00E638A1 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				924132DE20E27A5200CEBC81 /* logo_verde.png */,
+				9267015020D9F76A00E638A1 /* back_white.png */,
 				92682D3720DD62A700E6C4A8 /* default.png */,
-				9267014A20D9994700E638A1 /* ic_action_mail.png */,
-				9267015420DAB3D600E638A1 /* ic_action_ic_contrasea.png */,
-				92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */,
 				92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */,
-				92682D2520DB7B9D00E6C4A8 /* loading.gif */,
-				92226FD920F4371300ED30E0 /* ic_school_gray.png */,
+				92226FE820F5E02F00ED30E0 /* ic_action_descripcion_gray.png */,
+				92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */,
+				9267015420DAB3D600E638A1 /* ic_action_ic_contrasea.png */,
+				92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */,
 				9267015620DAB3D800E638A1 /* ic_action_mail_gray.png */,
-				922892AC20F2DE5B0021DB32 /* ic_user_profile.png */,
-				924132E020E27A9500CEBC81 /* logo_white.png */,
-				924132F220E422EB00CEBC81 /* loading_data.gif */,
-				92DD410920EC218D0035EF4E /* PayPal.jpg */,
+				92226FD320F4354700ED30E0 /* ic_action_mail_gray.png */,
+				9267014A20D9994700E638A1 /* ic_action_mail.png */,
+				92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */,
+				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
+				92682D2B20DB8E1800E6C4A8 /* ic_menu.png */,
+				92226FD920F4371300ED30E0 /* ic_school_gray.png */,
+				92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */,
 				9267015520DAB3D700E638A1 /* ic_telefono.png */,
 				9267015220DA9AFC00E638A1 /* ic_user_gray.png */,
-				92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */,
-				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
-				92226FD320F4354700ED30E0 /* ic_action_mail_gray.png */,
-				92682D2B20DB8E1800E6C4A8 /* ic_menu.png */,
-				92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */,
-				9267015020D9F76A00E638A1 /* back_white.png */,
-				9267014620D8B9A200E638A1 /* logo_white.png */,
+				922892AC20F2DE5B0021DB32 /* ic_user_profile.png */,
+				924132F220E422EB00CEBC81 /* loading_data.gif */,
+				92682D2520DB7B9D00E6C4A8 /* loading.gif */,
+				924132DE20E27A5200CEBC81 /* logo_verde.png */,
 				9267014420D8B98C00E638A1 /* logo_verde.png */,
+				924132E020E27A9500CEBC81 /* logo_white.png */,
+				9267014620D8B9A200E638A1 /* logo_white.png */,
+				92DD410920EC218D0035EF4E /* PayPal.jpg */,
 			);
 			path = assets;
 			sourceTree = "<group>";
@@ -414,6 +440,7 @@
 				9267015920DAB3D900E638A1 /* ic_action_mail_gray.png in Resources */,
 				9267012120D8462600E638A1 /* Assets.xcassets in Resources */,
 				924132DF20E27A5200CEBC81 /* logo_verde.png in Resources */,
+				92226FE920F5E03100ED30E0 /* ic_action_descripcion_gray.png in Resources */,
 				9267015820DAB3D900E638A1 /* ic_telefono.png in Resources */,
 				92226FD620F4362000ED30E0 /* ic_action_estado_gray.png in Resources */,
 				9267011C20D8462400E638A1 /* Main.storyboard in Resources */,
@@ -425,6 +452,7 @@
 				9267015120D9F76C00E638A1 /* back_white.png in Resources */,
 				92682D2620DB7B9E00E6C4A8 /* loading.gif in Resources */,
 				92682D3020DB8EE600E6C4A8 /* ic_dots.png in Resources */,
+				92226FEB20F5E07900ED30E0 /* ic_action_web_gray.png in Resources */,
 				9267014520D8B98C00E638A1 /* logo_verde.png in Resources */,
 				9267015320DA9AFC00E638A1 /* ic_user_gray.png in Resources */,
 			);
@@ -494,17 +522,21 @@
 			files = (
 				92E698C520EB291000F69FCD /* DetailViewController.swift in Sources */,
 				92E698C120EAFE8E00F69FCD /* QrCouponViewController.swift in Sources */,
+				92226FE520F59E4E00ED30E0 /* FirstFormViewController.swift in Sources */,
 				92E544C720DAD10F0062A9CA /* CheckboxButton.swift in Sources */,
 				92682D2420DB749A00E6C4A8 /* BaseViewCell.swift in Sources */,
 				9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */,
 				92E698C320EB146400F69FCD /* NotificationsViewController.swift in Sources */,
 				92682D1E20DB21A000E6C4A8 /* MainViewController.swift in Sources */,
+				92226FE720F59E6000ED30E0 /* SecondFormViewController.swift in Sources */,
 				924132E720E2B42F00CEBC81 /* CustomView.swift in Sources */,
+				92226FE020F54FC800ED30E0 /* EmptySegue.swift in Sources */,
 				92682D2220DB740500E6C4A8 /* BaseTableViewController.swift in Sources */,
 				924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */,
 				924132E520E2881300CEBC81 /* FindMapViewController.swift in Sources */,
 				92DD410C20EC753C0035EF4E /* UniversityTableViewController.swift in Sources */,
 				9267014F20D9E4DA00E638A1 /* RegisterViewController.swift in Sources */,
+				92226FE320F5517000ED30E0 /* ContainerViewController.swift in Sources */,
 				92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */,
 				92682D3620DC317900E6C4A8 /* WebServiceController.swift in Sources */,
 				9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */,

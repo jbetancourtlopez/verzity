@@ -190,7 +190,8 @@ extension MainViewController: SidebarViewDelegate {
         switch String(menu_side_selected["type"].stringValue) {
             case "profile_representative": //Promociones
                 print("profile_representative")
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileRepresentativeViewControllerID") as! ProfileRepresentativeViewController
+                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+                vc.type = "profile_representative"
                 self.show(vc, sender: nil)
                 break
             case "profile_university":
@@ -204,8 +205,9 @@ extension MainViewController: SidebarViewDelegate {
                 self.show(vc, sender: nil)
                 break
             case "profile_academic":
-                print("profile_university")
+                print("profile_academic")
                 let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+                vc.type = "profile_academic"
                 self.show(vc, sender: nil)
                 break
             case "sigout":

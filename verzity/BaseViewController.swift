@@ -88,7 +88,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         self.present(alert, animated: true, completion: nil)
         
         if automatic{
-            Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(BaseViewController.dismissAlert), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(BaseViewController.dismissAlert), userInfo: nil, repeats: false)
         }
     }
     

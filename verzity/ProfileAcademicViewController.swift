@@ -33,9 +33,11 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     var countries:NSArray = []
     var is_mexico = 1;
     var name_country = ""
+    var type = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.type = type as String
         setup_ux()
         setup_textfield()
         get_data_profile()
@@ -159,7 +161,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         var json = JSON(response)
         debugPrint(json)
         if status == 1{
-            debugPrint(json)
             showMessage(title: json["Mensaje"].stringValue, automatic: true)
             
             var data = JSON(json["Data"])

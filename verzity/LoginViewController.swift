@@ -27,6 +27,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         super.viewDidLoad()
         
         setup_uicontrols()
+        setup_ux()
         
         // Forget Event
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_forget))
@@ -50,14 +51,10 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         setSettings(key: "name_email", value: "")
     }
     
-    
     @IBAction func on_click_login(_ sender: Any) {
         setSettings(key: "profile_menu", value: "profile_university")
-    
             if validate_form() == 0 {
-            //if  true {
-                //showGifIndicator(view: self.view)
-
+                showGifIndicator(view: self.view)
                 let array_parameter = [
                     "pwdContrasenia": password.text,
                     "nbUsuario": email.text
@@ -70,30 +67,27 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
 
     func IngresarAppUniversidad(status: Int, response: AnyObject){
-        
-        
-        let json = JSON(response)
+        hiddenGifIndicator(view: self.view)
+        var json = JSON(response)
         debugPrint(json)
         if status == 1 || true {
-            hiddenGifIndicator(view: self.view)
+            
+            
+            
+            
             _ = self.navigationController?.popToRootViewController(animated: false)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
             UIApplication.shared.keyWindow?.rootViewController = vc
         }else{
-            hiddenGifIndicator(view: self.view)
             showMessage(title: response as! String, automatic: true)
         }
-        
-        
     }
-    
     
     
     @objc func on_click_here(sender:UITapGestureRecognizer) {
         print("AQUI")
         let cvDispositivo =  Config.UID
-        
         let array_parameter = [
             "cvFirebase": Config.cvFirebase,
             "cvDispositivo": cvDispositivo
@@ -101,11 +95,11 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.IngresarAppUniversitario(parameters: parameter_json_string!, doneFunction: sigin_academic)
+        webServiceController.IngresarAppUniversitario(parameters: parameter_json_string!, doneFunction: ingresarAppUniversitario)
         
     }
     
-    func sigin_academic(status: Int, response: AnyObject){
+    func ingresarAppUniversitario(status: Int, response: AnyObject){
         var json = JSON(response)
         debugPrint(json)
         if status == 1{
@@ -144,7 +138,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             setSettings(key: "state_profile", value: direcciones["nbEstado"].stringValue)
             setSettings(key: "description_profile", value: direcciones["desDireccion"].stringValue)
             
-            
             _ = self.navigationController?.popToRootViewController(animated: false)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
@@ -164,8 +157,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         self.present(customAlert, animated: true, completion: nil)
     }
 
-    
-    override func viewWillAppear(_ animated: Bool) {
+    func setup_ux(){
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController!.navigationBar.topItem!.title = ""
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -206,9 +198,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
 
 extension LoginViewController: ForgetViewControllerDelegate {
     func okButtonTapped(textFieldValue: String) {
-        
         let array_parameter = ["nbUsuario": textFieldValue]
-        
         if FormValidate.validateEmail(textFieldValue){
             showGifIndicator(view: self.view)
             let parameter_json = JSON(array_parameter)
@@ -217,19 +207,16 @@ extension LoginViewController: ForgetViewControllerDelegate {
         }else{
             showMessage(title: StringsLabel.email_invalid, automatic: true)
         }
-        
-        
     }
     
     func RecuperarContrasenia(status: Int, response: AnyObject){
         let json = JSON(response)
-        
         if status == 1{
             showMessage(title: json["Mensaje"].stringValue, automatic: true)
+        }else{
+           showMessage(title: response as! String, automatic: true)
         }
-        
         hiddenGifIndicator(view: self.view)
-        showMessage(title: response as! String, automatic: true)
     }
     
     func cancelButtonTapped() {
