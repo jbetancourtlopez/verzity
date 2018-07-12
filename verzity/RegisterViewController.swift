@@ -24,12 +24,52 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     @IBOutlet var email: FloatableTextField!
     @IBOutlet var phone_representative: FloatableTextField!
     
+    // Contrains
+    
+    @IBOutlet var topContrainstLabelTerminos: NSLayoutConstraint!
+    @IBOutlet var topConstrainsSwich: NSLayoutConstraint!
+    
+    @IBOutlet var topConstrainsButtonRegister: NSLayoutConstraint!
+    // Datos obtenidos de facebook
+    var facebook_url: String = ""
+    var facebook_name: String = ""
+    var facebook_email: String = ""
+    var is_facebook:Int = 0
+    
     var webServiceController = WebServiceController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
         setup_textfield()
+        setdata_facebook()
+        
+    }
+    
+    func setdata_facebook(){
+        self.facebook_url = facebook_url as String
+        self.facebook_name = facebook_name as String
+        self.facebook_email = facebook_email as String
+        self.is_facebook = Int(is_facebook)
+        
+        name_representative.text = self.facebook_name
+        email.text = self.facebook_email
+        
+        // Foto Profile
+        let url = self.facebook_url
+        let URL = Foundation.URL(string: url)
+        let image_default = UIImage(named: "ic_user_profile.png")
+        img_profile.kf.setImage(with: URL, placeholder: image_default)
+        
+        if is_facebook == 1{
+            email.isEnabled = false
+            password.isHidden = true
+            confirm_password.isHidden = true
+            topContrainstLabelTerminos.constant = -100
+            topConstrainsSwich.constant = -100
+            topConstrainsButtonRegister.constant = -70
+        }
+        
     }
     
     @IBAction func import_image(_ sender: Any) {
@@ -184,18 +224,22 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             }
         }
         
-        if FormValidate.isEmptyTextField(textField: password){
-            password.setState(.FAILED, with: StringsLabel.required)
-            count_error = count_error + 1
-        }else{
-            if password.text != confirm_password.text{
-                confirm_password.setState(.FAILED, with: "Las contraseñas no coinciden")
+        
+        if is_facebook == 0 {
+            if FormValidate.isEmptyTextField(textField: password){
+                password.setState(.FAILED, with: StringsLabel.required)
                 count_error = count_error + 1
             }else{
-                confirm_password.setState(.DEFAULT, with: "")
-                password.setState(.DEFAULT, with: "")
+                if password.text != confirm_password.text{
+                    confirm_password.setState(.FAILED, with: "Las contraseñas no coinciden")
+                    count_error = count_error + 1
+                }else{
+                    confirm_password.setState(.DEFAULT, with: "")
+                    password.setState(.DEFAULT, with: "")
+                }
             }
         }
+       
         
         if  !swich_acept.isOn {
             count_error = count_error + 1

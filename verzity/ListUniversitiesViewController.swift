@@ -16,11 +16,12 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     var webServiceController = WebServiceController()  //WebServiceController()
     var type: String = ""
     var items:NSArray = []
-    var list_licenciaturas:NSArray = []
+    var list_licensature:[Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = String(type)
+        self.list_licensature = list_licensature as [Any]
         setup_table()
         setup_search_bar()
         setup_ux()
@@ -71,20 +72,29 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
           hiddenGifIndicator(view: self.view)
         } else if type == "find_university" {
             
-            var array_parameter = ["": ""]
+            var array_parameter:[String: Any] = ["": ""]
+            
+        
+            
             if  name_university != "" {
                 array_parameter = ["nombreUniversidad": name_university]
             }
             
-            if list_licenciaturas.count > 0{
+            
+            if list_licensature.count > 0{
+                
+                //let string_licensatures = JSON(self.list_licensature).rawString()
                 array_parameter = [
                     "nombreUniversidad": name_university,
-                    "licenciaturas": list_licenciaturas
-                    ] as! [String : String]
+                    "Licenciaturas": list_licensature
+                    ]
             }
+            
             
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
+            
+            print(parameter_json_string)
             webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: GetListGeneral)
         }
     }

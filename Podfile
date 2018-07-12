@@ -13,7 +13,8 @@ target 'verzity' do
   	pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
   	pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
     pod 'youtube-ios-player-helper', :git=>'https://github.com/youtube/youtube-ios-player-helper', :commit=>'head'
-
+    pod 'FacebookCore'
+    pod 'FacebookLogin'
 
   # Pods for verzity
 

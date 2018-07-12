@@ -59,8 +59,9 @@ class DetailUniversityViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         idUniversidad = idUniversidad as Int
+       
         setup_ux()
-        
+        print(idUniversidad)
         load_data()
         
         //Gestos

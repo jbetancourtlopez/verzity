@@ -11,6 +11,8 @@ import Realm
 import RealmSwift
 import SwiftyJSON
 import FloatableTextField
+import FacebookLogin
+import FBSDKLoginKit
 
 
 class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
@@ -20,14 +22,38 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     @IBOutlet weak var btnForget: UILabel!
     @IBOutlet weak var btnHere: UILabel!
     @IBOutlet weak var btnRegister: UILabel!
+    @IBOutlet var button_facaebook: UIButton!
     
     var webServiceController = WebServiceController()
-    
+    var dict : [String : AnyObject]!
+    var is_click_facebook = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup_uicontrols()
         setup_ux()
+        
+        /*
+        // Init Facebook
+        //creating button
+        let loginButton = LoginButton(readPermissions: [ .publicProfile ])
+    
+        
+        //adding it to view
+        view_facebook.addSubview(loginButton)
+    
+        
+        //if the user is already logged in
+        if let accessToken = FBSDKAccessToken.current(){
+            //getFBUserData(aux: 0)
+            
+        }
+        */
+        // End Facebook
+        // var image_facebook = UIImage(named: "icon_face_white")
+        //button_facaebook.imageEdgeInsets = UIEdgeInsets(top: 5, left: (button_facaebook.bounds.width - 35), bottom: 5, right: 5)
+        //button_facaebook.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (image_facebook?.frame.width)!)
+        
         
         // Forget Event
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_forget))
@@ -38,6 +64,23 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         let tap_here = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_here))
         btnHere.isUserInteractionEnabled = true
         btnHere.addGestureRecognizer(tap_here)
+    }
+    
+    
+    @IBAction func on_click_facebook(_ sender: Any) {
+        let loginManager = LoginManager()
+        loginManager.logIn(readPermissions: [ .publicProfile ], viewController: self) { loginResult in
+            switch loginResult {
+            case .failed(let error):
+                print(error)
+                self.is_click_facebook = 1
+            case .cancelled:
+                print("User cancelled login.")
+                self.is_click_facebook = 1
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                self.getFBUserData()
+            }
+        }
     }
     
     func setup_uicontrols(){
@@ -73,8 +116,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         if status == 1 || true {
             
             
-            
-            
             _ = self.navigationController?.popToRootViewController(animated: false)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
@@ -83,7 +124,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             showMessage(title: response as! String, automatic: true)
         }
     }
-    
     
     @objc func on_click_here(sender:UITapGestureRecognizer) {
         print("AQUI")
@@ -150,11 +190,13 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     
     @objc func on_click_forget(sender:UITapGestureRecognizer) {
+        
         let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "ForgetViewControllerID") as! ForgetViewController
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.delegate = self
         self.present(customAlert, animated: true, completion: nil)
+ 
     }
 
     func setup_ux(){
@@ -193,7 +235,34 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         
         return count_error
     }
+    
+    //function is fetching the user data
+    func getFBUserData(){
 
+        if((FBSDKAccessToken.current()) != nil){
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
+                if (error == nil){
+                    self.dict = result as! [String : AnyObject]
+                    print(result!)
+                    print(self.dict)
+                    
+                    var picture = self.dict["picture"] as! [String : AnyObject]
+                    var data = picture["data"] as! [String : AnyObject]
+                    var url = data["url"] as! String
+ 
+                    
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
+                    vc.facebook_name = self.dict["name"] as! String
+                    vc.facebook_email = self.dict["email"] as! String
+                    vc.facebook_url = url
+                    vc.is_facebook = 1
+                    self.show(vc, sender: nil)
+ 
+                }
+            })
+        }
+    }
 }
 
 extension LoginViewController: ForgetViewControllerDelegate {

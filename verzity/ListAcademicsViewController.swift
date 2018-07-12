@@ -17,6 +17,7 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     var webServiceController = WebServiceController()
     var items:NSArray = []
     var sections: NSMutableArray = []
+    var list_licensature_array:[Any] = []
     
     var button_find = UIBarButtonItem()
     
@@ -124,10 +125,13 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     @objc func on_click_find(sender: AnyObject) {
+        
+    
         let vc = storyboard?.instantiateViewController(withIdentifier: "ListUniversitiesViewControllerID") as! ListUniversitiesViewController
         vc.type = "find_university"
-        //vc.licenciaturas =
+        vc.list_licensature = list_licensature_array
         self.show(vc, sender: nil)
+ 
     }
     
     //Table View. -------------------
@@ -249,10 +253,12 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     
 
     func validate_any_swich_active()-> Int{
+        
+        list_licensature_array = []
         var is_any_swich_active = 0
         for section_i in 0 ..< sections.count{
             
-            var section_item = sections[section_i] as! NSDictionary
+            let section_item = sections[section_i] as! NSDictionary
             var list_licensature_aux = section_item["list_licensature"] as! [Any]
             
             for row_i in 0 ..< list_licensature_aux.count{
@@ -260,6 +266,13 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
                 var row_item = JSON(list_licensature_aux[row_i])
                 if  row_item["is_checked"].intValue == 1{
                     is_any_swich_active = is_any_swich_active + 1
+                    
+                    if row_item["idLicenciatura"].intValue != 0 {
+                        let item_parameter = ["idLicenciatura": row_item["idLicenciatura"].intValue]
+                        list_licensature_array.append(item_parameter)
+                    }
+                    
+
                 }
             }
         }

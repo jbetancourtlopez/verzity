@@ -32,7 +32,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         tableView.delegate = self
         tableView.dataSource = self
         self.title = "Buscar universidades"
-        updateCounter = 1
+        updateCounter = 0
         self.navigationItem.backBarButtonItem?.title = ""
         
         
@@ -57,18 +57,23 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
         
         if items.count > 0 {
-            
-            // Registramos la Visista
-            showGifIndicator(view: self.view)
-            var  banner_item = JSON(items[updateCounter])
-            let array_parameter = [
-                "idBanner": banner_item["idBanner"].intValue,
-                "idPersona": getSettings(key: "idPersona")
-                
-                ] as [String : Any]
-            let parameter_json = JSON(array_parameter)
-            let parameter_json_string = parameter_json.rawString()
-            webServiceController.RegistrarVisitaBanners(parameters: parameter_json_string!, doneFunction: RegistrarVisitaBanners)
+            do {
+                print("Count:\(updateCounter)")
+                print("total: \(items.count)")
+                // Registramos la Visista
+                showGifIndicator(view: self.view)
+                var  banner_item = JSON(items[updateCounter - 1])
+                let array_parameter = [
+                    "idBanner": banner_item["idBanner"].intValue,
+                    "idPersona": getSettings(key: "idPersona")
+                    
+                    ] as [String : Any]
+                let parameter_json = JSON(array_parameter)
+                let parameter_json_string = parameter_json.rawString()
+                webServiceController.RegistrarVisitaBanners(parameters: parameter_json_string!, doneFunction: RegistrarVisitaBanners)
+            } catch let error {
+                print(error.localizedDescription)
+            }
             
            
         }else{
@@ -79,7 +84,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     func RegistrarVisitaBanners(status: Int, response: AnyObject){
         hiddenGifIndicator(view: self.view)
         if status == 1{
-            var  banner_item = JSON(items[updateCounter])
+            var  banner_item = JSON(items[updateCounter - 1])
             let url = banner_item["desSitioWeb"].stringValue
             if FormValidate.validateUrl(urlString: url as NSString){
                 openUrl(scheme: url)

@@ -9,79 +9,104 @@
 import UIKit
 import MapKit
 
-class customPin: NSObject, MKAnnotation{
-    var coordinate: CLLocationCoordinate2D
-    var title: String?
-    var subtitle: String?
-    
-    init(pinTitle: String, pinSubTitle: String, location:CLLocationCoordinate2D){
-        self.title = pinTitle
-        self.subtitle = pinSubTitle
-        self.coordinate = location
-        
-    }
-}
+private let kPersonWishListAnnotationName = "kPersonWishListAnnotationName"
 
-class FindMapViewController: UIViewController, MKMapViewDelegate, CustomViewDelegate {
+class FindMapViewController: UIViewController, MKMapViewDelegate, DetailMapViewDelegate {
     
-    func detailsRequestedForCustom(data: AnyObject) {
-        // Code
-    }
-    
-    
-    var type: String = ""
+    // outlet
     @IBOutlet weak var mapView: MKMapView!
+    
+    // data
+    var type: String = ""
+    // data
+    var idUniversidad: Int = 0
+    
+    let names = ["Oren Nimmons", "Flor Addington"]
+    let coordinates = [
+        CLLocationCoordinate2D(latitude: 47.57273, longitude: -52.68997),
+        CLLocationCoordinate2D(latitude: 47.56624, longitude: -52.71184)
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = String(type)
-        mapView.showsUserLocation = true
-        mapView.delegate = self
+        //mapView.showsUserLocation = true
+        //mapView.delegate = self
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
-        let location = CLLocationCoordinate2D(latitude: 38.0000, longitude: -97.0000)
-        let region = MKCoordinateRegionMakeWithDistance(location, 1800000, 1800000)
-        mapView.setRegion(region, animated: true)
-        
-        //Agrego los Markers
-        add_makers_universities(lat: 25.7742691, lon: -80.1936569, title: "Prueba")
+        super.viewWillAppear(animated)
+        load_data()
+        setFakeUserPosition()
     }
+    
+    func load_data() {
+        var annotations = [MKAnnotation]()
+        for i in 0..<self.names.count {
+            
+            let title_item =  names[i]
+            let avatar = "ic_user_profile.png"
+            let idUniversidad = 11
+            let location = coordinates[i]
+            
+            let annotation =  CustomAnnotation.init(title: title_item, idUniversidad: idUniversidad, location: location, avatar: avatar)
+            annotations.append(annotation)
+        }
+        
+        
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(annotations)
+    }
+    
     
     func setFakeUserPosition() {
         let visibleRegion = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 47.57983, longitude: -52.68997), 10000, 10000)
         self.mapView.setRegion(self.mapView.regionThatFits(visibleRegion), animated: true)
     }
-    
+
+    // MARK: - MKMapViewDelegate methods
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let visibleRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 10000, 10000)
         self.mapView.setRegion(self.mapView.regionThatFits(visibleRegion), animated: true)
     }
     
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation{ return nil }
+        if annotation is MKUserLocation { return nil }
         
-        let anotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customAnotation")
-        anotationView.image = UIImage(named: "ic_school_map.png")
-        anotationView.canShowCallout = true
-        return anotationView
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: kPersonWishListAnnotationName)
+        
+        if annotationView == nil {
+            annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: kPersonWishListAnnotationName)
+            (annotationView as! CustomAnnotationView).detailDelegate  = self
+        } else {
+            annotationView!.annotation = annotation
+        }
+        
+        return annotationView
         
     }
-
-    func add_makers_universities(lat: Double, lon: Double, title: String){
-        let location = CLLocationCoordinate2D(latitude: lat,
-                                              longitude: lon)
-        let pin = customPin(pinTitle: title, pinSubTitle: "Sub", location: location)
-        //let annotation = MKPointAnnotation()
-        //annotation.coordinate = location
-        //annotation.title = title
-        //annotation.subtitle = ""
-        mapView.addAnnotation(pin)
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Ir al Detalle")
+        
+         if let pdvc = segue.destination as? DetailUniversityViewController {
+         pdvc.idUniversidad = self.idUniversidad
+         }
+    }
+    
+    func detailsRequestedForPerson(idUniversidad: Int) {
+        print("Hola:\(idUniversidad)")
+        self.idUniversidad = idUniversidad
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversityViewControllerID") as! DetailUniversityViewController
+        vc.idUniversidad = idUniversidad
+        self.show(vc, sender: nil)
     }
     
     
-    
+    // ----------------------
     // https://www.youtube.com/watch?v=agXeo1PApq8
     // https://stackoverflow.com/questions/30793315/customize-mkannotation-callout-view
     // http://www.surekhatech.com/blog/custom-callout-view-for-ios-map

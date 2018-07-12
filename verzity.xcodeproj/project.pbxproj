@@ -21,6 +21,10 @@
 		92226FEB20F5E07900ED30E0 /* ic_action_web_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */; };
 		922892AB20F2B3260021DB32 /* CustomSwich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922892AA20F2B3260021DB32 /* CustomSwich.swift */; };
 		922892AD20F2DE5C0021DB32 /* ic_user_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 922892AC20F2DE5B0021DB32 /* ic_user_profile.png */; };
+		922ABFBA20F6BA0300C5A56C /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922ABFB620F6BA0200C5A56C /* CustomAnnotation.swift */; };
+		922ABFBB20F6BA0300C5A56C /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922ABFB720F6BA0200C5A56C /* CustomAnnotationView.swift */; };
+		922ABFBC20F6BA0300C5A56C /* DetailMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922ABFB820F6BA0300C5A56C /* DetailMapView.xib */; };
+		922ABFBD20F6BA0300C5A56C /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922ABFB920F6BA0300C5A56C /* DetailMapView.swift */; };
 		924132DF20E27A5200CEBC81 /* logo_verde.png in Resources */ = {isa = PBXBuildFile; fileRef = 924132DE20E27A5200CEBC81 /* logo_verde.png */; };
 		924132E120E27A9600CEBC81 /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 924132E020E27A9500CEBC81 /* logo_white.png */; };
 		924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */; };
@@ -74,6 +78,7 @@
 		92A64B7E20EFE8AD00E96152 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7C20EFE8AB00E96152 /* YTPlayerView.m */; };
 		92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7F20EFF33700E96152 /* ExampleViewController.swift */; };
 		92A64B8220F087E400E96152 /* DetailFinanciamientoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */; };
+		92B6A3B020F7B28B00987258 /* icon_face_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B6A3AF20F7B28A00987258 /* icon_face_white.png */; };
 		92DD410420EBC8EE0035EF4E /* PostuladoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410320EBC8EE0035EF4E /* PostuladoViewController.swift */; };
 		92DD410620EBC90D0035EF4E /* PackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410520EBC90D0035EF4E /* PackagesViewController.swift */; };
 		92DD410820EC11560035EF4E /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DD410720EC11560035EF4E /* Dates.swift */; };
@@ -102,6 +107,10 @@
 		92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_web_gray.png; sourceTree = "<group>"; };
 		922892AA20F2B3260021DB32 /* CustomSwich.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwich.swift; sourceTree = "<group>"; };
 		922892AC20F2DE5B0021DB32 /* ic_user_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_user_profile.png; sourceTree = "<group>"; };
+		922ABFB620F6BA0200C5A56C /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		922ABFB720F6BA0200C5A56C /* CustomAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
+		922ABFB820F6BA0300C5A56C /* DetailMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailMapView.xib; sourceTree = "<group>"; };
+		922ABFB920F6BA0300C5A56C /* DetailMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
 		924132DE20E27A5200CEBC81 /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_verde.png; path = "../../../Documentacion Verzity/Logotipo/logo_verde.png"; sourceTree = "<group>"; };
 		924132E020E27A9500CEBC81 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_white.png; path = "../../../Documentacion Verzity/Logotipo/logo_white.png"; sourceTree = "<group>"; };
 		924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUniversityViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +168,7 @@
 		92A64B7D20EFE8AC00E96152 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YTPlayerView.h; path = "../../../../Downloads/youtube-ios-player-helper-master/Classes/YTPlayerView.h"; sourceTree = "<group>"; };
 		92A64B7F20EFF33700E96152 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFinanciamientoViewController.swift; sourceTree = "<group>"; };
+		92B6A3AF20F7B28A00987258 /* icon_face_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_face_white.png; sourceTree = "<group>"; };
 		92DD410320EBC8EE0035EF4E /* PostuladoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostuladoViewController.swift; sourceTree = "<group>"; };
 		92DD410520EBC90D0035EF4E /* PackagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesViewController.swift; sourceTree = "<group>"; };
 		92DD410720EC11560035EF4E /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
@@ -212,6 +222,17 @@
 				92226FE620F59E6000ED30E0 /* SecondFormViewController.swift */,
 			);
 			name = ContainerView;
+			sourceTree = "<group>";
+		};
+		922ABFB520F6B8EF00C5A56C /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				922ABFB620F6BA0200C5A56C /* CustomAnnotation.swift */,
+				922ABFB720F6BA0200C5A56C /* CustomAnnotationView.swift */,
+				922ABFB920F6BA0300C5A56C /* DetailMapView.swift */,
+				922ABFB820F6BA0300C5A56C /* DetailMapView.xib */,
+			);
+			name = Map;
 			sourceTree = "<group>";
 		};
 		924132F620E42E1500CEBC81 /* system */ = {
@@ -279,6 +300,7 @@
 		9267012E20D8468D00E638A1 /* viewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				922ABFB520F6B8EF00C5A56C /* Map */,
 				92226FE120F5513F00ED30E0 /* ContainerView */,
 				92682D3120DC038300E6C4A8 /* CardViewController.swift */,
 				924132E620E2B42F00CEBC81 /* CustomView.swift */,
@@ -348,6 +370,7 @@
 				9267014A20D9994700E638A1 /* ic_action_mail.png */,
 				92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */,
 				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
+				92B6A3AF20F7B28A00987258 /* icon_face_white.png */,
 				92682D2B20DB8E1800E6C4A8 /* ic_menu.png */,
 				92226FD920F4371300ED30E0 /* ic_school_gray.png */,
 				92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */,
@@ -445,9 +468,11 @@
 				92226FD620F4362000ED30E0 /* ic_action_estado_gray.png in Resources */,
 				9267011C20D8462400E638A1 /* Main.storyboard in Resources */,
 				92682D2D20DB8E1900E6C4A8 /* ic_menu.png in Resources */,
+				92B6A3B020F7B28B00987258 /* icon_face_white.png in Resources */,
 				92226FDA20F4371600ED30E0 /* ic_school_gray.png in Resources */,
 				922892AD20F2DE5C0021DB32 /* ic_user_profile.png in Resources */,
 				92682D2A20DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png in Resources */,
+				922ABFBC20F6BA0300C5A56C /* DetailMapView.xib in Resources */,
 				924132F320E422EC00CEBC81 /* loading_data.gif in Resources */,
 				9267015120D9F76C00E638A1 /* back_white.png in Resources */,
 				92682D2620DB7B9E00E6C4A8 /* loading.gif in Resources */,
@@ -487,6 +512,11 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-verzity/Pods-verzity-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 				"${BUILT_PRODUCTS_DIR}/FloatableTextField/FloatableTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -499,6 +529,11 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FloatableTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -530,6 +565,7 @@
 				92682D1E20DB21A000E6C4A8 /* MainViewController.swift in Sources */,
 				92226FE720F59E6000ED30E0 /* SecondFormViewController.swift in Sources */,
 				924132E720E2B42F00CEBC81 /* CustomView.swift in Sources */,
+				922ABFBD20F6BA0300C5A56C /* DetailMapView.swift in Sources */,
 				92226FE020F54FC800ED30E0 /* EmptySegue.swift in Sources */,
 				92682D2220DB740500E6C4A8 /* BaseTableViewController.swift in Sources */,
 				924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */,
@@ -546,7 +582,9 @@
 				9267011F20D8462400E638A1 /* verzity.xcdatamodeld in Sources */,
 				924132F120E34EE800CEBC81 /* DetailBecasViewController.swift in Sources */,
 				924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */,
+				922ABFBB20F6BA0300C5A56C /* CustomAnnotationView.swift in Sources */,
 				922892AB20F2B3260021DB32 /* CustomSwich.swift in Sources */,
+				922ABFBA20F6BA0300C5A56C /* CustomAnnotation.swift in Sources */,
 				92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */,
 				924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */,
 				9267013F20D84AD000E638A1 /* Colors.swift in Sources */,
