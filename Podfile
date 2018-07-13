@@ -15,6 +15,8 @@ target 'verzity' do
     pod 'youtube-ios-player-helper', :git=>'https://github.com/youtube/youtube-ios-player-helper', :commit=>'head'
     pod 'FacebookCore'
     pod 'FacebookLogin'
+    pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
 
   # Pods for verzity
 

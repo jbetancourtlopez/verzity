@@ -13,6 +13,7 @@ import SwiftyJSON
 import FloatableTextField
 import FacebookLogin
 import FBSDKLoginKit
+import Firebase
 
 
 class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
@@ -32,28 +33,17 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         super.viewDidLoad()
         setup_uicontrols()
         setup_ux()
-        
-        /*
-        // Init Facebook
-        //creating button
-        let loginButton = LoginButton(readPermissions: [ .publicProfile ])
-    
-        
-        //adding it to view
-        view_facebook.addSubview(loginButton)
-    
-        
-        //if the user is already logged in
-        if let accessToken = FBSDKAccessToken.current(){
-            //getFBUserData(aux: 0)
-            
-        }
-        */
+       
         // End Facebook
         // var image_facebook = UIImage(named: "icon_face_white")
         //button_facaebook.imageEdgeInsets = UIEdgeInsets(top: 5, left: (button_facaebook.bounds.width - 35), bottom: 5, right: 5)
         //button_facaebook.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (image_facebook?.frame.width)!)
         
+        /*
+        // Llamada a Firebase
+        NotificationCenter.default.addObserver(self, selector: #selector(self.displayFCMToken(notification:)),
+                                               name: Notification.Name("FCMToken"), object: nil)
+         */
         
         // Forget Event
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_forget))
@@ -66,7 +56,15 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         btnHere.addGestureRecognizer(tap_here)
     }
     
+    // Firebase Event
+    @objc func displayFCMToken(notification: NSNotification){
+        guard let userInfo = notification.userInfo else {return}
+        if let fcmToken = userInfo["token"] as? String {
+            print("Received FCM token: \(fcmToken)")
+        }
+    }
     
+    // On_click_facebook
     @IBAction func on_click_facebook(_ sender: Any) {
         let loginManager = LoginManager()
         loginManager.logIn(readPermissions: [ .publicProfile ], viewController: self) { loginResult in
@@ -124,7 +122,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             showMessage(title: response as! String, automatic: true)
         }
     }
-    
+    // On_click_Here(AQUI)
     @objc func on_click_here(sender:UITapGestureRecognizer) {
         print("AQUI")
         let cvDispositivo =  Config.UID
@@ -139,6 +137,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         
     }
     
+    // Callback - On_click_Here(AQUI)
     func ingresarAppUniversitario(status: Int, response: AnyObject){
         var json = JSON(response)
         debugPrint(json)
@@ -190,14 +189,12 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     
     @objc func on_click_forget(sender:UITapGestureRecognizer) {
-        
         let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "ForgetViewControllerID") as! ForgetViewController
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.delegate = self
         self.present(customAlert, animated: true, completion: nil)
- 
-    }
+     }
 
     func setup_ux(){
         self.navigationController?.isNavigationBarHidden = true

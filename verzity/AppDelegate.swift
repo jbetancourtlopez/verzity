@@ -10,13 +10,18 @@ import UIKit
 import CoreData
 import CoreLocation
 import FBSDKLoginKit
+import UserNotifications
+
+import Firebase
+import FirebaseMessaging
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var locationManager: CLLocationManager?
+    var locationManager: CLLocationManager? // Map
+    let gcmMessageIDKey = "gcm.message_id" // FireBase
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -45,17 +50,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(error)
         }
         
+        /*
+        //Firebase
+        FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+        
+        if #available(iOS 10.0, *) {
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions) {_,_ in }
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        application.registerForRemoteNotifications()
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        */
+        
+        
         // Facebook
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 
         
         //return true
     }
-
+    
+    // Metodo facebook
     func applicationWillResignActive(_ application: UIApplication) {
         FBSDKAppEvents.activateApp()
     }
     
+    // Metodo facebook
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
@@ -78,6 +107,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
+    // Init Métodos Firebase
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        showAlert(withUserInfo: userInfo)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // Print message ID.
+        
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        showAlert(withUserInfo: userInfo)
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+    
+    func showAlert(withUserInfo userInfo: [AnyHashable : Any]) {
+        let apsKey = "aps"
+        let gcmMessage = "alert"
+        let gcmLabel = "google.c.a.c_l"
+        
+        if let aps = userInfo[apsKey] as? NSDictionary {
+            if let message = aps[gcmMessage] as? String {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: userInfo[gcmLabel] as? String ?? "",
+                                                  message: message, preferredStyle: .alert)
+                    let dismissAction = UIAlertAction(title: "Dismiss", style: .destructive, handler: nil)
+                    alert.addAction(dismissAction)
+                    self.window?.rootViewController?.presentedViewController?.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    // End Métodos Firebase
+    
 
     // MARK: - Core Data stack
 
@@ -125,4 +201,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
+@available(iOS 10, *)
+extension AppDelegate : UNUserNotificationCenterDelegate {
+    
+    // Receive displayed notifications for iOS 10 devices.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        // Print message ID.
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        showAlert(withUserInfo: userInfo)
+        
+        // Change this to your preferred presentation option
+        completionHandler([])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        showAlert(withUserInfo: userInfo)
+        
+        completionHandler()
+    }
+}
 
+//Firebase
+
+extension AppDelegate : MessagingDelegate {
+    // [START refresh_token]
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        //print("Firebase registration token: \(fcmToken)")
+        
+        let dataDict:[String: String] = ["token": fcmToken]
+        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    // [END refresh_token]
+    // [START ios_10_data_message]
+    // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
+    // To enable direct data messages, you can set Messaging.messaging().shouldEstablishDirectChannel to true.
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print("Received data message: \(remoteMessage.appData)")
+    }
+    // [END ios_10_data_message]
+}
+
+
+/*
+ Documentancion:
+ 
+ https://codelabs.developers.google.com/codelabs/firebase-ios-swift/#16
+ */
