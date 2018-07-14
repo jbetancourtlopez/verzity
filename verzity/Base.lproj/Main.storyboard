@@ -2409,14 +2409,14 @@
                                                             <segue destination="Thy-Se-Usr" kind="show" id="CLR-HT-MKt"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4lC-Ah-xXw">
-                                                        <rect key="frame" x="0.0" y="151" width="160" height="38"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4lC-Ah-xXw">
+                                                        <rect key="frame" x="8" y="151" width="144" height="38"/>
                                                         <color key="backgroundColor" red="0.25882352941176467" green="0.40392156862745099" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="38" id="RPc-Dy-lCI"/>
-                                                            <constraint firstAttribute="height" constant="30" id="iua-NJ-beO"/>
+                                                            <constraint firstAttribute="height" constant="38" id="iua-NJ-beO"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <state key="normal" title="Continuar con Facebook">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
@@ -2428,7 +2428,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="hFb-tE-cen" secondAttribute="trailing" constant="8" id="5BO-V1-7QI"/>
-                                                    <constraint firstAttribute="trailing" secondItem="4lC-Ah-xXw" secondAttribute="trailing" id="868-tW-xfV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="4lC-Ah-xXw" secondAttribute="trailing" constant="8" id="868-tW-xfV"/>
                                                     <constraint firstItem="4lC-Ah-xXw" firstAttribute="top" secondItem="prv-Yp-tMK" secondAttribute="bottom" constant="8" id="DFm-zD-lqM"/>
                                                     <constraint firstItem="l50-xX-TQq" firstAttribute="leading" secondItem="MDW-He-gKX" secondAttribute="leading" constant="8" id="KEr-wM-Upp"/>
                                                     <constraint firstItem="nan-Hs-Lux" firstAttribute="centerX" secondItem="MDW-He-gKX" secondAttribute="centerX" id="M2L-TG-6hU"/>
@@ -2436,11 +2436,11 @@
                                                     <constraint firstItem="hFb-tE-cen" firstAttribute="top" secondItem="l50-xX-TQq" secondAttribute="bottom" constant="1" id="QWD-Gv-rbY"/>
                                                     <constraint firstAttribute="trailing" secondItem="l50-xX-TQq" secondAttribute="trailing" constant="8" id="QXZ-wQ-mz5"/>
                                                     <constraint firstItem="nan-Hs-Lux" firstAttribute="top" secondItem="hFb-tE-cen" secondAttribute="bottom" constant="1" id="TB1-gJ-lU8"/>
-                                                    <constraint firstItem="4lC-Ah-xXw" firstAttribute="leading" secondItem="MDW-He-gKX" secondAttribute="leading" id="YMf-K8-ILP"/>
-                                                    <constraint firstAttribute="trailing" secondItem="4lC-Ah-xXw" secondAttribute="trailing" id="aJV-FV-ccn"/>
+                                                    <constraint firstItem="4lC-Ah-xXw" firstAttribute="leading" secondItem="MDW-He-gKX" secondAttribute="leading" constant="8" id="YMf-K8-ILP"/>
+                                                    <constraint firstAttribute="trailing" secondItem="4lC-Ah-xXw" secondAttribute="trailing" constant="8" id="aJV-FV-ccn"/>
                                                     <constraint firstItem="hFb-tE-cen" firstAttribute="leading" secondItem="MDW-He-gKX" secondAttribute="leading" constant="8" id="eEa-Kk-CtE"/>
                                                     <constraint firstItem="prv-Yp-tMK" firstAttribute="top" secondItem="nan-Hs-Lux" secondAttribute="bottom" constant="4" id="ff8-sQ-pcG"/>
-                                                    <constraint firstItem="4lC-Ah-xXw" firstAttribute="leading" secondItem="MDW-He-gKX" secondAttribute="leading" id="iqU-Mx-DRa"/>
+                                                    <constraint firstItem="4lC-Ah-xXw" firstAttribute="leading" secondItem="MDW-He-gKX" secondAttribute="leading" constant="8" id="iqU-Mx-DRa"/>
                                                     <constraint firstItem="nan-Hs-Lux" firstAttribute="centerY" secondItem="MDW-He-gKX" secondAttribute="centerY" id="lO7-G9-7U8"/>
                                                     <constraint firstItem="4lC-Ah-xXw" firstAttribute="top" secondItem="prv-Yp-tMK" secondAttribute="bottom" constant="8" id="wKN-ZK-941"/>
                                                 </constraints>

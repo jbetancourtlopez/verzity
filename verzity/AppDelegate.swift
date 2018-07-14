@@ -50,7 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(error)
         }
         
-        /*
+        // Paypal
+        PayPalMobile .initializeWithClientIds(forEnvironments: [PayPalEnvironmentProduction: "YOUR_CLIENT_ID_FOR_PRODUCTION", PayPalEnvironmentSandbox: "AQAP2y1cMhZoAx7nPTZ5ge9Q9qRcuCOa-ruTbUvL8xcqtw0Y7hZ_pDs7HqK2cxmoT4mCYG6jiGc7WOmE"])
+        
         //Firebase
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
@@ -69,14 +71,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
-        */
-        
         
         // Facebook
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 
-        
-        //return true
     }
     
     // Metodo facebook

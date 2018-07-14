@@ -8,6 +8,7 @@
 
 import UIKit
 import SystemConfiguration
+import SwiftyUserDefaults
 
 class BaseViewController: UIViewController, UITextFieldDelegate{
     var alert = UIAlertController()
@@ -230,4 +231,9 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         self.scrollView_?.isScrollEnabled = true
     }
     
+}
+
+extension DefaultsKeys {
+    static let username = DefaultsKey<String?>("username")
+    static let launchCount = DefaultsKey<Int>("launchCount")
 }

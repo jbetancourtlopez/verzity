@@ -14,6 +14,7 @@ import FloatableTextField
 import FacebookLogin
 import FBSDKLoginKit
 import Firebase
+import SwiftyUserDefaults
 
 
 class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
@@ -33,17 +34,19 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         super.viewDidLoad()
         setup_uicontrols()
         setup_ux()
+        
+        print("Inicio:\(Defaults[.username]!)")
        
         // End Facebook
         // var image_facebook = UIImage(named: "icon_face_white")
         //button_facaebook.imageEdgeInsets = UIEdgeInsets(top: 5, left: (button_facaebook.bounds.width - 35), bottom: 5, right: 5)
         //button_facaebook.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (image_facebook?.frame.width)!)
         
-        /*
+    
         // Llamada a Firebase
         NotificationCenter.default.addObserver(self, selector: #selector(self.displayFCMToken(notification:)),
                                                name: Notification.Name("FCMToken"), object: nil)
-         */
+ 
         
         // Forget Event
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_forget))
@@ -124,6 +127,9 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     // On_click_Here(AQUI)
     @objc func on_click_here(sender:UITapGestureRecognizer) {
+        
+        Defaults[.username] = "Jossue"
+        
         print("AQUI")
         let cvDispositivo =  Config.UID
         let array_parameter = [

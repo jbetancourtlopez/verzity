@@ -10,13 +10,14 @@ target 'verzity' do
   	#pod 'SDWebImage', '~> 4.0'
   	pod 'RealmSwift'
     pod 'FloatableTextField'
-  	pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
-  	pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
+    pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
+    #pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
     pod 'youtube-ios-player-helper', :git=>'https://github.com/youtube/youtube-ios-player-helper', :commit=>'head'
     pod 'FacebookCore'
     pod 'FacebookLogin'
     pod 'Firebase/Core'
     pod 'Firebase/Messaging'
+    pod 'PayPal-iOS-SDK'
 
   # Pods for verzity
 

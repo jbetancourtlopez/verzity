@@ -9,23 +9,43 @@
 import UIKit
 import SwiftyJSON
 
-class PackagesViewController:BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class PackagesViewController:BaseViewController, UITableViewDelegate, UITableViewDataSource, PayPalPaymentDelegate {
     
     @IBOutlet var tableView: UITableView!
     
     var webServiceController = WebServiceController()
     var items:NSArray = []
+    var selected_idPaquete = 0;
+
   
+    // Init Paypal
+    var payPalConfig = PayPalConfiguration()
+    
+    var environment:String = PayPalEnvironmentNoNetwork {
+        willSet(newEnvironment) {
+            if (newEnvironment != environment) {
+                PayPalMobile.preconnect(withEnvironment: newEnvironment)
+            }
+        }
+        
+    }
+    
+    var acceptCreditCards: Bool = true {
+        didSet {
+            payPalConfig.acceptCreditCards = acceptCreditCards
+        }
+    }
+    //End Paypal
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.estimatedRowHeight = 60
+        
         setup_ux()
         load_data()
+        setup_paypal()
     }
     
     func load_data(){
@@ -79,7 +99,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PackageTableViewCell
         
-        
         var item = JSON(items[indexPath.section])
         
         //Evento al Boton
@@ -103,25 +122,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         cell.label_postulacion.text = "Aplica postulación"
         cell.swich_postulacion.isOn = item["fgAplicaPostulacion"].boolValue
         
-       
-        /*
-        
-        "idPaquete": 11,
-        "cvPaquete": "CV007",
-        "nbPaquete": "PAQUETE 007",
-        "desPaquete": "ESTE ES UN PAQUETE DE PRUEBA",
-        "dcDiasVigencia": 10,
-        "fgAplicaBecas": true,
-        "fgAplicaFinanciamiento": false,
-        "fgAplicaPostulacion": false,
-        "dcCosto": 1.0,
-        "feRegistro": "2018-04-23T18:53:07.133",
-        "idEstatus": 0,
-        "Estatus": null,
-        "VentasPaquetes": []
- */
-
-        
         // setup_ux
         cell.clipsToBounds = true
         cell.layer.masksToBounds = true
@@ -134,9 +134,117 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
+    func setup_paypal(){
+        payPalConfig.acceptCreditCards = acceptCreditCards;
+        payPalConfig.merchantName = "Siva Ganesh Inc."
+        payPalConfig.merchantPrivacyPolicyURL = NSURL(string: "https://www.sivaganesh.com/privacy.html")! as URL
+        payPalConfig.merchantUserAgreementURL = NSURL(string: "https://www.sivaganesh.com/useragreement.html")! as URL
+        payPalConfig.languageOrLocale = NSLocale.preferredLanguages[0]
+        payPalConfig.payPalShippingAddressOption = .payPal;
+        PayPalMobile.preconnect(withEnvironment: environment)
+    }
+    
+    // PayPalPaymentDelegate
+    func payPalPaymentDidCancel(_ paymentViewController: PayPalPaymentViewController) {
+        print("PayPal Payment Cancelled")
+        paymentViewController.dismiss(animated: true, completion: nil)
+    }
+    
+    func payPalPaymentViewController(_ paymentViewController: PayPalPaymentViewController!, didComplete completedPayment: PayPalPayment!) {
+        
+        print("PayPal Payment Success !")
+        paymentViewController?.dismiss(animated: true, completion: { () -> Void in
+            // send completed confirmaion to your server
+            print("Here is your proof of payment:\n\n\(completedPayment.confirmation)\n\nSend this to your server for confirmation and fulfillment.")
+            let confirmation = completedPayment.confirmation
+            let response = confirmation["response"] as AnyObject
+            let state = response["state"]  as! String
+            if state == "approved"{
+                // Guardar el Paquete
+                self.showGifIndicator(view: self.view)
+
+                let array_parameter = [
+                    "idUniversidad": 4,
+                    "idPaquete": self.selected_idPaquete
+                ]
+                let parameter_json = JSON(array_parameter)
+                let parameter_json_string = parameter_json.rawString()
+                self.webServiceController.SaveVentaPaquete(parameters: parameter_json_string!, doneFunction: self.SaveVentaPaquete)
+            }else{
+                self.showMessage(title: "El pago fue rechazado", automatic: true)
+            }
+
+        })
+    }
+    
+    func SaveVentaPaquete(status: Int, response: AnyObject){
+         hiddenGifIndicator(view: self.view)
+        var json = JSON(response)
+        if status == 1{
+            showMessage(title: json["Mensaje"].stringValue, automatic: true)
+        }else{
+            showMessage(title: response as! String, automatic: true)
+        }
+       
+    }
+    
     @objc func on_click_buy(sender: UIButton){
         let index = sender.tag
-        print("Pagar \(index)")
+        
+        /*
+         
+         "idPaquete": 11,
+         "cvPaquete": "CV007",
+         "nbPaquete": "PAQUETE 007",
+         "desPaquete": "ESTE ES UN PAQUETE DE PRUEBA",
+         "dcDiasVigencia": 10,
+         "fgAplicaBecas": true,
+         "fgAplicaFinanciamiento": false,
+         "fgAplicaPostulacion": false,
+         "dcCosto": 1.0,
+         "feRegistro": "2018-04-23T18:53:07.133",
+         "idEstatus": 0,
+         "Estatus": null,
+         "VentasPaquetes": []
+         */
+        
+        var package = JSON(self.items[index])
+        
+        // Process Payment once the pay button is clicked.
+        self.selected_idPaquete = package["idPaquete"].intValue
+        let currency_code = "MXN"
+        let quantity = 1
+        let product_name = package["nbPaquete"].stringValue
+        let product_price = package["dcCosto"].stringValue
+        let product_description_short = package["desPaquete"].stringValue
+        let product_sku = "\(product_name)-\(package["cvPaquete"].stringValue)"
+        
+        
+        // --------
+        var item = PayPalItem(name: product_name, withQuantity: UInt(quantity), withPrice: NSDecimalNumber(string: product_price), withCurrency: currency_code, withSku: product_sku)
+        
+        let items = [item]
+        let subtotal = PayPalItem.totalPrice(forItems: items)
+        
+        // Optional: include payment details
+        let shipping = NSDecimalNumber(string: "0.00")
+        let tax = NSDecimalNumber(string: "0.00")
+        let paymentDetails = PayPalPaymentDetails(subtotal: subtotal, withShipping: shipping, withTax: tax)
+        
+        let total = subtotal.adding(shipping).adding(tax)
+        
+        let payment = PayPalPayment(amount: total, currencyCode: currency_code, shortDescription: product_description_short, intent: .sale)
+        
+        payment.items = items
+        payment.paymentDetails = paymentDetails
+        
+        if (payment.processable) {
+            let paymentViewController = PayPalPaymentViewController(payment: payment, configuration: payPalConfig, delegate: self)
+            present(paymentViewController!, animated: true, completion: nil)
+        }
+        else {
+            print("Payment not processalbe: \(payment)")
+        }
     }
 
 

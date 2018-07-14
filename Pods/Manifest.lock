@@ -6,6 +6,7 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - CardIO (5.4.1)
   - FacebookCore (0.3.1):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.33)
@@ -52,6 +53,12 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - PayPal-iOS-SDK (2.18.1):
+    - PayPal-iOS-SDK/CardIO (= 2.18.1)
+    - PayPal-iOS-SDK/Core (= 2.18.1)
+  - PayPal-iOS-SDK/CardIO (2.18.1):
+    - CardIO (~> 5.4.1)
+  - PayPal-iOS-SDK/Core (2.18.1)
   - Protobuf (3.6.0)
   - Realm (3.7.4):
     - Realm/Headers (= 3.7.4)
@@ -71,6 +78,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - FloatableTextField
   - Kingfisher (~> 4.0)
+  - PayPal-iOS-SDK
   - RealmSwift
   - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
   - SwiftyJSON (~> 4.0)
@@ -81,6 +89,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Bolts
+    - CardIO
     - FacebookCore
     - FacebookLogin
     - FBSDKCoreKit
@@ -94,6 +103,7 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - Kingfisher
     - nanopb
+    - PayPal-iOS-SDK
     - Protobuf
     - Realm
     - RealmSwift
@@ -118,6 +128,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
   FacebookCore: 33078ef1d7d76b73f7e8c990dca7d3ea6db8d22f
   FacebookLogin: 6f15bf4fefd7a8865abbfa8fcd7f3dfd87aa275f
   FBSDKCoreKit: 0ff57f093b85c8c9d5aba697d3edf68a8960ce78
@@ -131,6 +142,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  PayPal-iOS-SDK: 10654cd111e911a9807bddb96fae81aacb8e9915
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
@@ -139,6 +151,6 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   youtube-ios-player-helper: 21ab92db027c7ff86cb17a3843a3f6eafc8158d2
 
-PODFILE CHECKSUM: 32739640d7e00f4d7b49cd507fffc2ebc6191e4e
+PODFILE CHECKSUM: c13fea4872e9c577e8d87dc3548550390fdaf911
 
 COCOAPODS: 1.5.3
