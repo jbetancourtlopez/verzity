@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
+
 
 class DetailUniversityViewController: BaseViewController {
 
@@ -232,7 +234,7 @@ class DetailUniversityViewController: BaseViewController {
         showGifIndicator(view: self.view)
         let array_parameter = [
             "idUniversidad": idUniversidad,
-            "idPersona": getSettings(key: "idPersona")
+            "idPersona": Defaults[.academic_idPersona]!
             ] as [String : Any]
         
         let parameter_json = JSON(array_parameter)

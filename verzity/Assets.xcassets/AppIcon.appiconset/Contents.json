@@ -3,13 +3,13 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "2x_20-1.png",
+      "filename" : "logo_verde_20pt_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "3x_20-1.png",
+      "filename" : "logo_verde_20pt_3x.png",
       "scale" : "3x"
     },
     {
@@ -33,13 +33,15 @@
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "logo_verde_60pt_2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "logo_verde_60pt_3x.png",
       "scale" : "3x"
     },
     {
@@ -90,17 +92,6 @@
     {
       "idiom" : "ios-marketing",
       "size" : "1024x1024",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "2x_20.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "3x_20.png",
-      "unassigned" : true,
       "scale" : "1x"
     }
   ],

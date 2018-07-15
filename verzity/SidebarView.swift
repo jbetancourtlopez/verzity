@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import SwiftyUserDefaults
 
 
 protocol SidebarViewDelegate: class {
@@ -77,17 +78,30 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
             cellImg.image = UIImage(named: "ic_user_profile")
             cell.addSubview(cellImg)
             
+            
+            var name_profile = ""
+            var email_profile = ""
+            if Defaults[.type_user] == 1 {
+                name_profile = Defaults[.academic_name]!
+                email_profile = Defaults[.academic_email]!
+            }else{
+                
+            }
+            
+
+            
+            
             // Nombre
             let cellLbl = UILabel(frame: CGRect(x: 15, y: 115, width: 250, height: 30))
             cell.addSubview(cellLbl)
-            cellLbl.text = getSettings_sidebar(key: "name_profile")
+            cellLbl.text = name_profile
             cellLbl.font=UIFont.systemFont(ofSize: 17)
             cellLbl.textColor=UIColor.white
             
             // Correo
             let cellLblCorreo = UILabel(frame: CGRect(x: 15, y: 145, width: 250, height: 30))
             cell.addSubview(cellLblCorreo)
-            cellLblCorreo.text = getSettings_sidebar(key: "email_profile")
+            cellLblCorreo.text = email_profile
             cellLblCorreo.font=UIFont.systemFont(ofSize: 15)
             cellLblCorreo.textColor=UIColor.white
             

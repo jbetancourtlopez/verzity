@@ -20,7 +20,6 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     @IBOutlet var countryPickerView: UIPickerView!
     @IBOutlet var icon_country: UIImageView!
     
-   
     @IBOutlet var second_cp: FloatableTextField!
     @IBOutlet var second_state: FloatableTextField!
     @IBOutlet var second_municipio: FloatableTextField!

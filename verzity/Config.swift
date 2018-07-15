@@ -8,12 +8,16 @@
 import UIKit
 
 struct Config{
+    
+    static var config_data = "http://www.dwmedios.com/UrlAppVerzity.json"
+    //static var UID = UIDevice.current.identifierForVendor!.uuidString
+    
+    // Valores por default: Los valores se cargan de un Json en red, el cual si por alguna razon no carga bien tomara el valor de las siguientes variables
     static var desRutaWebServices = "http://verzity.dwmedios.com/WS/service/UNICONEKT.asmx/"
     static var desRutaMultimedia = "http://verzity.dwmedios.com/SITE/"
-    static var cvPaypal : String?
-    static var config_data = "http://www.dwmedios.com/UrlAppVerzity.json"
-    static var cvFirebase = "Fix"
-    static var UID = UIDevice.current.identifierForVendor!.uuidString
+   
+    //static var cvFirebase = "Fix"
+    
 }
 
 struct Strings {
@@ -36,7 +40,7 @@ final class Singleton {
     static let GetFinanciamientosVigentes = "GetFinanciamientosVigentes"
     static let CrearCuentaAcceso = "CrearCuentaAcceso"
     static let IngresarAppUniversidad = "IngresarAppUniversidad"
-    static let IngresarUniversitario = "IngresarUniversitario"
+    static let IngresarUniversitario = "IngresarAppUniversitario"
     static let BusquedaUniversidades = "BusquedaUniversidades"
     static let GetDetallesUniversidad = "GetDetallesUniversidad"
     static let GetBannersVigentes = "GetBannersVigentes"
@@ -57,7 +61,6 @@ final class Singleton {
     static let BuscarCodigoPostal = "BuscarCodigoPostal"
     static let EditarPerfil = "EditarPerfil"
     static let PostularseUniversidad = "PostularseUniversidad"
-    static let SaveVentaPaquete = "SaveVentaPaquete"
-    
-    
+    static let SaveVentaPaquete = "SaveVentaPaquete"  
+    static let VerificarEstatusUniversidad = "VerificarEstatusUniversidad"  
 }

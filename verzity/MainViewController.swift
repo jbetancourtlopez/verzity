@@ -7,6 +7,8 @@
 //
 import UIKit
 import SwiftyJSON
+import SwiftyUserDefaults
+
 
 class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource{
     
@@ -45,7 +47,6 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     //Table View. -------
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.menu_main.count
     }
@@ -83,7 +84,6 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let menu_selected = menu_main[indexPath.section]["type"]
-        print(menu_selected)
         switch String(menu_selected!) {
         case "find_university": //Promociones
             print("find_university")
@@ -115,24 +115,17 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             let vc = storyboard?.instantiateViewController(withIdentifier: "ExampleViewControllerID") as! ExampleViewController
             self.show(vc, sender: nil)
              */
-            /*
-            let vc = storyboard?.instantiateViewController(withIdentifier: "QrCouponViewControllerID") as! QrCouponViewController
-            self.show(vc, sender: nil)
-            */
             showMessage(title: "En proceso ...", automatic: true)
             break
         case "package": //Eventos
             print("package")
             let vc = storyboard?.instantiateViewController(withIdentifier: "PackagesViewControllerID") as! PackagesViewController
             self.show(vc, sender: nil)
- 
             break
         case "postulate": //Eventos
             print("postulate")
-            
             let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
             self.show(vc, sender: nil)
- 
             break
         default:
             break
@@ -170,6 +163,63 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func sigout(){
+        // Borramos los datos de session
+        setSettings(key: "profile_menu", value: "")
+        Defaults[.type_user] = 0
+        Defaults[.academic_idPersona] = 0
+        Defaults[.academic_idDireccion] = 0
+        Defaults[.academic_name] = ""
+        Defaults[.academic_email] = ""
+        Defaults[.academic_phone] = ""
+        Defaults[.academic_nbPais] = ""
+        Defaults[.academic_cp] = ""
+        Defaults[.academic_city] = ""
+        Defaults[.academic_municipio] = ""
+        Defaults[.academic_state] = ""
+        Defaults[.academic_description] = ""
+        
+        //Paquete
+        Defaults[.package_idUniveridad] = 0
+        Defaults[.package_idPaquete] = 0
+
+        //Universidad
+        Defaults[.university_idUniveridad] = 0
+        Defaults[.university_pathLogo] = ""
+        Defaults[.university_nbUniversidad] = ""
+        Defaults[.university_nbReprecentante] = ""
+        Defaults[.university_desUniversidad] = ""
+        Defaults[.university_desSitioWeb] = ""
+        Defaults[.university_desTelefono] = ""
+        Defaults[.university_desCorreo] = ""
+        Defaults[.university_idPersona] = 0
+
+        //Persona Universidad
+        Defaults[.representative_nbCompleto] = ""
+        Defaults[.representative_desTelefono] = ""
+        Defaults[.representative_desCorreo] = ""
+        Defaults[.representative_pathFoto] = ""
+
+        // Direccion Representante
+        Defaults[.add_rep_desDireccion] = ""
+        Defaults[.add_rep_numCodigoPostal] = ""
+        Defaults[.add_rep_nbPais] = ""
+        Defaults[.add_rep_nbEstado] = ""
+        Defaults[.add_rep_nbMunicipio] = ""
+        Defaults[.add_rep_nbCiudad] = ""
+        Defaults[.add_rep_dcLatitud] = ""
+        Defaults[.add_rep_dcLongitud] = ""
+
+        // Direccion Universidad
+        Defaults[.add_uni_desDireccion] = ""
+        Defaults[.add_uni_numCodigoPostal] = ""
+        Defaults[.add_uni_nbPais] = ""
+        Defaults[.add_uni_nbEstado] = ""
+        Defaults[.add_uni_nbMunicipio] = ""
+        Defaults[.add_uni_nbCiudad] = ""
+        Defaults[.add_uni_dcLatitud] = ""
+        Defaults[.add_uni_dcLongitud] = ""
+        
+        // Cambiamos de vista
         _ = self.navigationController?.popToRootViewController(animated: false)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController

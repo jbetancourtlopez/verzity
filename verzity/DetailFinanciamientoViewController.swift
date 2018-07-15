@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
+
 
 class DetailFinanciamientoViewController: BaseViewController {
 
@@ -69,7 +71,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         var detail = JSON(self.detail)
 
         // Archivo
-        var file_path = detail["pathArchivo"].stringValue
+        let file_path = detail["pathArchivo"].stringValue
         if  !file_path.isEmpty{
              label_file.text = "Descargar archivo adjunto"
         }else{
@@ -114,17 +116,17 @@ class DetailFinanciamientoViewController: BaseViewController {
 
    
     @IBAction func on_clic_request(_ sender: Any) {
-        let idPersona = Int(getSettings(key: "idPersona"))
+        let idPersona = Defaults[.academic_idPersona] as! Int
         
         var detail = JSON(self.detail)
         let idFinanciamiento = detail["idFinanciamiento"].stringValue
         
-        if  (idPersona! > 0){
+        if  (idPersona > 0){
             showGifIndicator(view: self.view)
             
             // FIX - Armar los parametros
             let array_parameter = [
-                "idPersona": idPersona as! Int,
+                "idPersona": idPersona,
                 "idFinanciamiento": idFinanciamiento
                 ] as [String : Any]
             

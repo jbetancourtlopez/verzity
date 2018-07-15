@@ -4,6 +4,8 @@ platform :ios, '10.0'
 target 'verzity' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+  
+     # Pods for verzity
   	pod 'Alamofire', '~> 4.7'
   	pod 'SwiftyJSON', '~> 4.0'
   	pod 'Kingfisher', '~> 4.0'
@@ -18,7 +20,11 @@ target 'verzity' do
     pod 'Firebase/Core'
     pod 'Firebase/Messaging'
     pod 'PayPal-iOS-SDK'
+end
 
-  # Pods for verzity
-
+post_install do |installer|
+    installer.pods_project.build_configurations.each do |config|
+        config.build_settings.delete('CODE_SIGNING_ALLOWED')
+        config.build_settings.delete('CODE_SIGNING_REQUIRED')
+    end
 end

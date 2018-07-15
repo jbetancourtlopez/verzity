@@ -9,13 +9,14 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import SwiftyUserDefaults
 
 
 class WebServiceController: AlamofireWebServiceController{
     
     // CanjearCupon
     func CanjearCupon(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.CanjearCupon)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.CanjearCupon)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -34,7 +35,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetDetalleNotificacion
     func GetDetalleNotificacion(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetDetalleNotificacion)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetDetalleNotificacion)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -53,7 +54,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // ConsultarNotificaciones
     func ConsultarNotificaciones(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.ConsultarNotificaciones)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.ConsultarNotificaciones)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -72,7 +73,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetPostulados
     func GetPostulados(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetPostulados)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetPostulados)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -92,7 +93,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // RegistrarUniversidad
     func RegistrarUniversidad(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.RegistrarUniversidad)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.RegistrarUniversidad)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -110,7 +111,7 @@ class WebServiceController: AlamofireWebServiceController{
     }
     // GetFavoritos
     func GetFavoritos(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetFavoritos)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetFavoritos)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -130,7 +131,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // SetFavorito
     func SetFavorito(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.SetFavorito)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.SetFavorito)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -150,7 +151,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // PostularseBeca
     func PostularseBeca(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.PostularseBeca)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.PostularseBeca)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -169,7 +170,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetVideos
     func GetVideos(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetVideos)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetVideos)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -188,7 +189,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetProgramasAcademicos
     func GetProgramasAcademicos(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetProgramasAcademicos)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetProgramasAcademicos)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -207,7 +208,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // 2.12 RegistrarVisitaBanners
     func RegistrarVisitaBanners(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.RegistrarVisitaBanners)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.RegistrarVisitaBanners)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -227,7 +228,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetBannersVigentes
     func GetBannersVigentes(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetBannersVigentes)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetBannersVigentes)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -247,7 +248,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetDetallesUniversidad
     func GetDetallesUniversidad(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetDetallesUniversidad)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetDetallesUniversidad)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -267,7 +268,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // BusquedaUniversidades
     func BusquedaUniversidades(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.BusquedaUniversidades)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.BusquedaUniversidades)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -285,30 +286,11 @@ class WebServiceController: AlamofireWebServiceController{
     }
     
     
-    // IngresarUniversitario
-    /*
-    func IngresarUniversitario(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.IngresarUniversitario)"
-        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
-            if(error == nil){
-                if let value = response {
-                    let json = JSON(value)
-                    if(json["Estatus"].numberValue == 1){
-                        doneFunction(1, json as AnyObject)
-                    }else{
-                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
-                    }
-                }
-            }else{
-                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
-            }
-        }
-    }*/
     
     
     // IngresarAppUniversidad
     func IngresarAppUniversidad(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.IngresarAppUniversidad)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.IngresarAppUniversidad)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -326,7 +308,7 @@ class WebServiceController: AlamofireWebServiceController{
     }
     // CrearCuentaAcceso
     func CrearCuentaAcceso(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.CrearCuentaAcceso)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.CrearCuentaAcceso)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -345,7 +327,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetFinanciamientosVigentes
     func GetFinanciamientosVigentes(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetFinanciamientosVigentes)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetFinanciamientosVigentes)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -364,7 +346,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // SolicitarFinanciamientos
     func SolicitarFinanciamientos(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.SolicitarFinanciamientos)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.SolicitarFinanciamientos)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -383,8 +365,8 @@ class WebServiceController: AlamofireWebServiceController{
     
     
     //IngresarAppUniversitario
-    func IngresarAppUniversitario(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.IngresarAppUniversitario)"
+    func IngresarUniversitario(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.IngresarUniversitario)"        
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -403,7 +385,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     //GetDetalleCupon
     func GetDetalleCupon(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetDetalleCupon)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetDetalleCupon)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -423,7 +405,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetCuponesVigentes
     func GetCuponesVigentes(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetCuponesVigentes)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetCuponesVigentes)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -443,7 +425,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // GetBecasVigentes
     func GetBecasVigentes(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetBecasVigentes)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetBecasVigentes)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -462,7 +444,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // RecuperarContrasenia
     func RecuperarContrasenia(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.RecuperarContrasenia)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.RecuperarContrasenia)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -481,7 +463,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // 2.26 SaveVentaPaquete
     func SaveVentaPaquete(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.SaveVentaPaquete)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.SaveVentaPaquete)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -501,7 +483,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // 2.29 GetPaises
     func GetPaises(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetPaises)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetPaises)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -518,11 +500,11 @@ class WebServiceController: AlamofireWebServiceController{
         }
     }
     
-
+    
     
     // 2.30 BuscarCodigoPostal
     func BuscarCodigoPostal(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.BuscarCodigoPostal)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.BuscarCodigoPostal)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -541,7 +523,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     // 2.31 EditarPerfil
     func EditarPerfil(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.EditarPerfil)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.EditarPerfil)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -561,7 +543,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     //2.32 PostularseUniversidad
     func PostularseUniversidad(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.PostularseUniversidad)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.PostularseUniversidad)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -581,7 +563,26 @@ class WebServiceController: AlamofireWebServiceController{
     
     //2.33 GetPaquetesDisponibles
     func GetPaquetesDisponibles(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetPaquetesDisponibles)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetPaquetesDisponibles)"
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+
+     //2.33 VerificarEstatusUniversidad
+    func VerificarEstatusUniversidad(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.VerificarEstatusUniversidad)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -599,13 +600,30 @@ class WebServiceController: AlamofireWebServiceController{
     }
     
     
-
     
-    // ----------------------------
+    
+    // getSettings
+    func getSettings(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  Config.config_data
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
     
     // getTest
     func getTest(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Config.desRutaWebServices)\(Singleton.GetCuponesVigentes)"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.GetCuponesVigentes)"
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -621,12 +639,5 @@ class WebServiceController: AlamofireWebServiceController{
             }
         }
     }
-    
-    
-    
-    
-    
-   
-    
-    
 }
+

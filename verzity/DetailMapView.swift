@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol DetailMapViewDelegate: class {
     func detailsRequestedForPerson(idUniversidad: Int)
@@ -25,16 +26,26 @@ class DetailMapView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setup_ux()
     }
     
     @IBAction func seeDetails(_ sender: Any) {
         delegate?.detailsRequestedForPerson(idUniversidad: idUniversidad)
     }
     
+    func setup_ux(){
+        self.avatar.layer.masksToBounds = true
+        self.avatar.cornerRadius = 33
+    }
+    
     func configureData(title: String, avatar: String, idUniversidad: Int) {
         self.idUniversidad = idUniversidad
-        self.avatar.image = UIImage(named: "ic_user_profile.png")
+        
         self.title.text = title
+        
+        let image_default = UIImage(named: "default.png")
+        let URL = Foundation.URL(string: avatar)
+        self.avatar.kf.setImage(with: URL, placeholder: image_default)
     }
     
 

@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
+
 
 class DetailBecasViewController: BaseViewController {
 
@@ -69,19 +71,16 @@ class DetailBecasViewController: BaseViewController {
     }
     
     @IBAction func on_click_postulate(_ sender: Any) {
-        let idPersona = Int(getSettings(key: "idPersona"))
+        let idPersona = Defaults[.academic_idPersona]
         if  (idPersona! > 0){
             showGifIndicator(view: self.view)
             
-            // FIX - Armar los parametros
             var detail = JSON(self.detail)
-            let idPersona = getSettings(key: "idPersona")
             let array_parameter = [
-                "idPersona": Int(idPersona)!,
+                "idPersona": idPersona!,
                 "idBeca": detail["idBeca"].intValue
                 ] as [String : Any]
             
-            debugPrint(array_parameter)
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.PostularseBeca(parameters: parameter_json_string!, doneFunction: PostularseBeca)
@@ -93,6 +92,7 @@ class DetailBecasViewController: BaseViewController {
     }
     
     func PostularseBeca(status: Int, response: AnyObject){
+        hiddenGifIndicator(view: self.view)
         var json = JSON(response)
         if status == 1{
             let message = json["Mensaje"].stringValue
@@ -100,7 +100,7 @@ class DetailBecasViewController: BaseViewController {
         }else{
             showMessage(title: response as! String, automatic: true)
         }
-        hiddenGifIndicator(view: self.view)
+       
     }
     
     func set_data(){

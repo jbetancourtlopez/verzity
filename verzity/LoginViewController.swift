@@ -35,18 +35,16 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         setup_uicontrols()
         setup_ux()
         
-        print("Inicio:\(Defaults[.username]!)")
+        Defaults[.cvDispositivo] = UIDevice.current.identifierForVendor!.uuidString
+        print("Firebase Login: \(Defaults[.cvFirebase])")
        
         // End Facebook
         // var image_facebook = UIImage(named: "icon_face_white")
         //button_facaebook.imageEdgeInsets = UIEdgeInsets(top: 5, left: (button_facaebook.bounds.width - 35), bottom: 5, right: 5)
         //button_facaebook.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (image_facebook?.frame.width)!)
         
-    
         // Llamada a Firebase
-        NotificationCenter.default.addObserver(self, selector: #selector(self.displayFCMToken(notification:)),
-                                               name: Notification.Name("FCMToken"), object: nil)
- 
+       
         
         // Forget Event
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_forget))
@@ -59,13 +57,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         btnHere.addGestureRecognizer(tap_here)
     }
     
-    // Firebase Event
-    @objc func displayFCMToken(notification: NSNotification){
-        guard let userInfo = notification.userInfo else {return}
-        if let fcmToken = userInfo["token"] as? String {
-            print("Received FCM token: \(fcmToken)")
-        }
-    }
+   
     
     // On_click_facebook
     @IBAction func on_click_facebook(_ sender: Any) {
@@ -74,10 +66,8 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             switch loginResult {
             case .failed(let error):
                 print(error)
-                self.is_click_facebook = 1
             case .cancelled:
                 print("User cancelled login.")
-                self.is_click_facebook = 1
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 self.getFBUserData()
             }
@@ -88,75 +78,121 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         email.floatableDelegate = self
         password.floatableDelegate = self
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        setSettings(key: "profile_menu", value: "")
-        setSettings(key: "name_profile", value: "")
-        setSettings(key: "name_email", value: "")
-    }
-    
+
     @IBAction func on_click_login(_ sender: Any) {
-        setSettings(key: "profile_menu", value: "profile_university")
-            if validate_form() == 0 {
-                showGifIndicator(view: self.view)
-                let array_parameter = [
-                    "pwdContrasenia": password.text,
-                    "nbUsuario": email.text
-                ]
-                let parameter_json = JSON(array_parameter)
-                let parameter_json_string = parameter_json.rawString()
-                webServiceController.IngresarAppUniversidad(parameters: parameter_json_string!, doneFunction: IngresarAppUniversidad)
-            }
-       
+        
+        if validate_form() == 0 {
+            showGifIndicator(view: self.view)
+            let array_parameter = [
+                "pwdContrasenia": password.text,
+                "nbUsuario": email.text
+            ]
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            webServiceController.IngresarAppUniversidad(parameters: parameter_json_string!, doneFunction: IngresarAppUniversidad)
+        }
     }
 
     func IngresarAppUniversidad(status: Int, response: AnyObject){
         hiddenGifIndicator(view: self.view)
-        var json = JSON(response)
-        debugPrint(json)
-        if status == 1 || true {
+        debugPrint(response)
+        if status == 1{
+            var json = JSON(response)
+            let data = JSON(json["Data"])
+            
+            let personas = JSON(data["Personas"])
+            let universidades_list = personas["Universidades"].array
+            let universidades = JSON(universidades_list![0])
+            let paquete = JSON(universidades["VentasPaquetes"])
+            let direccion_uni = JSON(universidades["Direcciones"])
+            let direccion_rep = JSON(personas["Direcciones"])
             
             
-            _ = self.navigationController?.popToRootViewController(animated: false)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
-            UIApplication.shared.keyWindow?.rootViewController = vc
+            setSettings(key: "profile_menu", value: "profile_university")
+            Defaults[.type_user] = 2
+            
+            //Paquete
+            Defaults[.package_idUniveridad] = paquete["idUniversidad"].intValue
+            Defaults[.package_idPaquete] = paquete["idPaquete"].intValue
+            
+            //Universidad
+            Defaults[.university_idUniveridad] = universidades["idUniversidad"].intValue
+            Defaults[.university_pathLogo] = universidades["pathLogo"].stringValue
+            Defaults[.university_nbUniversidad] = universidades["nbUniversidad"].stringValue
+            Defaults[.university_nbReprecentante] = universidades["nbReprecentante"].stringValue
+            Defaults[.university_desUniversidad] = universidades["desUniversidad"].stringValue
+            Defaults[.university_desSitioWeb] = universidades["desSitioWeb"].stringValue
+            Defaults[.university_desTelefono] = universidades["desTelefono"].stringValue
+            Defaults[.university_desCorreo] = universidades["desCorreo"].stringValue
+            Defaults[.university_idPersona] = universidades["idPersona"].intValue
+            
+            //Persona Universidad
+            Defaults[.representative_nbCompleto] = personas["nbCompleto"].stringValue
+            Defaults[.representative_desTelefono] = personas["desTelefono"].stringValue
+            Defaults[.representative_desCorreo] = personas["desCorreo"].stringValue
+            Defaults[.representative_pathFoto] = personas["pathFoto"].stringValue
+            
+            // Direccion Representante
+            Defaults[.add_rep_desDireccion] = direccion_rep["desDireccion"].stringValue
+            Defaults[.add_rep_numCodigoPostal] = direccion_rep["numCodigoPostal"].stringValue
+            Defaults[.add_rep_nbPais] = direccion_rep["nbPais"].stringValue
+            Defaults[.add_rep_nbEstado] = direccion_rep["nbEstado"].stringValue
+            Defaults[.add_rep_nbMunicipio] = direccion_rep["nbMunicipio"].stringValue
+            Defaults[.add_rep_nbCiudad] = direccion_rep["nbCiudad"].stringValue
+            Defaults[.add_rep_dcLatitud] = direccion_rep["dcLatitud"].stringValue
+            Defaults[.add_rep_dcLongitud] = direccion_rep["dcLongitud"].stringValue
+            
+            // Direccion Universidad
+            Defaults[.add_uni_desDireccion] = direccion_uni["desDireccion"].stringValue
+            Defaults[.add_uni_numCodigoPostal] = direccion_uni["numCodigoPostal"].stringValue
+            Defaults[.add_uni_nbPais] = direccion_uni["nbPais"].stringValue
+            Defaults[.add_uni_nbEstado] = direccion_uni["nbEstado"].stringValue
+            Defaults[.add_uni_nbMunicipio] = direccion_uni["nbMunicipio"].stringValue
+            Defaults[.add_uni_nbCiudad] = direccion_uni["nbCiudad"].stringValue
+            Defaults[.add_uni_dcLatitud] = direccion_uni["dcLatitud"].stringValue
+            Defaults[.add_uni_dcLongitud] = direccion_uni["dcLongitud"].stringValue
+            
+            /*
+            let vc = storyboard?.instantiateViewController(withIdentifier: "SplashViewControllerID") as! SplashViewController
+            self.show(vc, sender: nil)
+            */
+            performSegue(withIdentifier: "showSplash", sender: self)
+            
+            
         }else{
             showMessage(title: response as! String, automatic: true)
         }
     }
     // On_click_Here(AQUI)
     @objc func on_click_here(sender:UITapGestureRecognizer) {
+        print("on_click_aqui")
         
-        Defaults[.username] = "Jossue"
-        
-        print("AQUI")
-        let cvDispositivo =  Config.UID
         let array_parameter = [
-            "cvFirebase": Config.cvFirebase,
-            "cvDispositivo": cvDispositivo
+            "cvFirebase": Defaults[.cvFirebase],
+            "cvDispositivo": Defaults[.cvDispositivo]
         ]
+        
+        debugPrint(array_parameter)
         
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.IngresarAppUniversitario(parameters: parameter_json_string!, doneFunction: ingresarAppUniversitario)
-        
+        webServiceController.IngresarUniversitario(parameters: parameter_json_string!, doneFunction: IngresarUniversitario)
     }
     
     // Callback - On_click_Here(AQUI)
-    func ingresarAppUniversitario(status: Int, response: AnyObject){
+    func IngresarUniversitario(status: Int, response: AnyObject){
         var json = JSON(response)
         debugPrint(json)
         if status == 1{
-            let data = json["Data"].rawValue
-            var data_json = JSON(data)
+            let data_json = JSON(json["Data"])
             
             //Config
             setSettings(key: "profile_menu", value: "profile_academic")
             
-            //Persona
             let persona_json = JSON(data_json["Personas"])
-            let idPersona = persona_json["idPersona"].stringValue
+            let direcciones = JSON(persona_json["Direcciones"])
+            
+            
             var nbCompleto = persona_json["nbCompleto"].stringValue
             var desCorreo = persona_json["desCorreo"].stringValue
             
@@ -167,21 +203,20 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             if desCorreo == "temp@email.com" {
                 desCorreo = ""
             }
-            
-            setSettings(key: "persona", value: data_json["Personas"].stringValue)
-            setSettings(key: "name_profile", value: nbCompleto)
-            setSettings(key: "email_profile", value: desCorreo)
-            setSettings(key: "phone_profile", value: persona_json["desTelefono"].stringValue)
-            setSettings(key: "idPersona", value: idPersona)
-            
-            // Direcciones
-            let direcciones = JSON(persona_json["Direcciones"])
-            setSettings(key: "nbPais", value: direcciones["nbPais"].stringValue)
-            setSettings(key: "cp_profile", value: direcciones["numCodigoPostal"].stringValue)
-            setSettings(key: "city_profile", value: direcciones["nbCiudad"].stringValue)
-            setSettings(key: "municipio_profile", value: direcciones["nbMunicipio"].stringValue)
-            setSettings(key: "state_profile", value: direcciones["nbEstado"].stringValue)
-            setSettings(key: "description_profile", value: direcciones["desDireccion"].stringValue)
+            Defaults[.type_user] = 1
+            Defaults[.academic_idPersona] = persona_json["idPersona"].intValue
+            Defaults[.academic_idDireccion] = direcciones["idDireccion"].intValue
+
+
+            Defaults[.academic_name] = nbCompleto
+            Defaults[.academic_email] = desCorreo
+            Defaults[.academic_phone] =  persona_json["desTelefono"].stringValue
+            Defaults[.academic_nbPais] = direcciones["nbPais"].stringValue
+            Defaults[.academic_cp] = direcciones["numCodigoPostal"].stringValue
+            Defaults[.academic_city] = direcciones["nbCiudad"].stringValue
+            Defaults[.academic_municipio] = direcciones["nbMunicipio"].stringValue
+            Defaults[.academic_state] = direcciones["nbEstado"].stringValue
+            Defaults[.academic_description] =  direcciones["desDireccion"].stringValue
             
             _ = self.navigationController?.popToRootViewController(animated: false)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -190,7 +225,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         }else{
            updateAlert(title: "Error", message: response as! String, automatic: true)
         }
-        
         
     }
     

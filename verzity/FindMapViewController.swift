@@ -8,63 +8,157 @@
 
 import UIKit
 import MapKit
+import SwiftyJSON
+import Kingfisher
+import SwiftyUserDefaults
 
 private let kPersonWishListAnnotationName = "kPersonWishListAnnotationName"
 
-class FindMapViewController: UIViewController, MKMapViewDelegate, DetailMapViewDelegate {
+class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapViewDelegate, CLLocationManagerDelegate {
     
     // outlet
     @IBOutlet weak var mapView: MKMapView!
     
     // data
     var type: String = ""
-    // data
     var idUniversidad: Int = 0
-    
-    let names = ["Oren Nimmons", "Flor Addington"]
-    let coordinates = [
-        CLLocationCoordinate2D(latitude: 47.57273, longitude: -52.68997),
-        CLLocationCoordinate2D(latitude: 47.56624, longitude: -52.71184)
-    ]
-    
+    var webServiceController = WebServiceController()
+    var items:NSArray = []
+    var locationManager:CLLocationManager!
+    var annotations = [MKAnnotation]()
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         type = String(type)
-        //mapView.showsUserLocation = true
-        //mapView.delegate = self
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        set_map()
         load_data()
-        setFakeUserPosition()
+        //setFakeUserPosition()
+        mapView.showsUserLocation = true
+        
     }
     
-    func load_data() {
-        var annotations = [MKAnnotation]()
-        for i in 0..<self.names.count {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        determineCurrentLocation()
+    }
+    
+    func determineCurrentLocation()
+    {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        
+        // Call stopUpdatingLocation() to stop listening for location updates,
+        // other wise this function will be called every time when user location changes.
+        //manager.stopUpdatingLocation()
+        
+        /*
+        let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        
+        mapView.setRegion(region, animated: true)
+         */
+        
+        // Drop a pin at user's Current Location
+        let myAnnotation: MKPointAnnotation = MKPointAnnotation()
+        myAnnotation.coordinate = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude);
+        myAnnotation.title = "Yo"
+        //mapView.addAnnotation(myAnnotation)
+        /*
+        self.annotations.append(myAnnotation)
+    
+    
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(annotations)
+         */
+    }
+    
+    private func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
+        print("Error \(error)")
+    }
+    
+    func load_data(name_university: String = ""){
+        hiddenGifIndicator(view: self.view)
+        
+        if  type == "find_next_to_me" {
+            let array_parameter = [
+                "nombreEstado": Defaults[.academic_state]!,
+                "extranjero": false
+                ] as [String : Any]
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            print(parameter_json_string!)
+            webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: BusquedaUniversidades)
             
-            let title_item =  names[i]
-            let avatar = "ic_user_profile.png"
-            let idUniversidad = 11
-            let location = coordinates[i]
+        } else if type == "find_euu" {
             
-            let annotation =  CustomAnnotation.init(title: title_item, idUniversidad: idUniversidad, location: location, avatar: avatar)
-            annotations.append(annotation)
+            let array_parameter = ["extranjero": true]
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            print(parameter_json_string!)
+            webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: BusquedaUniversidades)
+        }
+    }
+    
+    func BusquedaUniversidades(status: Int, response: AnyObject){
+        hiddenGifIndicator(view: self.view)
+        var json = JSON(response)
+        debugPrint(json)
+        if status == 1{
+            items = json["Data"].arrayValue as NSArray
+        }else{
+            items = []
+        }
+        set_map()
+    }
+    
+    func set_map() {
+        
+        
+        for i in 0..<self.items.count {
+            
+            var item = JSON(items[i])
+            var direcciones = JSON(item["Direcciones"])
+            let title_item =  item["nbUniversidad"].stringValue
+            let idUniversidad = item["idUniversidad"].intValue
+            
+            // Image
+            var pathImage = item["pathLogo"].stringValue
+            pathImage = pathImage.replacingOccurrences(of: "~", with: "")
+            pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
+            let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
+            let avatar = url
+            
+            
+            let latitud = direcciones["dcLatitud"].doubleValue
+            let longitude = direcciones["dcLongitud"].doubleValue
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitud, longitude: longitude)
+            
+            let annotation = CustomAnnotation.init(title: title_item, idUniversidad: idUniversidad, location: coordinate, avatar: avatar)
+            self.annotations.append(annotation)
         }
         
         
         mapView.removeAnnotations(mapView.annotations)
-        mapView.addAnnotations(annotations)
+        mapView.addAnnotations(self.annotations)
     }
     
-    
-    func setFakeUserPosition() {
-        let visibleRegion = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 47.57983, longitude: -52.68997), 10000, 10000)
-        self.mapView.setRegion(self.mapView.regionThatFits(visibleRegion), animated: true)
-    }
-
+ 
     // MARK: - MKMapViewDelegate methods
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let visibleRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 10000, 10000)
@@ -83,7 +177,7 @@ class FindMapViewController: UIViewController, MKMapViewDelegate, DetailMapViewD
         } else {
             annotationView!.annotation = annotation
         }
-        
+               
         return annotationView
         
     }
@@ -92,7 +186,7 @@ class FindMapViewController: UIViewController, MKMapViewDelegate, DetailMapViewD
         print("Ir al Detalle")
         
          if let pdvc = segue.destination as? DetailUniversityViewController {
-         pdvc.idUniversidad = self.idUniversidad
+            pdvc.idUniversidad = self.idUniversidad
          }
     }
     
@@ -110,6 +204,15 @@ class FindMapViewController: UIViewController, MKMapViewDelegate, DetailMapViewD
     // https://www.youtube.com/watch?v=agXeo1PApq8
     // https://stackoverflow.com/questions/30793315/customize-mkannotation-callout-view
     // http://www.surekhatech.com/blog/custom-callout-view-for-ios-map
+    
+    // https://stackoverflow.com/questions/38274115/ios-swift-mapkit-custom-annotation
+    
+    /*Dibujar Mapa
+     https://www.raywenderlich.com/166182/mapkit-tutorial-overlay-views
+     https://www.ioscreator.com/tutorials/draw-route-mapkit-tutorial
+     http://rshankar.com/how-to-add-mapview-annotation-and-draw-polyline-in-swift/
+     https://makeapppie.com/2018/02/20/use-markers-instead-of-pins-for-map-annotations/
+     */
     
     
     

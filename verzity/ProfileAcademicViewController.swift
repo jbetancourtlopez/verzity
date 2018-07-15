@@ -9,17 +9,17 @@
 import UIKit
 import FloatableTextField
 import SwiftyJSON
+import SwiftyUserDefaults
+
 
 class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, FloatableTextFieldDelegate{
     
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var topContraintDescription: NSLayoutConstraint!
     @IBOutlet var img_profile: UIImageView!
     @IBOutlet var import_image: UIButton!
     @IBOutlet var countryPickerView: UIPickerView!
-    
- 
     @IBOutlet var icon_country: UIImageView!
-    
     @IBOutlet var name_profile: FloatableTextField!
     @IBOutlet var phone_profile: FloatableTextField!
     @IBOutlet var cp_profile: FloatableTextField!
@@ -42,6 +42,12 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         setup_textfield()
         get_data_profile()
         load_countries()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
+        self.view.addGestureRecognizer(tap)
+        
+        registerForKeyboardNotifications(scrollView: scrollView)
+        setGestureRecognizerHiddenKeyboard()
     }
     
     @objc func cpDidChange(_ textField: UITextField) {
@@ -78,7 +84,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     }
     
     func load_countries(){
-        print("Carga de oaises")
+        print("Carga de Paises")
         let array_parameter = ["": ""]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
@@ -95,7 +101,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         }
         countryPickerView.reloadAllComponents()
         // Establesco el Pais Seleccionado
-        let selected_name_country = getSettings(key: "nbPais") //"México"
+        let selected_name_country = Defaults[.academic_nbPais] //"México"
         for i in 0 ..< countries.count{
             var item_country_json = JSON(countries[i])
             let name_country = item_country_json["nbPais"].stringValue
@@ -105,6 +111,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                 countryPickerView.selectRow(i, inComponent:0, animated:true)
             }
         }
+        is_mexico_setup(name_country: self.name_country)
         hiddenGifIndicator(view: self.view)
     }
     
@@ -142,12 +149,12 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                     "nbEstado": state_profile.text!,
                     "nbPais": name_country,
                     "nbMunicipio": municipio_profile.text!,
-                    "idDireccion": 0
+                    "idDireccion": Defaults[.academic_idDireccion]!
                 ],
                 "desTelefono": phone_profile.text!,
                 "nbCompleto": name_profile.text!,
-                "idDireccion": 0,
-                "idPersona": getSettings(key: "idPersona")
+                "idDireccion": Defaults[.academic_idDireccion]!,
+                "idPersona": Defaults[.academic_idPersona]!
             ] as [String : Any]
         
             let parameter_json = JSON(array_parameter)
@@ -162,24 +169,18 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         debugPrint(json)
         if status == 1{
             showMessage(title: json["Mensaje"].stringValue, automatic: true)
-            
             var data = JSON(json["Data"])
-            // Actulizo la persistencia
-          
-            //Persona
-            setSettings(key: "name_profile", value: data["nbCompleto"].stringValue)
-            setSettings(key: "email_profile", value: data["desCorreo"].stringValue)
-            setSettings(key: "phone_profile", value: data["desTelefono"].stringValue)
-            
-            // Direcciones
             let direcciones = JSON(data["Direcciones"])
-            setSettings(key: "idDireccion", value: direcciones["idDireccion"].stringValue)
-            setSettings(key: "nbPais", value: direcciones["nbPais"].stringValue)
-            setSettings(key: "cp_profile", value: direcciones["numCodigoPostal"].stringValue)
-            setSettings(key: "city_profile", value: direcciones["nbCiudad"].stringValue)
-            setSettings(key: "municipio_profile", value: direcciones["nbMunicipio"].stringValue)
-            setSettings(key: "state_profile", value: direcciones["nbEstado"].stringValue)
-            setSettings(key: "description_profile", value: direcciones["desDireccion"].stringValue)
+            
+            Defaults[.academic_name] = data["nbCompleto"].stringValue
+            Defaults[.academic_email] = data["desCorreo"].stringValue
+            Defaults[.academic_phone] = data["desTelefono"].stringValue
+            Defaults[.academic_nbPais] = direcciones["nbPais"].stringValue
+            Defaults[.academic_cp] = direcciones["numCodigoPostal"].stringValue
+            Defaults[.academic_city] = direcciones["nbCiudad"].stringValue
+            Defaults[.academic_municipio] = direcciones["nbMunicipio"].stringValue
+            Defaults[.academic_state] = direcciones["nbEstado"].stringValue
+            Defaults[.academic_description] = direcciones["desDireccion"].stringValue
             
         }else{
             showMessage(title: response as! String, automatic: true)
@@ -188,16 +189,16 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     }
     
     func get_data_profile(){
-        name_profile.text = getSettings(key: "name_profile")
-        phone_profile.text = getSettings(key: "phone_profile")
-        email_profile.text = getSettings(key: "email_profile")
+        name_profile.text = Defaults[.academic_name]
+        phone_profile.text = Defaults[.academic_phone]
+        email_profile.text = Defaults[.academic_email]
         
         // Direcciones
-        cp_profile.text = getSettings(key: "cp_profile")
-        city_profile.text = getSettings(key: "city_profile")
-        municipio_profile.text = getSettings(key: "municipio_profile")
-        state_profile.text = getSettings(key: "state_profile")
-        description_profile.text = getSettings(key: "description_profile")
+        cp_profile.text = Defaults[.academic_cp]
+        city_profile.text = Defaults[.academic_city]
+        municipio_profile.text = Defaults[.academic_municipio]
+        state_profile.text = Defaults[.academic_state]
+        description_profile.text = Defaults[.academic_description]
     }
     
     func setup_ux(){
@@ -241,6 +242,12 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         
         var item_country_json = JSON(countries[row])
         self.name_country = item_country_json["nbPais"].stringValue
+        
+        is_mexico_setup(name_country: self.name_country)
+    }
+    
+    func is_mexico_setup(name_country: String){
+        
         if  name_country != "México" {
             cp_profile.isHidden = true
             state_profile.isHidden = true
@@ -253,6 +260,12 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             state_profile.isHidden = false
             municipio_profile.isHidden = false
             city_profile.isHidden = false
+            
+            cp_profile.text = ""
+            state_profile.text = ""
+            municipio_profile.text = ""
+            city_profile.text = ""
+            
             topContraintDescription.constant = 0
             is_mexico = 1
         }

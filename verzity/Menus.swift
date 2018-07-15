@@ -45,12 +45,8 @@ struct Menus{
             "name":"Cupones y descuentos",
             "image":"ic_action_cupon.png",
             "type": "coupons"
-        ],
-        [
-            "name":"Viaje al extranjero",
-            "image":"ic_world.png",
-            "type": "travel"
         ]
+
         
     ]
     

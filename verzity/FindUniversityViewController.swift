@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
+
 
 class FindUniversityViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource  {
 
@@ -65,7 +67,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
                 var  banner_item = JSON(items[updateCounter - 1])
                 let array_parameter = [
                     "idBanner": banner_item["idBanner"].intValue,
-                    "idPersona": getSettings(key: "idPersona")
+                    "idPersona": Defaults[.academic_idPersona]
                     
                     ] as [String : Any]
                 let parameter_json = JSON(array_parameter)
@@ -185,6 +187,9 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             break
         case "find_next_to_me": //comunicados
             print("find_next_to_me")
+            let vc = storyboard?.instantiateViewController(withIdentifier: "FindMapViewControllerID") as! FindMapViewController
+            vc.type = menu_selected!
+            self.show(vc, sender: nil)
             break
         case "find_euu": //Eventos
             print("find_euu")

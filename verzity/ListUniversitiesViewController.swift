@@ -8,6 +8,8 @@
 import UIKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
+
 
 class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -54,13 +56,13 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         
         
         self.navigationItem.leftBarButtonItem?.title = ""
-        showGifIndicator(view: self.view)
+        
     }
     
     func load_data(name_university: String = ""){
-        
+        showGifIndicator(view: self.view)
         if  type == "find_favorit" {
-            let idPersona = getSettings(key: "idPersona")
+            let idPersona = Defaults[.academic_idPersona]
             let array_parameter = ["idPersona": idPersona]
           
             debugPrint(array_parameter)
@@ -68,18 +70,13 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetFavoritos(parameters: parameter_json_string!, doneFunction: GetListGeneral)
             
-            
-          hiddenGifIndicator(view: self.view)
         } else if type == "find_university" {
             
             var array_parameter:[String: Any] = ["": ""]
             
-        
-            
             if  name_university != "" {
                 array_parameter = ["nombreUniversidad": name_university]
             }
-            
             
             if list_licensature.count > 0{
                 

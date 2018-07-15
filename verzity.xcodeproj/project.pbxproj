@@ -72,6 +72,7 @@
 		92682D3820DD62A700E6C4A8 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 92682D3720DD62A700E6C4A8 /* default.png */; };
 		9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */; };
 		9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69420E7337A004D7FC7 /* VideoViewController.swift */; };
+		9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641820FA448C00876AC0 /* SplashViewController.swift */; };
 		92A64B7420EE78B500E96152 /* ic_telefono_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */; };
 		92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7520EE8A3B00E96152 /* StringsLabel.swift */; };
 		92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7720EE8D8300E96152 /* FormValidate.swift */; };
@@ -170,6 +171,7 @@
 		92682D3720DD62A700E6C4A8 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewClass.swift; sourceTree = "<group>"; };
 		9276B69420E7337A004D7FC7 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		9286641820FA448C00876AC0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_telefono_gray.png; sourceTree = "<group>"; };
 		92A64B7520EE8A3B00E96152 /* StringsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsLabel.swift; sourceTree = "<group>"; };
 		92A64B7720EE8D8300E96152 /* FormValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidate.swift; sourceTree = "<group>"; };
@@ -342,10 +344,8 @@
 		9267012E20D8468D00E638A1 /* viewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				92B6A40920F9B2B800987258 /* Paypal */,
-				922ABFB520F6B8EF00C5A56C /* Map */,
-				92226FE120F5513F00ED30E0 /* ContainerView */,
 				92682D3120DC038300E6C4A8 /* CardViewController.swift */,
+				92226FE120F5513F00ED30E0 /* ContainerView */,
 				924132E620E2B42F00CEBC81 /* CustomView.swift */,
 				924132F020E34EE800CEBC81 /* DetailBecasViewController.swift */,
 				92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */,
@@ -360,16 +360,19 @@
 				924132EC20E2F10900CEBC81 /* ListUniversitiesViewController.swift */,
 				9267011820D8462400E638A1 /* LoginViewController.swift */,
 				92682D1D20DB21A000E6C4A8 /* MainViewController.swift */,
+				922ABFB520F6B8EF00C5A56C /* Map */,
 				92E698C220EB146400F69FCD /* NotificationsViewController.swift */,
 				92DD410520EBC90D0035EF4E /* PackagesViewController.swift */,
+				92B6A40920F9B2B800987258 /* Paypal */,
 				92DD410320EBC8EE0035EF4E /* PostuladoViewController.swift */,
 				92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */,
+				92226FDD20F465C600ED30E0 /* ProfileUniversityViewController.swift */,
 				92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */,
 				9267014E20D9E4DA00E638A1 /* RegisterViewController.swift */,
 				92682D1F20DB4E4600E6C4A8 /* SidebarView.swift */,
+				9286641820FA448C00876AC0 /* SplashViewController.swift */,
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
-				92226FDD20F465C600ED30E0 /* ProfileUniversityViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -583,7 +586,6 @@
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -603,7 +605,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -660,6 +661,7 @@
 				924132EF20E2F7AE00CEBC81 /* DetailUniversityViewController.swift in Sources */,
 				92682D2020DB4E4600E6C4A8 /* SidebarView.swift in Sources */,
 				924132F520E4296C00CEBC81 /* iOSImageGif.swift in Sources */,
+				9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */,
 				9267013720D849C900E638A1 /* BaseViewController.swift in Sources */,
 				9267013D20D84A8C00E638A1 /* Config.swift in Sources */,
 				9267014920D98EFB00E638A1 /* ForgetViewController.swift in Sources */,

@@ -16,6 +16,8 @@ class StringsLabel{
     static let timeCancelPay : Double = 60.0
     static let url_imagen_mapa = "http://maps.google.com/maps/api/staticmap?center=%d,%d&zoom=15&size=300x300&markers=color:red|%d,%d"
     static let operation_complete = "Operación realizada con éxito"
+
+    static let account_invalid = "La información de la universidad se esta validando por el administrador, se le notificara por correo cuando este proceso concluya."
     
     // Patrones
     static let numero_letra = "AÁÀÄÂÃÅĄÆĀªaáàäâãåąæāªBbCÇĆČcçćčDĐdđEÉÈËÊĘĖĒeéèëêęėēFfGgHhĪĮÎÌÏÍIiíïìîįīIJjKkLlMmNŃnńÓOÒÖÔÕØŒŌºoóòöôõøœōºPpQqRrSŠsšTtUÚÜÙÛŪuúüùûūVvWwXxYyZz0123456789 "

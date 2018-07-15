@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
+
 
 class QrCouponViewController: BaseViewController {
 
@@ -99,7 +101,7 @@ class QrCouponViewController: BaseViewController {
         
         let array_parameter = [
             "idCupon": idCupon,
-            "idPersona": getSettings(key: "idPersona")
+            "idPersona": Defaults[.academic_idPersona]
             ] as [String : Any]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()

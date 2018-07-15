@@ -231,9 +231,85 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         self.scrollView_?.isScrollEnabled = true
     }
     
+    
+    
 }
 
 extension DefaultsKeys {
     static let username = DefaultsKey<String?>("username")
     static let launchCount = DefaultsKey<Int>("launchCount")
+    
+    // Generales
+    static let type_user = DefaultsKey<Int?>("type_user") // 1:Academic - 2:Universidad
+    
+    // Settings
+    static let id_Configuraciones = DefaultsKey<Int?>("id_Configuraciones")
+    static let desRutaWebServices = DefaultsKey<String?>("desRutaWebServices")
+    static let desRutaMultimedia = DefaultsKey<String?>("desRutaMultimedia")
+    static let cvPaypal = DefaultsKey<String?>("cvPaypal")
+    static let desRutaFTP = DefaultsKey<String?>("desRutaFTP")
+    static let nbUsuarioFTP = DefaultsKey<String?>("nbUsuarioFTP")
+    static let pdwContraseniaFTP = DefaultsKey<String?>("pdwContraseniaFTP")
+    static let desCarpetaMultimediaFTP = DefaultsKey<String?>("desCarpetaMultimediaFTP")
+    
+    // Dispositivo
+    static let cvDispositivo = DefaultsKey<String?>("cvDispositivo")
+    static let cvFirebase = DefaultsKey<String?>("cvFirebase")
+    
+    // Academico
+    static let academic_idPersona = DefaultsKey<Int?>("academic_idPersona")
+    static let academic_idDireccion = DefaultsKey<Int?>("academic_idDireccion")
+
+    static let academic_name = DefaultsKey<String?>("academic_name")
+    static let academic_email = DefaultsKey<String?>("academic_email")
+    static let academic_phone = DefaultsKey<String?>("academic_phone")
+    static let academic_nbPais = DefaultsKey<String?>("academic_nbPais")
+    static let academic_cp = DefaultsKey<String?>("academic_cp")
+    static let academic_city = DefaultsKey<String?>("academic_city")
+    static let academic_municipio = DefaultsKey<String?>("academic_municipio")
+    static let academic_state = DefaultsKey<String?>("academic_state")
+    static let academic_description = DefaultsKey<String?>("academic_description")
+    
+    //Paquete
+    static let package_idUniveridad = DefaultsKey<Int?>("package_idUniveridad")
+    static let package_idPaquete = DefaultsKey<Int?>("package_idPaquete")
+    
+    //Universidad
+    static let university_idPersona = DefaultsKey<Int?>("university_idPersona")
+    static let university_idUniveridad = DefaultsKey<Int?>("university_idUniveridad")
+    static let university_pathLogo = DefaultsKey<String?>("university_pathLogo")
+    static let university_nbUniversidad = DefaultsKey<String?>("university_nbUniversidad")
+    static let university_nbReprecentante = DefaultsKey<String?>("university_nbReprecentante")
+    static let university_desUniversidad = DefaultsKey<String?>("university_desUniversidad")
+    static let university_desSitioWeb = DefaultsKey<String?>("university_desSitioWeb")
+    static let university_desTelefono = DefaultsKey<String?>("university_desTelefono")
+    static let university_desCorreo = DefaultsKey<String?>("university_desCorreo")
+    
+    //Persona Universidad
+    static let representative_nbCompleto = DefaultsKey<String?>("representative_nbCompleto")
+    static let representative_desTelefono = DefaultsKey<String?>("representative_desTelefono")
+    static let representative_desCorreo = DefaultsKey<String?>("representative_desCorreo")
+    static let representative_pathFoto = DefaultsKey<String?>("representative_pathFoto")
+    
+    // Direccion Representante
+    static let add_rep_desDireccion = DefaultsKey<String?>("add_rep_desDireccion")
+    static let add_rep_numCodigoPostal = DefaultsKey<String?>("add_rep_numCodigoPostal")
+    static let add_rep_nbPais = DefaultsKey<String?>("add_rep_nbPais")
+    static let add_rep_nbEstado = DefaultsKey<String?>("add_rep_nbEstado")
+    static let add_rep_nbMunicipio = DefaultsKey<String?>("add_rep_nbMunicipio")
+    static let add_rep_nbCiudad = DefaultsKey<String?>("add_rep_nbCiudad")
+    static let add_rep_dcLatitud = DefaultsKey<String?>("add_rep_dcLatitud")
+    static let add_rep_dcLongitud = DefaultsKey<String?>("add_rep_dcLongitud")
+    
+    // Direccion Universidad
+    static let add_uni_desDireccion = DefaultsKey<String?>("add_uni_desDireccion")
+    static let add_uni_numCodigoPostal = DefaultsKey<String?>("add_uni_numCodigoPostal")
+    static let add_uni_nbPais = DefaultsKey<String?>("add_uni_nbPais")
+    static let add_uni_nbEstado = DefaultsKey<String?>("add_uni_nbEstado")
+    static let add_uni_nbMunicipio = DefaultsKey<String?>("add_uni_nbMunicipio")
+    static let add_uni_nbCiudad = DefaultsKey<String?>("add_uni_nbCiudad")
+    static let add_uni_dcLatitud = DefaultsKey<String?>("add_uni_dcLatitud")
+    static let add_uni_dcLongitud = DefaultsKey<String?>("add_uni_dcLongitud")
+
+
 }
