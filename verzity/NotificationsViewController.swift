@@ -34,13 +34,12 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.GetCuponesVigentes(parameters: parameter_json_string!, doneFunction: ConsultarNotificaciones)
-
-        //webServiceController.ConsultarNotificaciones(parameters: parameter_json_string!, doneFunction: ConsultarNotificaciones)
+        webServiceController.ConsultarNotificaciones(parameters: parameter_json_string!, doneFunction: ConsultarNotificaciones)
     }
     
     func ConsultarNotificaciones(status: Int, response: AnyObject){
         var json = JSON(response)
+        print(json)
         if status == 1{
             items = json["Data"].arrayValue as NSArray
             tableView.reloadData()
@@ -84,10 +83,18 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! NotificationsTableViewCell
         var item = JSON(items[indexPath.section])
-        /*
-        cell.title_notification.text = item["desAsunto"].stringValue
+        
+        var feRegistro = item["feRegistro"].stringValue
+        var feRegistro_array = feRegistro.components(separatedBy: "T")
+        
+        var hourRegistro = feRegistro_array[1]
+        var hourRegistro_array = hourRegistro.components(separatedBy: ".")
+        hourRegistro = hourRegistro_array[0]
+        
+        let date = get_date(date_string: feRegistro_array[0])
+        cell.title_notification.text = item["desAsunto"].stringValue + " " + date + " " + hourRegistro
         cell.description_notificaction.text = item["desMensaje"].stringValue
-        */
+        
         
         //Icono
         cell.image_notification.image = cell.image_notification.image?.withRenderingMode(.alwaysTemplate)
@@ -99,10 +106,12 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         print("wananananaanan" )
+        
+        var item = JSON(items[indexPath.section])
+        let idNotificacion = item["idNotificacion"].intValue
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
-        vc.idNotificacion = 1
+        vc.idNotificacion = idNotificacion
         self.show(vc, sender: nil)
  
  

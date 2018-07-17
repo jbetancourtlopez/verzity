@@ -28,7 +28,14 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     
     var webServiceController = WebServiceController()
     var dict : [String : AnyObject]!
+    
+    
+    // Variables para manejar Facebook
     var is_click_facebook = 0
+    var facebook_name = ""
+    var facebook_email = ""
+    var facebook_id = 0
+    var facebook_url = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +65,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     
    
-    
     // On_click_facebook
     @IBAction func on_click_facebook(_ sender: Any) {
         let loginManager = LoginManager()
@@ -80,7 +86,11 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
 
     @IBAction func on_click_login(_ sender: Any) {
+        login_universidad()
         
+    }
+    
+    func login_universidad(){
         if validate_form() == 0 {
             showGifIndicator(view: self.view)
             let array_parameter = [
@@ -124,43 +134,57 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             Defaults[.university_desSitioWeb] = universidades["desSitioWeb"].stringValue
             Defaults[.university_desTelefono] = universidades["desTelefono"].stringValue
             Defaults[.university_desCorreo] = universidades["desCorreo"].stringValue
-            Defaults[.university_idPersona] = universidades["idPersona"].intValue
-            
-            //Persona Universidad
-            Defaults[.representative_nbCompleto] = personas["nbCompleto"].stringValue
-            Defaults[.representative_desTelefono] = personas["desTelefono"].stringValue
-            Defaults[.representative_desCorreo] = personas["desCorreo"].stringValue
-            Defaults[.representative_pathFoto] = personas["pathFoto"].stringValue
-            
-            // Direccion Representante
-            Defaults[.add_rep_desDireccion] = direccion_rep["desDireccion"].stringValue
-            Defaults[.add_rep_numCodigoPostal] = direccion_rep["numCodigoPostal"].stringValue
-            Defaults[.add_rep_nbPais] = direccion_rep["nbPais"].stringValue
-            Defaults[.add_rep_nbEstado] = direccion_rep["nbEstado"].stringValue
-            Defaults[.add_rep_nbMunicipio] = direccion_rep["nbMunicipio"].stringValue
-            Defaults[.add_rep_nbCiudad] = direccion_rep["nbCiudad"].stringValue
-            Defaults[.add_rep_dcLatitud] = direccion_rep["dcLatitud"].stringValue
-            Defaults[.add_rep_dcLongitud] = direccion_rep["dcLongitud"].stringValue
+            Defaults[.university_idPersona] = universidades["idPersona"].intValue            
             
             // Direccion Universidad
+            Defaults[.add_uni_idUniversidad] = direccion_uni["idUniversidad"].intValue
+            Defaults[.add_uni_idDireccion] = direccion_uni["idDireccion"].intValue
+
+            
             Defaults[.add_uni_desDireccion] = direccion_uni["desDireccion"].stringValue
             Defaults[.add_uni_numCodigoPostal] = direccion_uni["numCodigoPostal"].stringValue
             Defaults[.add_uni_nbPais] = direccion_uni["nbPais"].stringValue
             Defaults[.add_uni_nbEstado] = direccion_uni["nbEstado"].stringValue
             Defaults[.add_uni_nbMunicipio] = direccion_uni["nbMunicipio"].stringValue
             Defaults[.add_uni_nbCiudad] = direccion_uni["nbCiudad"].stringValue
-            Defaults[.add_uni_dcLatitud] = direccion_uni["dcLatitud"].stringValue
-            Defaults[.add_uni_dcLongitud] = direccion_uni["dcLongitud"].stringValue
-            
-            /*
-            let vc = storyboard?.instantiateViewController(withIdentifier: "SplashViewControllerID") as! SplashViewController
-            self.show(vc, sender: nil)
-            */
+            Defaults[.add_uni_dcLatitud] = direccion_uni["dcLatitud"].doubleValue
+            Defaults[.add_uni_dcLongitud] = direccion_uni["dcLongitud"].doubleValue
+
+            // Representante
+            Defaults[.academic_idPersona] = personas["idPersona"].intValue
+            Defaults[.academic_idDireccion] = direccion_rep["idDireccion"].intValue
+
+            Defaults[.academic_name] = personas["nbCompleto"].stringValue
+            Defaults[.academic_email] = personas["desCorreo"].stringValue
+            Defaults[.academic_phone] =  personas["desTelefono"].stringValue
+            Defaults[.academic_pathFoto] = personas["pathFoto"].stringValue
+
+            Defaults[.academic_nbPais] = direccion_rep["nbPais"].stringValue
+            Defaults[.academic_cp] = direccion_rep["numCodigoPostal"].stringValue
+            Defaults[.academic_city] = direccion_rep["nbCiudad"].stringValue
+            Defaults[.academic_municipio] = direccion_rep["nbMunicipio"].stringValue
+            Defaults[.academic_state] = direccion_rep["nbEstado"].stringValue
+            Defaults[.academic_description] =  direccion_rep["desDireccion"].stringValue
+            Defaults[.academic_dcLatitud] = direccion_rep["dcLatitud"].stringValue
+            Defaults[.academic_dcLongitud] = direccion_rep["dcLongitud"].stringValue
+
             performSegue(withIdentifier: "showSplash", sender: self)
             
             
         }else{
-            showMessage(title: response as! String, automatic: true)
+            if  is_click_facebook == 1{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
+                vc.facebook_name = self.facebook_name
+                vc.facebook_email = self.facebook_email
+                vc.facebook_id = self.facebook_id
+                vc.facebook_url = self.facebook_url
+                vc.is_facebook = 1
+                self.show(vc, sender: nil)
+            }
+            else{
+                showMessage(title: response as! String, automatic: true)
+            }
+            
         }
     }
     // On_click_Here(AQUI)
@@ -285,16 +309,26 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     
                     var picture = self.dict["picture"] as! [String : AnyObject]
                     var data = picture["data"] as! [String : AnyObject]
-                    var url = data["url"] as! String
- 
+                    let url = data["url"] as! String
+                    
+                   
+                    
+                    self.email.text = self.dict["email"] as? String
+                    self.password.text = (self.dict["id"] as! String)
+                    
+                    self.facebook_name = self.dict["name"] as! String
+                    self.facebook_email = self.dict["email"] as! String
+                    self.facebook_id = self.dict["id"] as! Int
+                    self.facebook_url = url
+                    
+                    self.is_click_facebook = 1
                     
                     
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
-                    vc.facebook_name = self.dict["name"] as! String
-                    vc.facebook_email = self.dict["email"] as! String
-                    vc.facebook_url = url
-                    vc.is_facebook = 1
-                    self.show(vc, sender: nil)
+                    self.login_universidad()
+                    
+                    /*
+                    
+                    */
  
                 }
             })

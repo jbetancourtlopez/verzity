@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftyJSON
+import SwiftyUserDefaults
 
 class ProfileUniversityViewController: BaseViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate{
 
@@ -19,12 +21,22 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     var container : ContainerViewController!
     
     var data_form = NSMutableDictionary()
+    var webServiceController = WebServiceController()
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         update_button()
         setup_ux()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        update_button()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //next()
+        update_button()
     }
     
     // Cargar Imagen
@@ -55,7 +67,11 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     }
     
     @IBAction func on_click_next_save(_ sender: Any) {
-
+        next()
+        update_button()
+    }
+    
+    func next(){
         let firstVC = self.container.currentViewController as? FirstFormViewController
         let secondVC = self.container.currentViewController as? SecondFormViewController
         
@@ -85,24 +101,91 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
                 data_form["second_city"] = secondVC?.second_city.text
                 data_form["second_description"] = secondVC?.second_description.text
                 data_form["second_location"] = secondVC?.second_location.text
+                data_form["second_pais"] = secondVC?.name_country
+                data_form["latitud"] = secondVC?.latitud
+                data_form["longitud"] = secondVC?.longitud
                 
                 save_data()
             }
         }
-        update_button()
     }
-    
     
     func save_data(){
         
         debugPrint(data_form)
-        
         print("Guardar Datos")
+        showGifIndicator(view: self.view)
         
-        // Tab 1
+        let array_parameter = [
+            "desCorreo": data_form["first_email"]!,
+            "desUniversidad": data_form["first_description"]!,
+            "idUniversidad": Defaults[.university_idUniveridad]!,
+            "idDireccion": Defaults[.add_uni_idDireccion]!,
+            "pathLogo": "",
+            "Direcciones": [
+                "nbCiudad": data_form["second_city"],
+                "numCodigoPostal": data_form["second_cp"],
+                "desDireccion": data_form["second_description"],
+                "nbEstado": data_form["second_state"],
+                "idDireccion": Defaults[.add_uni_idUniversidad],
+                "nbMunicipio": data_form["second_municipio"],
+                "nbPais": data_form["second_pais"],
+                "dcLatitud": data_form["latitud"] ,
+                "dcLongitud": data_form["longitud"],
+            ],
+            "nbUniversidad": data_form["first_name_university"]!,
+            "nbReprecentante": data_form["first_name_representative"]!,
+            "desSitioWeb": data_form["first_web"]!,
+            "desTelefono": data_form["first_phone"]!
+            ] as [String : Any]
         
         
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.RegistrarUniversidad(parameters: parameter_json_string!, doneFunction: RegistrarUniversidad)
         
+    }
+    
+    func RegistrarUniversidad(status: Int, response: AnyObject){
+        hiddenGifIndicator(view: self.view)
+        let json = JSON(response)
+        print("Respuestas")
+        print(json)
+        if status == 1{
+             showMessage(title: json["Mensaje"].stringValue, automatic: true)
+            // Guardo en Session los datos que devuelve
+            
+            var data = JSON(json["Data"])
+            var direccion = JSON(data["Direcciones"])
+           
+            
+            //Universidad
+            Defaults[.university_idUniveridad] = data["idUniversidad"].intValue
+            Defaults[.university_pathLogo] =  data["pathLogo"].stringValue
+            Defaults[.university_nbUniversidad] =  data["nbUniversidad"].stringValue
+            Defaults[.university_nbReprecentante] =  data["nbReprecentante"].stringValue
+            Defaults[.university_desUniversidad] =  data["desUniversidad"].stringValue
+            Defaults[.university_desSitioWeb] = data["desSitioWeb"].stringValue
+            Defaults[.university_desTelefono] =  data["desTelefono"].stringValue
+            Defaults[.university_desCorreo] =  data["desCorreo"].stringValue
+            Defaults[.university_idPersona] = data["idPersona"].intValue
+            
+            
+            // Direccion Universidad
+            Defaults[.add_uni_idUniversidad] = direccion["idDireccion"].intValue
+            Defaults[.add_uni_desDireccion] = direccion["desDireccion"].stringValue
+            Defaults[.add_uni_numCodigoPostal] = direccion["numCodigoPostal"].stringValue
+            Defaults[.add_uni_nbPais] = direccion["nbPais"].stringValue
+            Defaults[.add_uni_nbEstado] = direccion["nbEstado"].stringValue
+            Defaults[.add_uni_nbMunicipio] = direccion["nbMunicipio"].stringValue
+            Defaults[.add_uni_nbCiudad] = direccion["nbCiudad"].stringValue
+            Defaults[.add_uni_dcLatitud] = direccion["dcLatitud"].doubleValue
+            Defaults[.add_uni_dcLongitud] = direccion["dcLongitud"].doubleValue
+            
+            
+        }else {
+            showMessage(title: response as! String, automatic: true)
+        }
         
     }
     

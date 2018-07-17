@@ -34,6 +34,11 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     var is_mexico = 1;
     var name_country = ""
     var type = ""
+
+    /*
+    profile_representative
+    profile_academic
+    */
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +98,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     
     func GetPaises(status: Int, response: AnyObject){
         var json = JSON(response)
+        let selected_name_country = Defaults[.academic_nbPais]!
         if status == 1{
             countries = json["Data"].arrayValue as NSArray
         }else{
@@ -101,7 +107,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         }
         countryPickerView.reloadAllComponents()
         // Establesco el Pais Seleccionado
-        let selected_name_country = Defaults[.academic_nbPais] //"México"
+         //"México"
         for i in 0 ..< countries.count{
             var item_country_json = JSON(countries[i])
             let name_country = item_country_json["nbPais"].stringValue
@@ -111,7 +117,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                 countryPickerView.selectRow(i, inComponent:0, animated:true)
             }
         }
-        is_mexico_setup(name_country: self.name_country)
+        is_mexico_setup(name_country: selected_name_country)
         hiddenGifIndicator(view: self.view)
     }
     
@@ -157,9 +163,12 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                 "idPersona": Defaults[.academic_idPersona]!
             ] as [String : Any]
         
+
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
+
             webServiceController.EditarPerfil(parameters: parameter_json_string!, doneFunction: EditarPerfil)
+          
         }
         
     }

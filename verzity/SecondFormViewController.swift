@@ -9,6 +9,8 @@
 import UIKit
 import FloatableTextField
 import SwiftyJSON
+import SwiftyUserDefaults
+
 
 class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate, FloatableTextFieldDelegate {
 
@@ -26,12 +28,14 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     @IBOutlet var second_city: FloatableTextField!
     @IBOutlet var second_description: FloatableTextField!
     @IBOutlet var second_location: FloatableTextField!
-    @IBOutlet var icon_location: UIImageView!
+    @IBOutlet var button_location: UIButton!
     
     var webServiceController = WebServiceController()
     var countries:NSArray = []
     var is_mexico = 1;
     var name_country = ""
+    var latitud: Double = 0.0
+    var longitud: Double = 0.0
     
     
     override func viewDidLoad() {
@@ -40,6 +44,7 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         setup_ux()
         setup_textfield()
         load_countries()
+        set_data()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
@@ -49,13 +54,30 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
 
     }
     
+    @IBAction func on_click_map(_ sender: Any) {
+        let selectLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewControllerID") as! SelectLocationViewController
+        
+        selectLocationViewController.providesPresentationContextTransitionStyle = true
+        selectLocationViewController.definesPresentationContext = true
+        selectLocationViewController.selectLocationViewControllerDelegate = self
+        self.present(selectLocationViewController, animated: true, completion: nil)
+    
+    }
+    
+    
     func setup_ux(){
         
         icon_country.image = icon_country.image?.withRenderingMode(.alwaysTemplate)
         icon_country.tintColor = Colors.gray
         
+        let image_visitar_web  = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
+        button_location.setImage(image_visitar_web, for: .normal)
+        button_location.tintColor = Colors.gray
+        
+        /*
         icon_location.image = icon_location.image?.withRenderingMode(.alwaysTemplate)
         icon_location.tintColor = Colors.gray
+         */
         
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
@@ -70,7 +92,6 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         second_city.floatableDelegate = self
         second_description.floatableDelegate = self
         second_location.floatableDelegate = self
- 
         
         // on_change_code_postal
         second_cp.addTarget(self, action: #selector(SecondFormViewController.cpDidChange(_:)), for: UIControlEvents.editingChanged)
@@ -88,6 +109,7 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     
     func GetPaises(status: Int, response: AnyObject){
         var json = JSON(response)
+        let selected_name_country = Defaults[.add_uni_nbPais]!
         if status == 1{
             countries = json["Data"].arrayValue as NSArray
         }else{
@@ -96,7 +118,6 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         }
         countryPickerView.reloadAllComponents()
         // Establesco el Pais Seleccionado
-        let selected_name_country = getSettings(key: "nbPais") //"México"
         for i in 0 ..< countries.count{
             var item_country_json = JSON(countries[i])
             let name_country = item_country_json["nbPais"].stringValue
@@ -106,8 +127,11 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
                 countryPickerView.selectRow(i, inComponent:0, animated:true)
             }
         }
+        
+        is_mexico_setup(name_country: selected_name_country)
         hiddenGifIndicator(view: self.view)
     }
+    
     @objc func cpDidChange(_ textField: UITextField) {
         print("Change CP")
         let cp = textField.text
@@ -176,6 +200,11 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         
         var item_country_json = JSON(countries[row])
         self.name_country = item_country_json["nbPais"].stringValue
+        is_mexico_setup(name_country: self.name_country)
+       
+    }
+    
+    func is_mexico_setup(name_country: String){
         if  name_country != "México" {
             second_cp.isHidden = true
             second_state.isHidden = true
@@ -193,4 +222,24 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         }
     }
     
+    
+    func set_data(){
+        second_cp.text = Defaults[.add_uni_numCodigoPostal]
+        second_state.text = Defaults[.add_uni_nbEstado]
+        second_municipio.text = Defaults[.add_uni_nbMunicipio]
+        second_city.text = Defaults[.add_uni_nbCiudad]
+        second_description.text = Defaults[.add_uni_desDireccion]
+        second_location.text = Defaults[.add_uni_desDireccion]
+        self.latitud = Defaults[.add_uni_dcLatitud]!
+        self.longitud = Defaults[.add_uni_dcLongitud]!
+    }
+    
+}
+
+extension SecondFormViewController: SelectLocationViewControllerDelegate {
+    func ok_save_location(latitud: Double, longitud: Double, address: String){
+        second_location.text = address
+        self.latitud = latitud
+        self.longitud = longitud
+    }
 }

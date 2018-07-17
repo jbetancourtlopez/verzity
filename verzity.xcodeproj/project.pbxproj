@@ -73,6 +73,7 @@
 		9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */; };
 		9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69420E7337A004D7FC7 /* VideoViewController.swift */; };
 		9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641820FA448C00876AC0 /* SplashViewController.swift */; };
+		9286641B20FCD8D000876AC0 /* SelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */; };
 		92A64B7420EE78B500E96152 /* ic_telefono_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */; };
 		92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7520EE8A3B00E96152 /* StringsLabel.swift */; };
 		92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7720EE8D8300E96152 /* FormValidate.swift */; };
@@ -172,6 +173,7 @@
 		9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewClass.swift; sourceTree = "<group>"; };
 		9276B69420E7337A004D7FC7 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		9286641820FA448C00876AC0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationViewController.swift; sourceTree = "<group>"; };
 		92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_telefono_gray.png; sourceTree = "<group>"; };
 		92A64B7520EE8A3B00E96152 /* StringsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsLabel.swift; sourceTree = "<group>"; };
 		92A64B7720EE8D8300E96152 /* FormValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidate.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				9286641820FA448C00876AC0 /* SplashViewController.swift */,
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
+				9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				922ABFBD20F6BA0300C5A56C /* DetailMapView.swift in Sources */,
 				92226FE020F54FC800ED30E0 /* EmptySegue.swift in Sources */,
 				92682D2220DB740500E6C4A8 /* BaseTableViewController.swift in Sources */,
+				9286641B20FCD8D000876AC0 /* SelectLocationViewController.swift in Sources */,
 				924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */,
 				924132E520E2881300CEBC81 /* FindMapViewController.swift in Sources */,
 				92DD410C20EC753C0035EF4E /* UniversityTableViewController.swift in Sources */,

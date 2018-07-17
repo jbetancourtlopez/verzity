@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
+
 
 class DetailViewController: BaseViewController {
 
@@ -70,9 +72,11 @@ class DetailViewController: BaseViewController {
         // Cargamos los datos
         showGifIndicator(view: self.view)
         let array_parameter = [
-            "idDispositivo":97,
-            "idNotificacion":213
-        ]
+            "idDispositivo":Defaults[.cvDispositivo]!,
+            "idNotificacion": self.idNotificacion
+            ] as [String : Any]
+        
+        
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.GetDetalleNotificacion(parameters: parameter_json_string!, doneFunction: GetDetalleNotificacion)

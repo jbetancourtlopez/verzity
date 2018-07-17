@@ -9,6 +9,7 @@
 import UIKit
 import FloatableTextField
 import SwiftyJSON
+import SwiftyUserDefaults
 
 class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
     
@@ -23,6 +24,7 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_textfield()
+        set_data()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
@@ -105,17 +107,20 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     
     func setup_textfield(){
-        
-        
         first_name_university.floatableDelegate = self
         first_name_representative.floatableDelegate = self
         first_description.floatableDelegate = self
         first_web.floatableDelegate = self
         first_phone.floatableDelegate = self
         first_email.floatableDelegate = self
- 
-
     }
     
-
+    func set_data(){
+        first_name_university.text = Defaults[.university_nbUniversidad]
+        first_name_representative.text = Defaults[.university_nbReprecentante]
+        first_description.text = Defaults[.university_desUniversidad]
+        first_web.text = Defaults[.university_desSitioWeb]
+        first_phone.text = Defaults[.university_desTelefono]
+        first_email.text = Defaults[.university_desCorreo]
+    }
 }

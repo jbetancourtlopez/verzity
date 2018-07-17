@@ -34,6 +34,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     var facebook_url: String = ""
     var facebook_name: String = ""
     var facebook_email: String = ""
+    var facebook_id: Int = 0
     var is_facebook:Int = 0
     
     var webServiceController = WebServiceController()
@@ -51,9 +52,13 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         self.facebook_name = facebook_name as String
         self.facebook_email = facebook_email as String
         self.is_facebook = Int(is_facebook)
+        self.facebook_id = Int(facebook_id)
         
         name_representative.text = self.facebook_name
         email.text = self.facebook_email
+        confirm_password.text = String(describing: self.facebook_id)
+        password.text = String(describing: self.facebook_id)
+
         
         // Foto Profile
         let url = self.facebook_url

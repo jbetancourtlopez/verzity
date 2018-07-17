@@ -3950,14 +3950,14 @@
                                                     <userDefinedRuntimeAttribute type="image" keyPath="headerImage" value="ic_action_ciudad_gray.png"/>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ubicacion" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hqg-zz-eGb" customClass="FloatableTextField" customModule="FloatableTextField">
-                                                <rect key="frame" x="8" y="441" width="261" height="55"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ubicacion" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="hqg-zz-eGb" customClass="FloatableTextField" customModule="FloatableTextField">
+                                                <rect key="frame" x="8" y="441" width="256" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="55" id="C0X-Xs-U1Y"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" textContentType="street-address"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
                                                         <color key="value" red="0.24219554660000001" green="0.51679889899999998" blue="0.14828827720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3971,13 +3971,18 @@
                                                     <userDefinedRuntimeAttribute type="image" keyPath="headerImage" value="ic_action_ciudad_gray.png"/>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_visitar_web" translatesAutoresizingMaskIntoConstraints="NO" id="eb4-hD-xod">
-                                                <rect key="frame" x="277" y="451" width="30" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zU6-qH-swR">
+                                                <rect key="frame" x="272" y="448" width="40" height="40"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="Do0-mK-w3b"/>
-                                                    <constraint firstAttribute="height" constant="30" id="daJ-Z2-7Xz"/>
+                                                    <constraint firstAttribute="height" constant="40" id="1i4-gW-y92"/>
+                                                    <constraint firstAttribute="width" constant="40" id="DEL-Vu-R4T"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="jQY-mS-2Ft"/>
                                                 </constraints>
-                                            </imageView>
+                                                <state key="normal" image="ic_visitar_web"/>
+                                                <connections>
+                                                    <action selector="on_click_map:" destination="P3A-tX-VYF" eventType="touchUpInside" id="wve-wg-FDv"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -3991,19 +3996,19 @@
                                             <constraint firstItem="ITS-NJ-xgq" firstAttribute="top" secondItem="MdU-3R-Kvm" secondAttribute="bottom" constant="8" id="Gon-du-MGH"/>
                                             <constraint firstItem="hbW-Hc-4u3" firstAttribute="top" secondItem="vQe-RA-5fu" secondAttribute="bottom" constant="8" id="Hm2-OK-Q7V"/>
                                             <constraint firstItem="YTJ-8M-Jb6" firstAttribute="leading" secondItem="9i5-bL-FA6" secondAttribute="leading" constant="8" id="Njc-Kd-HSa"/>
+                                            <constraint firstAttribute="trailing" secondItem="zU6-qH-swR" secondAttribute="trailing" constant="8" id="Q08-Xp-I0F"/>
+                                            <constraint firstItem="zU6-qH-swR" firstAttribute="leading" secondItem="hqg-zz-eGb" secondAttribute="trailing" constant="8" id="Q8d-Vu-7vw"/>
                                             <constraint firstAttribute="trailing" secondItem="hbW-Hc-4u3" secondAttribute="trailing" constant="8" id="SAd-Lb-DBa"/>
                                             <constraint firstItem="ITS-NJ-xgq" firstAttribute="leading" secondItem="9i5-bL-FA6" secondAttribute="leading" constant="8" id="Xjm-C2-GCP"/>
-                                            <constraint firstAttribute="trailing" secondItem="eb4-hD-xod" secondAttribute="trailing" constant="13" id="YtU-50-G7N"/>
                                             <constraint firstItem="hqg-zz-eGb" firstAttribute="top" secondItem="YTJ-8M-Jb6" secondAttribute="bottom" constant="8" id="Z36-8R-ACJ"/>
                                             <constraint firstAttribute="trailing" secondItem="MdU-3R-Kvm" secondAttribute="trailing" constant="8" id="ZP8-ck-4ce"/>
+                                            <constraint firstItem="zU6-qH-swR" firstAttribute="top" secondItem="YTJ-8M-Jb6" secondAttribute="bottom" constant="15" id="bAJ-s7-h2S"/>
                                             <constraint firstItem="MdU-3R-Kvm" firstAttribute="top" secondItem="9i5-bL-FA6" secondAttribute="top" constant="19" id="baE-Lj-obL"/>
                                             <constraint firstAttribute="trailing" secondItem="vQe-RA-5fu" secondAttribute="trailing" constant="8" id="e23-q2-rgd"/>
-                                            <constraint firstItem="eb4-hD-xod" firstAttribute="leading" secondItem="hqg-zz-eGb" secondAttribute="trailing" constant="8" id="gVL-3Q-i5G"/>
-                                            <constraint firstItem="eb4-hD-xod" firstAttribute="leading" secondItem="hqg-zz-eGb" secondAttribute="trailing" constant="8" id="m3s-m2-zhJ"/>
-                                            <constraint firstItem="eb4-hD-xod" firstAttribute="top" secondItem="YTJ-8M-Jb6" secondAttribute="bottom" constant="18" id="o3n-AD-xfP"/>
                                             <constraint firstItem="hbW-Hc-4u3" firstAttribute="leading" secondItem="9i5-bL-FA6" secondAttribute="leading" constant="8" id="ofS-ag-Xem"/>
                                             <constraint firstItem="YTJ-8M-Jb6" firstAttribute="top" secondItem="mix-DY-l3T" secondAttribute="bottom" constant="8" id="q8Q-So-VKf"/>
                                             <constraint firstAttribute="trailing" secondItem="ITS-NJ-xgq" secondAttribute="trailing" constant="8" id="taf-1B-g8Z"/>
+                                            <constraint firstItem="zU6-qH-swR" firstAttribute="leading" secondItem="hqg-zz-eGb" secondAttribute="trailing" constant="8" id="vE8-Eu-plg"/>
                                             <constraint firstItem="mix-DY-l3T" firstAttribute="top" secondItem="hbW-Hc-4u3" secondAttribute="bottom" constant="8" id="vd8-LE-vDK"/>
                                             <constraint firstItem="wV0-xf-voA" firstAttribute="top" secondItem="9i5-bL-FA6" secondAttribute="top" constant="51" id="wzf-SX-jzA"/>
                                             <constraint firstAttribute="trailing" secondItem="YTJ-8M-Jb6" secondAttribute="trailing" constant="8" id="xtl-CO-IY3"/>
@@ -4031,9 +4036,9 @@
                     </view>
                     <size key="freeformSize" width="320" height="550"/>
                     <connections>
+                        <outlet property="button_location" destination="zU6-qH-swR" id="WWg-3Q-KHs"/>
                         <outlet property="countryPickerView" destination="MdU-3R-Kvm" id="Pfo-S4-5cJ"/>
                         <outlet property="icon_country" destination="wV0-xf-voA" id="la6-bB-wlo"/>
-                        <outlet property="icon_location" destination="eb4-hD-xod" id="BDb-sM-IRC"/>
                         <outlet property="scrollView" destination="LhN-wU-8MA" id="Nw5-86-WFG"/>
                         <outlet property="second_city" destination="mix-DY-l3T" id="5HJ-H2-anW"/>
                         <outlet property="second_cp" destination="ITS-NJ-xgq" id="GcQ-nh-3WJ"/>
@@ -4125,14 +4130,14 @@
                                                     <userDefinedRuntimeAttribute type="image" keyPath="headerImage" value="ic_action_descripcion_gray.png"/>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Sitio web universidad" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2n8-IZ-7hM" customClass="FloatableTextField" customModule="FloatableTextField">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://" placeholder="Sitio web universidad" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2n8-IZ-7hM" customClass="FloatableTextField" customModule="FloatableTextField">
                                                 <rect key="frame" x="8" y="210" width="304" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="55" id="3aQ-b2-mEq"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="URL" textContentType="url"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="URL" smartDashesType="no" textContentType="url"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
                                                         <color key="value" red="0.24219554660000001" green="0.51679889899999998" blue="0.14828827720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4245,6 +4250,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2qz-ER-oco" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6930" y="183.80281690140845"/>
+        </scene>
+        <!--Select Location View Controller-->
+        <scene sceneID="pgs-Hb-oYl">
+            <objects>
+                <viewController storyboardIdentifier="SelectLocationViewControllerID" id="S0J-Qy-ZR5" customClass="SelectLocationViewController" customModule="verzity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q1Y-FQ-noC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oSu-t1-CmY">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sin dirección" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQ3-71-d4u">
+                                <rect key="frame" x="16" y="20" width="288" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="blE-Qb-itX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m1d-yS-U5y">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <color key="backgroundColor" red="0.24219554660000001" green="0.51679889899999998" blue="0.14828827720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <items>
+                                    <barButtonItem title="Guardar" id="cEv-c1-JoR">
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <action selector="on_click_save:" destination="S0J-Qy-ZR5" id="Gd4-AI-gs3"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.24219554660000001" green="0.51679889899999998" blue="0.14828827720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="oSu-t1-CmY" firstAttribute="bottom" secondItem="cRr-Bv-Li7" secondAttribute="bottom" constant="-44" id="8HM-lH-8RK"/>
+                            <constraint firstItem="m1d-yS-U5y" firstAttribute="leading" secondItem="cRr-Bv-Li7" secondAttribute="leading" id="HJt-M5-Azh"/>
+                            <constraint firstItem="kQ3-71-d4u" firstAttribute="leading" secondItem="cRr-Bv-Li7" secondAttribute="leading" constant="16" id="Ow0-h7-8A6"/>
+                            <constraint firstItem="kQ3-71-d4u" firstAttribute="trailing" secondItem="cRr-Bv-Li7" secondAttribute="trailing" constant="-16" id="ToF-lE-gKK"/>
+                            <constraint firstItem="m1d-yS-U5y" firstAttribute="trailing" secondItem="cRr-Bv-Li7" secondAttribute="trailing" id="ZB4-ZA-BG7"/>
+                            <constraint firstItem="m1d-yS-U5y" firstAttribute="bottom" secondItem="cRr-Bv-Li7" secondAttribute="bottom" id="jqL-IT-w4H"/>
+                            <constraint firstItem="oSu-t1-CmY" firstAttribute="top" secondItem="q1Y-FQ-noC" secondAttribute="top" id="ktH-go-T40"/>
+                            <constraint firstItem="oSu-t1-CmY" firstAttribute="trailing" secondItem="cRr-Bv-Li7" secondAttribute="trailing" id="lZD-Ir-j2q"/>
+                            <constraint firstItem="kQ3-71-d4u" firstAttribute="top" secondItem="q1Y-FQ-noC" secondAttribute="top" constant="20" id="oP8-VJ-Bb8"/>
+                            <constraint firstItem="oSu-t1-CmY" firstAttribute="leading" secondItem="cRr-Bv-Li7" secondAttribute="leading" id="osr-6e-M4s"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cRr-Bv-Li7"/>
+                    </view>
+                    <connections>
+                        <outlet property="location_label" destination="kQ3-71-d4u" id="0bt-Hk-CQi"/>
+                        <outlet property="mapView" destination="oSu-t1-CmY" id="lIb-dX-t3F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c2t-85-WbJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8109.375" y="245.07042253521126"/>
         </scene>
     </scenes>
     <resources>

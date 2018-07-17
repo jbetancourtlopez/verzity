@@ -45,6 +45,11 @@ struct Menus{
             "name":"Cupones y descuentos",
             "image":"ic_action_cupon.png",
             "type": "coupons"
+        ],
+        [
+            "name":"Prueba",
+            "image":"ic_action_cupon.png",
+            "type": "travel"
         ]
 
         
@@ -107,7 +112,7 @@ struct Menus{
             "type": "home_representative"
         ],
         [
-            "name":"Ver Perfil universitario",
+            "name":"Ver Perfil universidad",
             "image":"ic_action_ic_school.png",
             "type": "profile_university"
         ],

@@ -263,13 +263,18 @@ extension DefaultsKeys {
     static let academic_name = DefaultsKey<String?>("academic_name")
     static let academic_email = DefaultsKey<String?>("academic_email")
     static let academic_phone = DefaultsKey<String?>("academic_phone")
+    static let academic_pathFoto = DefaultsKey<String?>("academic_pathFoto")
+
     static let academic_nbPais = DefaultsKey<String?>("academic_nbPais")
     static let academic_cp = DefaultsKey<String?>("academic_cp")
     static let academic_city = DefaultsKey<String?>("academic_city")
     static let academic_municipio = DefaultsKey<String?>("academic_municipio")
     static let academic_state = DefaultsKey<String?>("academic_state")
     static let academic_description = DefaultsKey<String?>("academic_description")
+    static let academic_dcLatitud = DefaultsKey<String?>("academic_dcLatitud")
+    static let academic_dcLongitud = DefaultsKey<String?>("academic_dcLongitud")
     
+
     //Paquete
     static let package_idUniveridad = DefaultsKey<Int?>("package_idUniveridad")
     static let package_idPaquete = DefaultsKey<Int?>("package_idPaquete")
@@ -302,14 +307,16 @@ extension DefaultsKeys {
     static let add_rep_dcLongitud = DefaultsKey<String?>("add_rep_dcLongitud")
     
     // Direccion Universidad
+    static let add_uni_idDireccion = DefaultsKey<Int?>("add_uni_idDireccion")
+    static let add_uni_idUniversidad = DefaultsKey<Int?>("add_uni_idUniversidad")
     static let add_uni_desDireccion = DefaultsKey<String?>("add_uni_desDireccion")
     static let add_uni_numCodigoPostal = DefaultsKey<String?>("add_uni_numCodigoPostal")
     static let add_uni_nbPais = DefaultsKey<String?>("add_uni_nbPais")
     static let add_uni_nbEstado = DefaultsKey<String?>("add_uni_nbEstado")
     static let add_uni_nbMunicipio = DefaultsKey<String?>("add_uni_nbMunicipio")
     static let add_uni_nbCiudad = DefaultsKey<String?>("add_uni_nbCiudad")
-    static let add_uni_dcLatitud = DefaultsKey<String?>("add_uni_dcLatitud")
-    static let add_uni_dcLongitud = DefaultsKey<String?>("add_uni_dcLongitud")
+    static let add_uni_dcLatitud = DefaultsKey<Double?>("add_uni_dcLatitud")
+    static let add_uni_dcLongitud = DefaultsKey<Double?>("add_uni_dcLongitud")
 
 
 }

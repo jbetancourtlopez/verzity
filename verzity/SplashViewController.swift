@@ -86,8 +86,6 @@ class SplashViewController: BaseViewController {
             let parameter_json_string = parameter_json.rawString()
             webServiceController.VerificarEstatusUniversidad(parameters: parameter_json_string!, doneFunction: VerificarEstatusUniversidad)
             
-            
-           
         }else{
             performSegue(withIdentifier: "showLogin", sender: self)
         }
@@ -102,11 +100,20 @@ class SplashViewController: BaseViewController {
         let json = JSON(response)
         debugPrint(json)
         if status == 1{
-          
-            _ = self.navigationController?.popToRootViewController(animated: false)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
-            UIApplication.shared.keyWindow?.rootViewController = vc
+            
+            var data = JSON(json["Data"])
+            let paquetes = data["VentasPaquetes"].arrayValue
+            
+            if  paquetes.count > 0{
+                _ = self.navigationController?.popToRootViewController(animated: false)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
+                UIApplication.shared.keyWindow?.rootViewController = vc
+            }else{
+                print("package")
+                let vc = storyboard?.instantiateViewController(withIdentifier: "PackagesViewControllerID") as! PackagesViewController
+                self.show(vc, sender: nil)
+            }
             
         }else{
             
@@ -114,9 +121,7 @@ class SplashViewController: BaseViewController {
                 self.performSegue(withIdentifier: "showLogin", sender: self)
             }
             
-            showAlert("Atención", message: StringsLabel.account_invalid, okAction: yesAction, cancelAction: nil, automatic: false)
-            
-            
+            showAlert("Atención", message: StringsLabel.account_invalid, okAction: yesAction, cancelAction: nil, automatic: false)            
         }
         
         
