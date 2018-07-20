@@ -20,6 +20,7 @@ target 'verzity' do
     pod 'Firebase/Core'
     pod 'Firebase/Messaging'
     pod 'PayPal-iOS-SDK'
+    pod 'FilesProvider'
 end
 
 post_install do |installer|

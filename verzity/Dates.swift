@@ -43,22 +43,42 @@ func get_day_of_week(today: String) -> String {
 func get_date(date_string: String) -> String {
     //let isoDate = "2018-07-15T10:44:00+0000"
     
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    
-    let date = dateFormatter.date(from: date_string)
-    
-    
-    let calendar = Calendar.current
-    let components = calendar.dateComponents([.year, .month, .day], from: date!)
-    
-    let year =  components.year
-    let month = components.month
-    let day = components.day
+   let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    let myString = date_string // string purpose I add here
+    let yourDate = formatter.date(from: myString)
+    formatter.dateFormat = "dd-MMM-yyyy"
+    let myStringafd = formatter.string(from: yourDate!)
     
     
-    return "\(String(describing: day))/\(String(describing: month))/\(String(describing: year))"
+    return  "\(myStringafd)"
 }
+
+
+func get_date_complete(date_complete_string: String) -> String {
+    
+    //2018-07-02T19:11:55.8529371-05:00
+    
+    
+    var date_complete_array = date_complete_string.components(separatedBy: "T")
+    let date_string = date_complete_array[0]
+    
+    var hourRegistro = date_complete_array[1]
+    var hourRegistro_array = hourRegistro.components(separatedBy: ".")
+    hourRegistro = hourRegistro_array[0]
+    
+    
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    let myString = date_string // string purpose I add here
+    let yourDate = formatter.date(from: myString)
+    formatter.dateFormat = "dd-MMM-yyyy"
+    let myStringafd = formatter.string(from: yourDate!)
+    
+    
+    return  "\(myStringafd) \(hourRegistro)"
+}
+
 
 func date_to_string(date: Date) -> String{
     let formatter = DateFormatter()

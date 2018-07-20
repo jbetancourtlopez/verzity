@@ -9,11 +9,13 @@
 import UIKit
 import FloatableTextField
 import SwiftyJSON
+import FilesProvider
 
 
 
-class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, FileProviderDelegate{
     
+    // oulets
     @IBOutlet var import_image: UIButton!
     @IBOutlet var img_profile: UIImageView!
     @IBOutlet weak var name_university: FloatableTextField!
@@ -25,11 +27,10 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     @IBOutlet var phone_representative: FloatableTextField!
     
     // Contrains
-    
     @IBOutlet var topContrainstLabelTerminos: NSLayoutConstraint!
     @IBOutlet var topConstrainsSwich: NSLayoutConstraint!
-    
     @IBOutlet var topConstrainsButtonRegister: NSLayoutConstraint!
+    
     // Datos obtenidos de facebook
     var facebook_url: String = ""
     var facebook_name: String = ""
@@ -39,11 +40,23 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     
     var webServiceController = WebServiceController()
     
+    // FTP
+    let server: URL = URL(string: "http://smarterasp.net")!
+    let ftp_username = "ftpVerzity"
+    let ftp_password = "ftp.Verzity"
+    let path_folder = "~/Upload/Usuarios/"
+    
+    var webdav: WebDAVFileProvider?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
         setup_textfield()
         setdata_facebook()
+        
+        let credential = URLCredential(user: self.ftp_username, password: self.ftp_password, persistence: URLCredential.Persistence.permanent)
+        webdav = WebDAVFileProvider(baseURL: server, credential: credential)
+        webdav?.delegate = self as FileProviderDelegate
         
     }
     
@@ -89,6 +102,34 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+       
+        debugPrint(info)
+        
+        
+        if let localUrl = (info[UIImagePickerControllerMediaURL] ?? info[UIImagePickerControllerReferenceURL]) as? NSURL {
+            
+            print (localUrl)
+            //if you want to get the image name
+            let imageName = localUrl.path!
+            print(imageName)
+            let remotePath = "/fileprovider.png"
+            
+            
+        
+        }
+        
+        /*
+        
+        let localURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("fileprovider.png")
+        
+        webdav?.copyItem(localFile: localURL, to: remotePath, completionHandler: nil)
+        
+        var uIImagePickerControllerReferenceURL = info[UIImagePickerControllerReferenceURL] as! URL
+        var uIImagePickerControllerImageURL = info["UIImagePickerControllerImageURL"] as! URL
+        
+        */
+        
+        
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
         {
             img_profile.image = image
@@ -124,9 +165,9 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     }
     
 
-
     @IBAction func on_click_register(_ sender: Any) {
         
+        /*
         if validate_form() == 0 {
             
             showGifIndicator(view: self.view)
@@ -165,7 +206,8 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             let parameter_json_string = parameter_json.rawString()
             webServiceController.CrearCuentaAcceso(parameters: parameter_json_string!, doneFunction: CrearCuentaAcceso)
  
-        }
+ 
+        }*/
     }
     
     
@@ -253,6 +295,59 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         return count_error
     }
     
+    
+    func upload(name_image: String){
+        let localURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(name_image)
+        let remotePath = "/fileprovider.png"
+        
+        let progress = webdav?.copyItem(localFile: localURL, to: remotePath, completionHandler: nil)
+        
+    }
+    
+    
+    // FilesProvider
+    func fileproviderSucceed(_ fileProvider: FileProviderOperations, operation: FileOperationType) {
+        switch operation {
+        case .copy(source: let source, destination: let dest):
+            print("\(source) copied to \(dest).")
+        case .remove(path: let path):
+            print("\(path) has been deleted.")
+        default:
+            if let destination = operation.destination {
+                print("\(operation.actionDescription) from \(operation.source) to \(destination) succeed.")
+            } else {
+                print("\(operation.actionDescription) on \(operation.source) succeed.")
+            }
+        }
+    }
+    
+    func fileproviderFailed(_ fileProvider: FileProviderOperations, operation: FileOperationType, error: Error) {
+        switch operation {
+        case .copy(source: let source, destination: let dest):
+            print("copying \(source) to \(dest) has been failed.")
+        case .remove:
+            print("file can't be deleted.")
+        default:
+            if let destination = operation.destination {
+                print("\(operation.actionDescription) from \(operation.source) to \(destination) failed.")
+            } else {
+                print("\(operation.actionDescription) on \(operation.source) failed.")
+            }
+        }
+    }
+    
+    func fileproviderProgress(_ fileProvider: FileProviderOperations, operation: FileOperationType, progress: Float) {
+        switch operation {
+        case .copy(source: let source, destination: let dest) where dest.hasPrefix("file://"):
+            print("Downloading \(source) to \((dest as NSString).lastPathComponent): \(progress * 100) completed.")
+        case .copy(source: let source, destination: let dest) where source.hasPrefix("file://"):
+            print("Uploading \((source as NSString).lastPathComponent) to \(dest): \(progress * 100) completed.")
+        case .copy(source: let source, destination: let dest):
+            print("Copy \(source) to \(dest): \(progress * 100) completed.")
+        default:
+            break
+        }
+    }
 }
 
 extension UIView {

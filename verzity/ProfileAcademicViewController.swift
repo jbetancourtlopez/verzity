@@ -264,16 +264,19 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             city_profile.isHidden = true
             topContraintDescription.constant = -260
             is_mexico = 0
+            
+            cp_profile.text = ""
+            state_profile.text = ""
+            municipio_profile.text = ""
+            city_profile.text = ""
+            
         }else{
             cp_profile.isHidden = false
             state_profile.isHidden = false
             municipio_profile.isHidden = false
             city_profile.isHidden = false
             
-            cp_profile.text = ""
-            state_profile.text = ""
-            municipio_profile.text = ""
-            city_profile.text = ""
+         
             
             topContraintDescription.constant = 0
             is_mexico = 1

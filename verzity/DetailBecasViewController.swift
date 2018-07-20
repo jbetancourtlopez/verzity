@@ -28,6 +28,7 @@ class DetailBecasViewController: BaseViewController {
     @IBOutlet var detail_file: UILabel!
     @IBOutlet var btn_university: UIButton!
     @IBOutlet var btn_file: UIButton!
+    
     var webServiceController = WebServiceController()
     
     override func viewDidLoad() {
@@ -63,7 +64,7 @@ class DetailBecasViewController: BaseViewController {
         var file_path = detail["desRutaArchivo"].stringValue
         file_path = file_path.replacingOccurrences(of: "~", with: "")
         file_path = file_path.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Config.desRutaMultimedia))\(file_path)"
+        let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(file_path)"
         
         if  !file_path.isEmpty{
             openUrl(scheme: url)
@@ -114,11 +115,18 @@ class DetailBecasViewController: BaseViewController {
         detail_name.text = universidad["nbUniversidad"].stringValue
         detail_description.text = detail["desBeca"].stringValue
         
+        /*
+        detail_description.translatesAutoresizingMaskIntoConstraints = true
+        detail_description.sizeToFit()
+        detail_description.isScrollEnabled = true
+         */
+        
+        
         let amountOfLinesToBeShown:CGFloat = 6
         let maxHeight:CGFloat = detail_description.font!.lineHeight * amountOfLinesToBeShown
         detail_description.sizeThatFits(CGSize(width: detail_description.frame.size.width, height:maxHeight))
         if  !file_path.isEmpty{
-             detail_file.text = "Descargar archivo adjunto"
+             detail_file.text = "Descargar documento adjunto"
         }else{
              detail_file.text = "No se encontró archivo adjunto"
         }
@@ -136,7 +144,7 @@ class DetailBecasViewController: BaseViewController {
          var pathImage = detail["pathImagen"].stringValue
          pathImage = pathImage.replacingOccurrences(of: "~", with: "")
          pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-         let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
+         let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
          let URL = Foundation.URL(string: url)
          let image_default = UIImage(named: "default.png")
          image.kf.setImage(with: URL, placeholder: image_default)

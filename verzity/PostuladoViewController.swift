@@ -8,6 +8,8 @@
 
 import UIKit
 import SwiftyJSON
+import SwiftyUserDefaults
+
 
 class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -36,7 +38,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     }
     
     func load_data(){
-        let array_parameter = ["idUniversidad": 4]
+        let array_parameter = ["idUniversidad": Defaults[.university_idUniveridad]]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.GetPostulados(parameters: parameter_json_string!, doneFunction: GetList)
@@ -167,7 +169,14 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let section_item = self.list_postulate[indexPath.section] as! [Any]
+        let row = section_item[indexPath.row]
+        //let row_json = JSON(row)
+
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
+        vc.type = "postulado"
+        vc.detail = row as AnyObject
         self.show(vc, sender: nil)
     }
     

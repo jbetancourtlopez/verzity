@@ -102,6 +102,9 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
         
         cell.title.text = item["nbVideo"].stringValue
         cell.video_description.text = item["desVideo"].stringValue
+        cell.video_description.translatesAutoresizingMaskIntoConstraints = true
+        cell.video_description.sizeToFit()
+        cell.video_description.isScrollEnabled = false
         
         //
         cell.layer.borderWidth = 3

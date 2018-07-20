@@ -19,6 +19,7 @@ PODS:
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.34.0):
     - FBSDKCoreKit
+  - FilesProvider (0.25.1)
   - Firebase/Core (5.2.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.0.1)
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - FacebookCore
   - FacebookLogin
+  - FilesProvider
   - Firebase/Core
   - Firebase/Messaging
   - FloatableTextField
@@ -92,6 +94,7 @@ SPEC REPOS:
     - FacebookLogin
     - FBSDKCoreKit
     - FBSDKLoginKit
+    - FilesProvider
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -126,6 +129,7 @@ SPEC CHECKSUMS:
   FacebookLogin: 6f15bf4fefd7a8865abbfa8fcd7f3dfd87aa275f
   FBSDKCoreKit: 0ff57f093b85c8c9d5aba697d3edf68a8960ce78
   FBSDKLoginKit: 8c78f57a145afb756e4755e69195ebe08a42466e
+  FilesProvider: f6ab75211d2fd4814720f19b427e43668dc24585
   Firebase: 25ed0412036d7d008568d1fb4d2e9d81ea8a0a2c
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseCore: a3c87242451633fff8490183898075ce77d168d2
@@ -143,6 +147,6 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   youtube-ios-player-helper: 21ab92db027c7ff86cb17a3843a3f6eafc8158d2
 
-PODFILE CHECKSUM: 639f2347d4f5be0fb9d9a7e910aa8f164fbb2ca2
+PODFILE CHECKSUM: 14d4044ec442a41e1c65a935b4c6728762e50057
 
 COCOAPODS: 1.5.3

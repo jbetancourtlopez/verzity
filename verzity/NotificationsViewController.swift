@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
 
 class NotificationsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -24,7 +25,17 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         
         setup_ux()
         
-        let array_parameter = [
+         let array_parameter = [
+         "desCorreo": Defaults[.academic_email],
+         "idPersona": Defaults[.academic_idPersona],
+         "idDireccion": Defaults[.academic_idDireccion],
+         "nbCompleto": Defaults[.academic_name] ,
+         "desTelefono": Defaults[.academic_phone]
+         ] as [String : Any]
+ 
+        
+        
+        let array_parameter_test = [
             "desCorreo": "marco.yam.catina@gmail.com",
             "idPersona": 86,
             "idDireccion": 75,
@@ -84,6 +95,10 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! NotificationsTableViewCell
         var item = JSON(items[indexPath.section])
         
+        var notificacionEstatusList = JSON(item["NotificacionEstatus"])
+        var notificacionEstatus = JSON(notificacionEstatusList[0])
+        var status = JSON(notificacionEstatus["Estatus"])
+        
         var feRegistro = item["feRegistro"].stringValue
         var feRegistro_array = feRegistro.components(separatedBy: "T")
         
@@ -93,7 +108,14 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         
         let date = get_date(date_string: feRegistro_array[0])
         cell.title_notification.text = item["desAsunto"].stringValue + " " + date + " " + hourRegistro
+        
+        if status["desEstatus"].stringValue == "PENDIENTE"{
+            cell.title_notification.font = UIFont.boldSystemFont(ofSize: 14.0)
+            cell.image_notification.image = UIImage(named: "ic_notification_green")
+        }
+        
         cell.description_notificaction.text = item["desMensaje"].stringValue
+        
         
         
         //Icono
@@ -112,6 +134,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
         vc.idNotificacion = idNotificacion
+        vc.type = "notificacion"
         self.show(vc, sender: nil)
  
  

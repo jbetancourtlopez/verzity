@@ -212,6 +212,12 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
             second_city.isHidden = true
             topConstraintDescription.constant = -260
             is_mexico = 0
+
+            second_cp.text = ""
+            second_state.text = ""
+            second_municipio.text = ""
+            second_city.text = ""
+
         }else{
             second_cp.isHidden = false
             second_state.isHidden = false

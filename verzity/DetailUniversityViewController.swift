@@ -146,7 +146,7 @@ class DetailUniversityViewController: BaseViewController {
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
             
-            let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
+            let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
             let URL = Foundation.URL(string: url)
             let image_default = UIImage(named: "default.png")
             
@@ -181,6 +181,11 @@ class DetailUniversityViewController: BaseViewController {
     
     @IBAction func on_click_map(_ sender: Any) {
         print("mapa")
+        var university_json = JSON(self.detail_data)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailMapViewControllerID") as! DetailMapViewController
+        vc.info = university_json as AnyObject
+        self.show(vc, sender: nil)
+        
     }
     
     @IBAction func on_click_postulate(_ sender: Any) {
@@ -300,8 +305,28 @@ class DetailUniversityViewController: BaseViewController {
     }
     
     func set_data(){
+        //debugPrint(<#T##items: Any...##Any#>)
         var university_json = JSON(self.detail_data)
         var address = JSON(university_json["Direcciones"])
+        var paquete_array = university_json["VentasPaquetes"].arrayValue
+        var fgAplicaBecas = false
+        var fgAplicaFinanciamiento = false
+        var fgAplicaPostulacion = false
+        if  paquete_array.count > 0 {
+            var paquete = JSON(paquete_array[0])
+            print("Paquete")
+            debugPrint(paquete)
+            
+            fgAplicaBecas = paquete["fgAplicaBecas"].boolValue
+            fgAplicaFinanciamiento = paquete["fgAplicaFinanciamiento"].boolValue
+            fgAplicaPostulacion = paquete["fgAplicaPostulacion"].boolValue
+            
+        }
+       
+        
+        /*"fgAplicaBecas": false, "fgAplicaFinanciamiento": true, "fgAplicaPostulacion": false,*/
+        
+   
         
         var name_uniersity_text = university_json["nbUniversidad"].stringValue
         if  name_uniersity_text.isEmpty{
@@ -337,6 +362,32 @@ class DetailUniversityViewController: BaseViewController {
         label_video.text = "Ver videos"
         label_beca.text = "Ver becas"
         label_financing.text = "Ver financiamientos"
+        
+        // Establecemos permisos
+        if !fgAplicaBecas{
+            image_beca.isHidden = true
+            label_beca.isHidden = true
+            button_beca.isHidden = true
+        }
+        
+        if !fgAplicaFinanciamiento{
+            image_financing.isHidden = true
+            label_financing.isHidden = true
+            button_financing.isHidden = true
+        }
+        
+        if !fgAplicaPostulacion{
+            button_postulate.isHidden = true
+        }
+        
+        // Set Favorito
+        let array_parameter = [
+            "idPersona": Defaults[.academic_idPersona],
+            "idUniversidad": idUniversidad
+        ]
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.VerificarFavorito(parameters: parameter_json_string!, doneFunction: SetFavorito)
     }
 
 

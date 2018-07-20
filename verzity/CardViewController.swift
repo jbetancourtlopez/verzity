@@ -154,7 +154,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         
         // ------
-        let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
+        let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
         let URL = Foundation.URL(string: url)
         let image = UIImage(named: "default.png")
         

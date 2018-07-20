@@ -140,7 +140,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
             var pathImage = item["pathLogo"].stringValue
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-            let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
+            let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
             let avatar = url
             
             

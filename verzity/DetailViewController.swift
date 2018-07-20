@@ -27,21 +27,32 @@ class DetailViewController: BaseViewController {
     @IBOutlet var postulate_location: UILabel!
     @IBOutlet var postulate_image_name: UILabel!
     
+    @IBOutlet var postulate_date: UILabel!
+    
     @IBOutlet var icon_name: UIImageView!
     @IBOutlet var icon_email: UIImageView!
     @IBOutlet var icon_phone: UIImageView!
     @IBOutlet var icon_location: UIImageView!
     @IBOutlet var button_phone: UIButton!
     @IBOutlet var button_email: UIButton!
+
     var idNotificacion: Int = 0
+    var type: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         idNotificacion = idNotificacion as Int
+        type = type as String
         
         septup_ux()
+
+        if type == "postulado" {
+            detail = detail as AnyObject
+            set_data_postulado()
+        } else if type == "notificacion" {
+            load_data();
+        }
         
-        load_data();
     }
     
     func septup_ux(){
@@ -72,51 +83,137 @@ class DetailViewController: BaseViewController {
         // Cargamos los datos
         showGifIndicator(view: self.view)
         let array_parameter = [
-            "idDispositivo":Defaults[.cvDispositivo]!,
+            "idDispositivo": 0,
             "idNotificacion": self.idNotificacion
             ] as [String : Any]
-        
-        
+        debugPrint(array_parameter)
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.GetDetalleNotificacion(parameters: parameter_json_string!, doneFunction: GetDetalleNotificacion)
     }
     
     func GetDetalleNotificacion(status: Int, response: AnyObject){
-        
         var json = JSON(response)
         debugPrint(json)
         if status == 1{
             self.detail = JSON(json["Data"]) as AnyObject
-            //set_data()
+            set_data()
           
         }else{
             // Mensaje de Error
+            showMessage(title: response as! String, automatic: true)
         }
         hiddenGifIndicator(view: self.view)
     }
     
     func set_data(){
         var data_json = JSON(self.detail)
+        var persona = JSON(data_json["persona"])
+        var licenciatura = JSON(data_json["licenciatura"])
+        var beca = JSON(data_json["beca"])
+        var financiamiento = JSON(data_json["financiamiento"])
         
-        postulate_name.text = data_json["nbCompleto"].stringValue
-        postulate_email.text = data_json["desCorreo"].stringValue
-        postulate_phone.text = data_json["desTelefono"].stringValue
         
-        var location_json = JSON(data_json["Direcciones"])
-        let text_location = "\(location_json["desDireccion"].stringValue), \(location_json["nbCiudad"].stringValue), \(location_json["nbMunicipio"].stringValue), \(location_json["nbEstado"].stringValue), \(location_json["nbPais"].stringValue), \(location_json["numCodigoPostal"].stringValue)"
+        // Descripcion
+        var postulate_description_text = ""
+        
+        if !licenciatura.isEmpty{
+            let nbLicenciatura = licenciatura["nbLicenciatura"].stringValue
+            postulate_description_text = persona["nbCompleto"].stringValue + " Se ha postulado al programa académico " + nbLicenciatura
+        } else if !beca.isEmpty{
+            postulate_description_text = persona["nbCompleto"].stringValue + " Se ha postulado a la beca " + beca["nbBeca"].stringValue
+        } else if !financiamiento.isEmpty {
+            postulate_description_text = persona["nbCompleto"].stringValue + " Se ha postulado al financiamiento " + financiamiento["nbFinanciamiento"].stringValue
+        }
+        
+        postulate_description.text = postulate_description_text
+        
+        //Fecha de Postulacion
+        var fechaPostulacion = data_json["fechaPostulacion"].stringValue
+        var date_complete_array = fechaPostulacion.components(separatedBy: "T")
+        let date_string = date_complete_array[0]
+        var day = get_day_of_week(today:date_string)
+        var date = get_date_complete(date_complete_string: fechaPostulacion )
+        postulate_date.text = day + " " + date
+        
+        // Titulo
+        postulate_name_postulate.text = "Nueva Postulacion"
+        
+        // Datos de la Persona
+        postulate_name.text = persona["nbCompleto"].stringValue
+        postulate_email.text = persona["desCorreo"].stringValue
+        postulate_phone.text = persona["desTelefono"].stringValue
+        
+        var location_json = JSON(persona["Direcciones"])
+        var text_location = ""
+        if location_json["nbPais"].stringValue == "México"{
+            text_location = "\(location_json["desDireccion"].stringValue), \(location_json["nbCiudad"].stringValue), \(location_json["nbMunicipio"].stringValue), \(location_json["nbEstado"].stringValue), \(location_json["nbPais"].stringValue), \(location_json["numCodigoPostal"].stringValue)"
+        } else{
+            text_location = location_json["nbPais"].stringValue
+        }
+        
         postulate_location.text = text_location
         
         
         // Imagen
-        var pathImage = data_json["pathFoto"].stringValue
+        var pathImage = persona["pathFoto"].stringValue
         pathImage = pathImage.replacingOccurrences(of: "~", with: "")
         pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
+        let url =  "\(String(describing: Defaults[.desRutaFTP]))\(pathImage)"
         let URL = Foundation.URL(string: url)
-        let image_default = UIImage(named: "default.png")
+        let image_default = UIImage(named: "ic_user_profile.png")
         postulate_image.kf.setImage(with: URL, placeholder: image_default)
         
+    }
+
+    func set_data_postulado(){
+        //debugPrint(self.detail)
+        
+        var data_json = JSON(self.detail)
+        var persona = JSON(data_json["person"])
+        var type = JSON(data_json["type"])
+        
+        
+        // Fecha
+        let fechaPostulacion = data_json["fechaPostulacion"].stringValue
+        var date_complete_array = fechaPostulacion.components(separatedBy: "T")
+        let date_string = date_complete_array[0]
+        let day = get_day_of_week(today:date_string)
+        let date = get_date_complete(date_complete_string: fechaPostulacion )
+        postulate_date.text = day + " " + date
+        
+        // Titulo
+        let nbLicenciatura = type["nbLicenciatura"].stringValue
+        let postulate_description_text = persona["nbCompleto"].stringValue + " Se ha postulado al programa académico " + nbLicenciatura
+        
+        // Descripcion
+        postulate_name_postulate.text = postulate_description_text
+        
+        // Datos de la Persona
+        postulate_description.text = ""
+        postulate_name.text = persona["nbCompleto"].stringValue
+        postulate_email.text = persona["desCorreo"].stringValue
+        postulate_phone.text = persona["desTelefono"].stringValue
+        
+        var location_json = JSON(persona["Direcciones"])
+        var text_location = ""
+        if location_json["nbPais"].stringValue == "México"{
+            text_location = "\(location_json["desDireccion"].stringValue), \(location_json["nbCiudad"].stringValue), \(location_json["nbMunicipio"].stringValue), \(location_json["nbEstado"].stringValue), \(location_json["nbPais"].stringValue), \(location_json["numCodigoPostal"].stringValue)"
+        } else{
+            text_location = location_json["nbPais"].stringValue
+        }
+        
+        postulate_location.text = text_location
+        
+        
+        // Imagen
+        var pathImage = persona["pathFoto"].stringValue
+        pathImage = pathImage.replacingOccurrences(of: "~", with: "")
+        pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
+        let url =  "\(String(describing: Defaults[.desRutaFTP]))\(pathImage)"
+        let URL = Foundation.URL(string: url)
+        let image_default = UIImage(named: "ic_user_profile.png")
+        postulate_image.kf.setImage(with: URL, placeholder: image_default)
     }
     
     @IBAction func on_click_email(_ sender: Any) {
@@ -133,7 +230,7 @@ class DetailViewController: BaseViewController {
     
     @IBAction func on_click_phone(_ sender: Any) {
         
-        let busPhone = "9999018357"
+        let busPhone = postulate_phone.text
         
         if let url = URL(string: "tel://\(busPhone)"), UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {

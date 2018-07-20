@@ -8,13 +8,14 @@
 
 import UIKit
 import SwiftyJSON
+import SwiftyUserDefaults
 
 class PackagesViewController:BaseViewController, UITableViewDelegate, UITableViewDataSource, PayPalPaymentDelegate {
     
     @IBOutlet var tableView: UITableView!
     
     var webServiceController = WebServiceController()
-    var items:NSArray = []
+    var items:NSMutableArray = []
     var selected_idPaquete = 0;
 
   
@@ -58,7 +59,26 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     func GetPaquetesDisponibles(status: Int, response: AnyObject){
         var json = JSON(response)
         if status == 1{
-            items = json["Data"].arrayValue as NSArray
+            let list_items = json["Data"].arrayValue
+            for i in 0..<list_items.count{
+                var item = JSON(list_items[i])
+                
+                if item["idPaquete"].intValue == Defaults[.package_idPaquete]{
+                    self.items.add(item)
+                }
+                
+            }
+            
+            
+            for i in 0..<list_items.count{
+                var item = JSON(list_items[i])
+                
+                if item["idPaquete"].intValue != Defaults[.package_idPaquete]{
+                    self.items.add(item)
+                }
+                
+            }
+            
         }
         tableView.reloadData()
         hiddenGifIndicator(view: self.view)
@@ -122,6 +142,14 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         cell.label_postulacion.text = "Aplica postulación"
         cell.swich_postulacion.isOn = item["fgAplicaPostulacion"].boolValue
         
+        print("Paq Actual: \(Defaults[.package_idPaquete])")
+        print("For Paq: \(item["idPaquete"].intValue)" )
+        
+        if item["idPaquete"].intValue == Defaults[.package_idPaquete]{
+            cell.button_buy.setTitle("PAQUETE ACTUAL", for: .normal)
+            cell.button_buy.isEnabled = false
+        }
+        
         // setup_ux
         cell.clipsToBounds = true
         cell.layer.masksToBounds = true
@@ -137,8 +165,8 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     func setup_paypal(){
         payPalConfig.acceptCreditCards = acceptCreditCards;
         payPalConfig.merchantName = "Siva Ganesh Inc."
-        payPalConfig.merchantPrivacyPolicyURL = NSURL(string: "https://www.sivaganesh.com/privacy.html")! as URL
-        payPalConfig.merchantUserAgreementURL = NSURL(string: "https://www.sivaganesh.com/useragreement.html")! as URL
+        payPalConfig.merchantPrivacyPolicyURL = NSURL(string: "https://www.google.com")! as URL
+        payPalConfig.merchantUserAgreementURL = NSURL(string: "https://www.google.com")! as URL
         payPalConfig.languageOrLocale = NSLocale.preferredLanguages[0]
         payPalConfig.payPalShippingAddressOption = .payPal;
         PayPalMobile.preconnect(withEnvironment: environment)
@@ -164,9 +192,12 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
                 self.showGifIndicator(view: self.view)
 
                 let array_parameter = [
-                    "idUniversidad": 4,
+                    "idUniversidad": Defaults[.university_idUniveridad] ,
                     "idPaquete": self.selected_idPaquete
                 ]
+                
+                debugPrint(array_parameter)
+                
                 let parameter_json = JSON(array_parameter)
                 let parameter_json_string = parameter_json.rawString()
                 self.webServiceController.SaveVentaPaquete(parameters: parameter_json_string!, doneFunction: self.SaveVentaPaquete)
@@ -181,7 +212,15 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
          hiddenGifIndicator(view: self.view)
         var json = JSON(response)
         if status == 1{
-            showMessage(title: json["Mensaje"].stringValue, automatic: true)
+            
+            
+            let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
+            customAlert.info = json as AnyObject
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.delegate = self
+            self.present(customAlert, animated: true, completion: nil)
+            
         }else{
             showMessage(title: response as! String, automatic: true)
         }
@@ -191,6 +230,18 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     @objc func on_click_buy(sender: UIButton){
         let index = sender.tag
         
+        let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
+            self.payment(index: index)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancelar", style: .default) { (action) -> Void in
+        }
+        
+        showAlert("Atención", message: "Ya cuenta con un paquete activo. ¿Desea actualizarlo?", okAction: yesAction, cancelAction: cancelAction, automatic: false)
+        
+    }
+    
+    func payment(index:Int){
         /*
          
          "idPaquete": 11,
@@ -245,7 +296,17 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         else {
             print("Payment not processalbe: \(payment)")
         }
+        
+        
     }
 
+
+}
+
+extension PackagesViewController: DetailBuyViewControllerDelegate {
+    func okButtonTapped() {
+     
+    }
+    
 
 }

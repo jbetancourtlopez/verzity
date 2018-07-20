@@ -77,7 +77,7 @@ class QrCouponViewController: BaseViewController {
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
             
-            let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
+            let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
             let URL = Foundation.URL(string: url)
             let image = UIImage(named: "default.png")
             

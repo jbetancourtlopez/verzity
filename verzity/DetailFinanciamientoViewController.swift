@@ -73,7 +73,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         // Archivo
         let file_path = detail["pathArchivo"].stringValue
         if  !file_path.isEmpty{
-             label_file.text = "Descargar archivo adjunto"
+             label_file.text = "Descargar documento adjunto"
         }else{
              label_file.text = "No se encontró archivo adjunto"
         }
@@ -108,7 +108,7 @@ class DetailFinanciamientoViewController: BaseViewController {
          var pathImage = detail["pathImagen"].stringValue
          pathImage = pathImage.replacingOccurrences(of: "~", with: "")
          pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-         let url =  "\(String(describing: Config.desRutaMultimedia))\(pathImage)"
+         let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
          let URL = Foundation.URL(string: url)
          let image_default = UIImage(named: "default.png")
          image_caratule.kf.setImage(with: URL, placeholder: image_default)
@@ -169,7 +169,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         var file_path = detail["desRutaArchivo"].stringValue
         file_path = file_path.replacingOccurrences(of: "~", with: "")
         file_path = file_path.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Config.desRutaMultimedia))\(file_path)"
+        let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(file_path)"
         
         if  !file_path.isEmpty{
             openUrl(scheme: url)

@@ -42,6 +42,7 @@
     <!-- End Facebook-->
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+    <!-- Init Permisos de seguridad en Red -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -50,15 +51,22 @@
 		<dict>
 			<key>youtube.com</key>
 			<dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                <false/>
+                 <!--
 				<key>NSIncludesSubdomains</key>
 				<true/>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<key>NSTemporaryExceptionMinimumTLSVersion</key>
 				<string>TLSv1.2</string>
+                -->
 			</dict>
 		</dict>
 	</dict>
+    <!-- End Permisos de seguridad en Red -->
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This is required to get current location</string>
 	<key>NSPhotoLibraryUsageDescription</key>

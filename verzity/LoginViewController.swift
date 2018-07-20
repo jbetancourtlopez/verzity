@@ -86,18 +86,60 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
 
     @IBAction func on_click_login(_ sender: Any) {
-        login_universidad()
+        login_universidad(type:"normal")
         
     }
     
-    func login_universidad(){
+    func login_universidad(type:String){
+        
         if validate_form() == 0 {
             showGifIndicator(view: self.view)
-            let array_parameter = [
-                "pwdContrasenia": password.text,
-                "nbUsuario": email.text
-            ]
-            let parameter_json = JSON(array_parameter)
+           
+            var array_parameter_new:[String : Any]
+            
+            if  type == "normal"{
+                array_parameter_new = [
+                    "pwdContrasenia": password.text,
+                    "Personas": [
+                        "Dispositivos": [
+                            [
+                                "cvDispositivo": Defaults[.cvDispositivo],
+                                "cvFirebase":Defaults[.cvFirebase],
+                                "idDispositivo": 0
+                            ]
+                        ],
+                        "idDireccion": 0,
+                        "idPersona": 0
+                    ],
+                    "nbUsuario": email.text,
+                    "idUsuario": 0
+                    ] as [String : Any]
+            }else{
+                
+                array_parameter_new = [
+                    "cvFacebook": password.text,
+                    "pwdContrasenia": "",
+                    "Personas": [
+                        "Dispositivos": [
+                            [
+                                "cvDispositivo": Defaults[.cvDispositivo],
+                                "cvFirebase":Defaults[.cvFirebase],
+                                "idDispositivo": 0
+                            ]
+                        ],
+                        "idDireccion": 0,
+                        "idPersona": 0
+                    ],
+                    "nbUsuario": email.text,
+                    "idUsuario": 0
+                    ] as [String : Any]
+            }
+            
+           
+            
+            
+            
+            let parameter_json = JSON(array_parameter_new)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.IngresarAppUniversidad(parameters: parameter_json_string!, doneFunction: IngresarAppUniversidad)
         }
@@ -113,7 +155,8 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             let personas = JSON(data["Personas"])
             let universidades_list = personas["Universidades"].array
             let universidades = JSON(universidades_list![0])
-            let paquete = JSON(universidades["VentasPaquetes"])
+            let paquete_list = JSON(universidades["VentasPaquetes"])
+            let paquete = JSON(paquete_list[0])
             let direccion_uni = JSON(universidades["Direcciones"])
             let direccion_rep = JSON(personas["Direcciones"])
             
@@ -324,7 +367,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     self.is_click_facebook = 1
                     
                     
-                    self.login_universidad()
+                    self.login_universidad(type:"facebook")
                     
                     /*
                     

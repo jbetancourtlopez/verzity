@@ -163,7 +163,7 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         blackScreen.addGestureRecognizer(tapGestRecognizer)
     }
     
-    func sigout(){
+    func sigout(type: Int){
         // Borramos los datos de session
         setSettings(key: "profile_menu", value: "")
         Defaults[.type_user] = 0
@@ -231,11 +231,16 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         Defaults[.add_uni_dcLatitud] = 0.0
         Defaults[.add_uni_dcLongitud] = 0.0
         
-        // Cambiamos de vista
-        _ = self.navigationController?.popToRootViewController(animated: false)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController
-        UIApplication.shared.keyWindow?.rootViewController = vc
+        if type == 1{
+            // Cambiamos de vista
+            _ = self.navigationController?.popToRootViewController(animated: false)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }else if type == 2{
+            exit(0)
+        }
+        
     }
 }
 
@@ -274,7 +279,10 @@ extension MainViewController: SidebarViewDelegate {
                 break
             case "sigout":
                 print("Salir")
-                sigout()
+                sigout(type: 1)
+                break
+        case "sigout_academic":
+                sigout(type: 2)
                 break
             default:
                 break

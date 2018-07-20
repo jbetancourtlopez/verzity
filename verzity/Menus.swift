@@ -97,9 +97,9 @@ struct Menus{
             "type": "profile_academic"
         ],
         [
-            "name":"Cerrar sesión",
+            "name":"Salir",
             "image":"ic_action_close.png",
-            "type": "sigout"
+            "type": "sigout_academic"
         ]
         
         ] as [Any]
