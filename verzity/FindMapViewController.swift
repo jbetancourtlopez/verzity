@@ -162,7 +162,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
     // MARK: - MKMapViewDelegate methods
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let visibleRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 10000, 10000)
-        self.mapView.setRegion(self.mapView.regionThatFits(visibleRegion), animated: true)
+        //self.mapView.setRegion(self.mapView.regionThatFits(visibleRegion), animated: true)
     }
     
     

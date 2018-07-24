@@ -46,6 +46,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     
     func GetList(status: Int, response: AnyObject){
         var json = JSON(response)
+        //debugPrint(json)
         if status == 1{
             items = json["Data"].arrayValue as NSArray
             
@@ -58,8 +59,10 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
                     print("Entro a Licenciatura")
                     let item = [
                         "person" : JSON(item_json["persona"]),
+                        "NombreSeccion" : JSON(item_json["NombreSeccion"]),
+                        
                         "fechaPostulacion": item_json["fechaPostulacion"].stringValue,
-                        "type":  JSON(item_json["licenciatura"]),
+                        "type":  JSON(item_json["licenciatura"])
                     ]  as [String : Any]
                     list_licensature.append(item)
                     
@@ -67,25 +70,40 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
                 else if  !item_json["beca"].isEmpty {
                     let item = [
                         "person" : JSON(item_json["persona"]),
+                         "NombreSeccion" : JSON(item_json["NombreSeccion"]),
                         "fechaPostulacion": item_json["fechaPostulacion"].stringValue,
-                        "type": JSON(item_json["beca"]),
+                        "type": JSON(item_json["beca"])
                         ] as [String : Any]
                     list_becas.append(item)
                     
                 } else if  !item_json["financiamiento"].isEmpty {
                     let item = [
                         "person" : JSON(item_json["persona"]),
+                         "NombreSeccion" : JSON(item_json["NombreSeccion"]),
                          "fechaPostulacion": item_json["fechaPostulacion"].stringValue,
-                        "type": JSON(item_json["financiamiento"]),
+                        "type": JSON(item_json["financiamiento"])
                         ] as [String : Any]
                     list_financing.append(item)
                 }
             }
             
-            list_postulate.append(list_licensature)
-            list_postulate.append(list_becas)
-            list_postulate.append(list_financing)
-            list_sections = ["Licenciaturas", "Becas", "Financiamientos"]
+            
+            if list_licensature.count > 0 {
+                list_postulate.append(list_licensature)
+                list_sections.append("Programas académicos")
+            }
+            
+            if  list_becas.count > 0 {
+                list_postulate.append(list_becas)
+                list_sections.append("Becas")
+            }
+            
+            if list_financing.count > 0 {
+                list_postulate.append(list_financing)
+                list_sections.append("Financiamientos")
+            }
+            
+            
             
         }
         tableView.reloadData()
@@ -114,6 +132,9 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         return section_item.count // count
     }
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45.0
+    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as! HeaderTableViewCell
@@ -143,7 +164,16 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         
         var postulate_name = ""
         if indexPath.section == 0 {
-            postulate_name = type["nbLicenciatura"].stringValue
+            debugPrint(type)
+            var catNivelEstudios = JSON(type["CatNivelEstudios"])
+            
+            let nbNivelEstudios = catNivelEstudios["nbNivelEstudios"].stringValue
+            print(nbNivelEstudios)
+            
+            postulate_name = "\(type["nbLicenciatura"].stringValue) - \(nbNivelEstudios)"
+            
+            print(postulate_name)
+            
         } else  if indexPath.section == 1 {
             postulate_name = type["nbBeca"].stringValue
         } else  if indexPath.section == 2 {

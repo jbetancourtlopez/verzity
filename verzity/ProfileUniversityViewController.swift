@@ -80,7 +80,6 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
             if  validate_form_first == 0{
                 
                 data_form["first_name_university"] = firstVC?.first_name_university.text
-                data_form["first_name_representative"] = firstVC?.first_name_representative.text
                 data_form["first_description"] = firstVC?.first_description.text
                 data_form["first_web"]  = firstVC?.first_web.text
                 data_form["first_phone"] = firstVC?.first_phone.text

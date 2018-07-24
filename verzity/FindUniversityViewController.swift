@@ -126,7 +126,9 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
             
-            let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
+            let desRutaMultimedia = Defaults[.desRutaMultimedia]!
+            
+            let url =  "\(desRutaMultimedia)\(pathImage)"
             let URL = Foundation.URL(string: url)
             let image_default = UIImage(named: "default.png")
             image?.kf.setImage(with: URL, placeholder: image_default)

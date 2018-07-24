@@ -155,7 +155,10 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         var pathImage = item_university["pathLogo"].stringValue
         pathImage = pathImage.replacingOccurrences(of: "~", with: "")
         pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
+        
+        let desRutaMultimedia = Defaults[.desRutaMultimedia]!
+
+        let url =  "\(desRutaMultimedia)\(pathImage)"
         let URL = Foundation.URL(string: url)
         let image_default = UIImage(named: "default.png")
         cell.icon.kf.setImage(with: URL, placeholder: image_default)

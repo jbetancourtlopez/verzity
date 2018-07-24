@@ -126,9 +126,13 @@ class DetailBecasViewController: BaseViewController {
         let maxHeight:CGFloat = detail_description.font!.lineHeight * amountOfLinesToBeShown
         detail_description.sizeThatFits(CGSize(width: detail_description.frame.size.width, height:maxHeight))
         if  !file_path.isEmpty{
-             detail_file.text = "Descargar documento adjunto"
+             detail_file.text = "Ver documento adjunto"
         }else{
-             detail_file.text = "No se encontró archivo adjunto"
+            
+            detail_file.text = ""
+            icon_file.isHidden = true
+            btn_file.isHidden = true
+            
         }
        
         icon_file.image = icon_file.image?.withRenderingMode(.alwaysTemplate)

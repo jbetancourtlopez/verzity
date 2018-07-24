@@ -106,17 +106,16 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         debugPrint(info)
         
         
-        if let localUrl = (info[UIImagePickerControllerMediaURL] ?? info[UIImagePickerControllerReferenceURL]) as? NSURL {
+        let localUrl = (info[UIImagePickerControllerMediaURL] ?? info[UIImagePickerControllerReferenceURL]) as? URL
             
-            print (localUrl)
-            //if you want to get the image name
-            let imageName = localUrl.path!
-            print(imageName)
-            let remotePath = "/fileprovider.png"
+        print (localUrl)
+        //if you want to get the image name
+        let imageName = localUrl?.path
+        print(imageName)
             
             
-        
-        }
+            
+      
         
         /*
         
@@ -128,6 +127,9 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         var uIImagePickerControllerImageURL = info["UIImagePickerControllerImageURL"] as! URL
         
         */
+        
+        let remotePath = "/fileprovider.png"
+        //webdav?.copyItem(localFile: localUrl!, to: remotePath, completionHandler: nil)
         
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
@@ -166,8 +168,10 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     
 
     @IBAction func on_click_register(_ sender: Any) {
+        print("Registro")
+        //upload(name_image: "asset.JPG")
         
-        /*
+        
         if validate_form() == 0 {
             
             showGifIndicator(view: self.view)
@@ -207,7 +211,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             webServiceController.CrearCuentaAcceso(parameters: parameter_json_string!, doneFunction: CrearCuentaAcceso)
  
  
-        }*/
+        }
     }
     
     
@@ -297,10 +301,14 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     
     
     func upload(name_image: String){
-        let localURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(name_image)
-        let remotePath = "/fileprovider.png"
+        print("upload")
+        let localURL = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask).first!.appendingPathComponent(name_image)
+    
+
+        print(localURL)
+        let remotePath = "/\(name_image)"
         
-        let progress = webdav?.copyItem(localFile: localURL, to: remotePath, completionHandler: nil)
+        webdav?.copyItem(localFile: localURL, to: remotePath, completionHandler: nil)
         
     }
     
@@ -337,12 +345,14 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     }
     
     func fileproviderProgress(_ fileProvider: FileProviderOperations, operation: FileOperationType, progress: Float) {
+        print("Entro")
         switch operation {
         case .copy(source: let source, destination: let dest) where dest.hasPrefix("file://"):
             print("Downloading \(source) to \((dest as NSString).lastPathComponent): \(progress * 100) completed.")
         case .copy(source: let source, destination: let dest) where source.hasPrefix("file://"):
             print("Uploading \((source as NSString).lastPathComponent) to \(dest): \(progress * 100) completed.")
         case .copy(source: let source, destination: let dest):
+            print("Copiando")
             print("Copy \(source) to \(dest): \(progress * 100) completed.")
         default:
             break

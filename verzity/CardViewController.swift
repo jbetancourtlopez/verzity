@@ -11,6 +11,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
 
 class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -115,13 +116,25 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         var name = ""
         var lblDescription = ""
         var pathImage = ""
+        let size = view.frame.width
+        var size_letter = 13.0
+        
+        if  size <= 320.0{
+            size_letter = 11.0
+        }
 
         // Becas
         if type == "becas" {
             title = item["nbBeca"].stringValue
-            name = "Autor"
+            name = "Universidad que ofrece la beca"
             var universidad = JSON(item["Universidades"])
+            
             lblDescription = universidad["nbUniversidad"].stringValue
+            
+            cell.name.font = UIFont.systemFont(ofSize: CGFloat(size_letter))
+            
+            cell.lblDescription.font =  UIFont.boldSystemFont(ofSize: 14.0)
+            
             pathImage = item["pathImagen"].stringValue
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
@@ -130,8 +143,16 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         // Financiamiento
         if type == "financing" {
             title = item["nbFinanciamiento"].stringValue
-            name = "Autor"
-            lblDescription = item["desFinancimiento"].stringValue
+            name = "Universidad que ofrece el financiamiento"
+            
+            var universidades = JSON(item["Universidades"])
+            
+            lblDescription = universidades["nbUniversidad"].stringValue
+            cell.name.font = UIFont.systemFont(ofSize: CGFloat(size_letter))
+           
+           
+            cell.lblDescription.font =  UIFont.boldSystemFont(ofSize: 14.0)
+            
             pathImage = item["pathArchivo"].stringValue
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
@@ -140,10 +161,10 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         //Cupones
         if type == "coupons" {
             title = item["nbCupon"].stringValue
-            name = "Vencimiento"
+            name = "Vencimiento:"
             let feInicio = (item["feInicio"].stringValue).components(separatedBy: "T")
             let feFin = (item["feFin"].stringValue).components(separatedBy: "T")
-            lblDescription = "\(feInicio[0]) - \(feFin[0])"
+            lblDescription = "\(feFin[0])"
             
             var imagenesCupones = item["ImagenesCupones"].arrayValue
             var cuponImagen = JSON(imagenesCupones[0])
@@ -154,7 +175,11 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         
         // ------
-        let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
+        let url_a = Defaults[.desRutaMultimedia]!
+        let url =  "\(url_a)\(pathImage)"
+        
+        
+        print(url)
         let URL = Foundation.URL(string: url)
         let image = UIImage(named: "default.png")
         

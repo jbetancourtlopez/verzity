@@ -73,9 +73,12 @@ class DetailFinanciamientoViewController: BaseViewController {
         // Archivo
         let file_path = detail["pathArchivo"].stringValue
         if  !file_path.isEmpty{
-             label_file.text = "Descargar documento adjunto"
+             label_file.text = "Ver documento adjunto"
         }else{
              label_file.text = "No se encontró archivo adjunto"
+            label_file.isHidden = true
+            icon_file.isHidden = true
+            button_file.isHidden = true
         }
         
         var universidad = JSON(detail["Universidades"])
@@ -87,9 +90,9 @@ class DetailFinanciamientoViewController: BaseViewController {
         // Web
         var desSitioWeb = universidad["desSitioWeb"].stringValue
         if desSitioWeb.isEmpty {
-            desSitioWeb = "http://www.dwmedios.com"
+            label_web.isHidden = true
+            
         }
-        label_web.text = desSitioWeb
 
         // Name universidad
         var nbUniversidad = universidad["nbUniversidad"].stringValue

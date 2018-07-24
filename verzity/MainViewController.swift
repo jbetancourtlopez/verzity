@@ -111,12 +111,12 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "travel": //Eventos
             print("travel")
-            /*
-            let vc = storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewControllerID") as! SelectLocationViewController
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailMapViewControllerID") as! DetailMapViewController
             self.show(vc, sender: nil)
  
             //showMessage(title: "En proceso ...", automatic: true)
-            */
+            
             break
         case "package": //Eventos
             print("package")

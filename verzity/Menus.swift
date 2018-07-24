@@ -72,7 +72,7 @@ struct Menus{
             "type": "find_next_to_me"
         ],
         [
-            "name":"En EUU.",
+            "name":"En EE. UU.",
             "image":"ic_action_aeroplane.png",
             "type": "find_euu"
         ],
@@ -122,7 +122,7 @@ struct Menus{
             "type": "profile_representative"
         ],
         [
-            "name":"Mensajes",
+            "name":"Notificaciones",
             "image":"ic_action_notifications.png",
             "type": "notifications"
         ],

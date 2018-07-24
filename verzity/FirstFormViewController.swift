@@ -15,7 +15,6 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var first_name_university: FloatableTextField!
-    @IBOutlet var first_name_representative: FloatableTextField!
     @IBOutlet var first_description: FloatableTextField!
     @IBOutlet var first_web: FloatableTextField!
     @IBOutlet var first_phone: FloatableTextField!
@@ -44,13 +43,7 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
             //first_name_university.setState(.DEFAULT, with: "")
         }
         
-        //Nombre representante
-        if FormValidate.isEmptyTextField(textField: first_name_representative){
-            //first_name_representative.setState(.FAILED, with: StringsLabel.required)
-            count_error = count_error + 1
-        }else{
-            //first_name_representative.setState(.DEFAULT, with: "")
-        }
+     
         
         //Descripcion
         if FormValidate.isEmptyTextField(textField: first_description){
@@ -108,7 +101,6 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
     
     func setup_textfield(){
         first_name_university.floatableDelegate = self
-        first_name_representative.floatableDelegate = self
         first_description.floatableDelegate = self
         first_web.floatableDelegate = self
         first_phone.floatableDelegate = self
@@ -117,7 +109,6 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
     
     func set_data(){
         first_name_university.text = Defaults[.university_nbUniversidad]
-        first_name_representative.text = Defaults[.university_nbReprecentante]
         first_description.text = Defaults[.university_desUniversidad]
         first_web.text = Defaults[.university_desSitioWeb]
         first_phone.text = Defaults[.university_desTelefono]

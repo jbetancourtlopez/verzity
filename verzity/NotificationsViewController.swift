@@ -32,8 +32,9 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
          "nbCompleto": Defaults[.academic_name] ,
          "desTelefono": Defaults[.academic_phone]
          ] as [String : Any]
- 
         
+        print("Notificaciones")
+        debugPrint(array_parameter)
         
         let array_parameter_test = [
             "desCorreo": "marco.yam.catina@gmail.com",
