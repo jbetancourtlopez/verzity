@@ -18,6 +18,11 @@ class ListTableViewCell: UITableViewCell{
     }
 }
 
+class CollectionViewCell: UICollectionViewCell{
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var icon: UIImageView!
+}
+
 class AcademicsTableViewCell: UITableViewCell{
  
     @IBOutlet var name: UILabel!
@@ -59,6 +64,9 @@ class HeaderTableViewCell: UITableViewCell {
 
 class PackageTableViewCell: UITableViewCell {
 
+    
+    
+    @IBOutlet var content_package: UIView!
     @IBOutlet var title_top: UILabel!
     
     @IBOutlet var label_financing: UILabel!
@@ -66,7 +74,9 @@ class PackageTableViewCell: UITableViewCell {
     
     @IBOutlet var swich_beca: UISwitch!
     @IBOutlet var swich_financing: UISwitch!
-    @IBOutlet var description_package: UILabel!
+   // @IBOutlet var description_package: UILabel!
+    
+    @IBOutlet var description_package: UITextView!
     @IBOutlet var label_postulacion: UILabel!
     @IBOutlet var swich_postulacion: UISwitch!
     @IBOutlet var button_buy: UIButton!

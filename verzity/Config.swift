@@ -64,4 +64,5 @@ final class Singleton {
     static let SaveVentaPaquete = "SaveVentaPaquete"  
     static let VerificarEstatusUniversidad = "VerificarEstatusUniversidad"  
     static let VerificarFavorito = "VerificarFavorito"
+    static let CerrarSesion = "cerrarSesion"
 }

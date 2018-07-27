@@ -37,9 +37,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         super.viewWillAppear(animated)
         set_map()
         load_data()
-        //setFakeUserPosition()
         mapView.showsUserLocation = true
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,8 +45,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         determineCurrentLocation()
     }
     
-    func determineCurrentLocation()
-    {
+    func determineCurrentLocation(){
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -95,10 +92,12 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         hiddenGifIndicator(view: self.view)
         
         if  type == "find_next_to_me" {
+            
             let array_parameter = [
-                "nombreEstado": Defaults[.academic_state]!,
+                "nombreEstado": !(Defaults[.academic_state]?.isEmpty)! ? Defaults[.academic_state]! : "Yucatán",
                 "extranjero": false
                 ] as [String : Any]
+            debugPrint(array_parameter)
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             print(parameter_json_string!)
@@ -128,7 +127,6 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
     
     func set_map() {
         
-        
         for i in 0..<self.items.count {
             
             var item = JSON(items[i])
@@ -140,7 +138,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
             var pathImage = item["pathLogo"].stringValue
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-            let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
+            let url =  "\(Defaults[.desRutaMultimedia]!)\(pathImage)"
             let avatar = url
             
             
@@ -183,8 +181,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("Ir al Detalle")
-        
+        print("Ir al Detalle Universidad")
          if let pdvc = segue.destination as? DetailUniversityViewController {
             pdvc.idUniversidad = self.idUniversidad
          }

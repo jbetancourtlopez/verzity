@@ -22,16 +22,34 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup_ux()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         
-         let array_parameter = [
-         "desCorreo": Defaults[.academic_email],
-         "idPersona": Defaults[.academic_idPersona],
-         "idDireccion": Defaults[.academic_idDireccion],
-         "nbCompleto": Defaults[.academic_name] ,
-         "desTelefono": Defaults[.academic_phone]
-         ] as [String : Any]
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        items = []
+        tableView.reloadData()
+        load_notifications()
+    }
+    
+    func load_notifications(){
+        let array_parameter = [
+            "desCorreo": Defaults[.academic_email]!,
+            "idPersona": Defaults[.academic_idPersona]!,
+            "idDireccion": Defaults[.academic_idDireccion]!,
+            "nbCompleto": Defaults[.academic_name]! ,
+            "desTelefono": Defaults[.academic_phone]!,
+            "Dispositivos": [
+                [
+                    "cvDispositivo": Defaults[.cvDispositivo]!,
+                    "cvFirebase": Defaults[.cvFirebase]!,
+                    "idDispositivo": Defaults[.idDispositivo]!
+                ]
+            ]
+            ] as [String : Any]
         
         print("Notificaciones")
         debugPrint(array_parameter)
@@ -49,13 +67,15 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         webServiceController.ConsultarNotificaciones(parameters: parameter_json_string!, doneFunction: ConsultarNotificaciones)
     }
     
+    
     func ConsultarNotificaciones(status: Int, response: AnyObject){
         var json = JSON(response)
         print(json)
         if status == 1{
             items = json["Data"].arrayValue as NSArray
-            tableView.reloadData()
+            
         }
+        tableView.reloadData()
         hiddenGifIndicator(view: self.view)
     }
     

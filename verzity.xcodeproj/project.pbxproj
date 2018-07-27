@@ -25,6 +25,8 @@
 		922ABFBB20F6BA0300C5A56C /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922ABFB720F6BA0200C5A56C /* CustomAnnotationView.swift */; };
 		922ABFBC20F6BA0300C5A56C /* DetailMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922ABFB820F6BA0300C5A56C /* DetailMapView.xib */; };
 		922ABFBD20F6BA0300C5A56C /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922ABFB920F6BA0300C5A56C /* DetailMapView.swift */; };
+		922E647C210A6776005B1699 /* DetailPdfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E647B210A6776005B1699 /* DetailPdfViewController.swift */; };
+		922E647E210A6D23005B1699 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E647D210A6D23005B1699 /* Downloader.swift */; };
 		924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */; };
 		924132E520E2881300CEBC81 /* FindMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132E420E2881300CEBC81 /* FindMapViewController.swift */; };
 		924132E720E2B42F00CEBC81 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132E620E2B42F00CEBC81 /* CustomView.swift */; };
@@ -126,6 +128,8 @@
 		922ABFB720F6BA0200C5A56C /* CustomAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		922ABFB820F6BA0300C5A56C /* DetailMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailMapView.xib; sourceTree = "<group>"; };
 		922ABFB920F6BA0300C5A56C /* DetailMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
+		922E647B210A6776005B1699 /* DetailPdfViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfViewController.swift; sourceTree = "<group>"; };
+		922E647D210A6D23005B1699 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUniversityViewController.swift; sourceTree = "<group>"; };
 		924132E420E2881300CEBC81 /* FindMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMapViewController.swift; sourceTree = "<group>"; };
 		924132E620E2B42F00CEBC81 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomView.swift; path = ../CustomView.swift; sourceTree = "<group>"; };
@@ -385,6 +389,7 @@
 				9286641820FA448C00876AC0 /* SplashViewController.swift */,
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
+				922E647B210A6776005B1699 /* DetailPdfViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -409,6 +414,7 @@
 				92DD410720EC11560035EF4E /* Dates.swift */,
 				92A64B7520EE8A3B00E96152 /* StringsLabel.swift */,
 				92A64B7720EE8D8300E96152 /* FormValidate.swift */,
+				922E647D210A6D23005B1699 /* Downloader.swift */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -641,6 +647,7 @@
 				92E698C120EAFE8E00F69FCD /* QrCouponViewController.swift in Sources */,
 				92226FE520F59E4E00ED30E0 /* FirstFormViewController.swift in Sources */,
 				92E544C720DAD10F0062A9CA /* CheckboxButton.swift in Sources */,
+				922E647C210A6776005B1699 /* DetailPdfViewController.swift in Sources */,
 				92682D2420DB749A00E6C4A8 /* BaseViewCell.swift in Sources */,
 				9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */,
 				92E698C320EB146400F69FCD /* NotificationsViewController.swift in Sources */,
@@ -665,6 +672,7 @@
 				92DD410820EC11560035EF4E /* Dates.swift in Sources */,
 				924132ED20E2F10900CEBC81 /* ListUniversitiesViewController.swift in Sources */,
 				9267011F20D8462400E638A1 /* verzity.xcdatamodeld in Sources */,
+				922E647E210A6D23005B1699 /* Downloader.swift in Sources */,
 				924132F120E34EE800CEBC81 /* DetailBecasViewController.swift in Sources */,
 				924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */,
 				922ABFBB20F6BA0300C5A56C /* CustomAnnotationView.swift in Sources */,

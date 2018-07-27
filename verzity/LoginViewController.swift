@@ -34,13 +34,13 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     var is_click_facebook = 0
     var facebook_name = ""
     var facebook_email = ""
-    var facebook_id = 0
+    var facebook_id = ""
     var facebook_url = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_uicontrols()
-        setup_ux()
+        
         
         Defaults[.cvDispositivo] = UIDevice.current.identifierForVendor!.uuidString
         print("Firebase Login: \(Defaults[.cvFirebase])")
@@ -62,6 +62,10 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         let tap_here = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_here))
         btnHere.isUserInteractionEnabled = true
         btnHere.addGestureRecognizer(tap_here)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setup_ux()
     }
     
    
@@ -87,7 +91,8 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
 
     @IBAction func on_click_login(_ sender: Any) {
         login_universidad(type:"normal")
-        
+        is_click_facebook = 0
+        password.text = ""
     }
     
     func login_universidad(type:String){
@@ -135,9 +140,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     ] as [String : Any]
             }
             
-           
-            
-            
+            debugPrint(array_parameter_new)
             
             let parameter_json = JSON(array_parameter_new)
             let parameter_json_string = parameter_json.rawString()
@@ -149,6 +152,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         hiddenGifIndicator(view: self.view)
         debugPrint(response)
         if status == 1{
+            
             var json = JSON(response)
             let data = JSON(json["Data"])
             
@@ -159,10 +163,19 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             let paquete = JSON(paquete_list[0])
             let direccion_uni = JSON(universidades["Direcciones"])
             let direccion_rep = JSON(personas["Direcciones"])
-            
+            let dispositivos_array = personas["Dispositivos"].arrayValue
+
             
             setSettings(key: "profile_menu", value: "profile_university")
             Defaults[.type_user] = 2
+
+            //Dispostivo
+
+            Defaults[.idDispositivo] = 0
+            if dispositivos_array.count > 0{
+                var dispositivo = JSON(dispositivos_array[0])
+                Defaults[.idDispositivo] = dispositivo["idDispositivo"].intValue
+            }
             
             //Paquete
             Defaults[.package_idUniveridad] = paquete["idUniversidad"].intValue
@@ -236,8 +249,9 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         
         let array_parameter = [
             "cvFirebase": Defaults[.cvFirebase],
-            "cvDispositivo": Defaults[.cvDispositivo]
-        ]
+            "cvDispositivo": Defaults[.cvDispositivo]!,
+            "idDispositivo": 0
+            ] as [String : Any]
         
         debugPrint(array_parameter)
         
@@ -361,7 +375,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     
                     self.facebook_name = self.dict["name"] as! String
                     self.facebook_email = self.dict["email"] as! String
-                    self.facebook_id = self.dict["id"] as! Int
+                    self.facebook_id = self.dict["id"] as! String
                     self.facebook_url = url
                     
                     self.is_click_facebook = 1

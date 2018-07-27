@@ -168,6 +168,8 @@ class DetailFinanciamientoViewController: BaseViewController {
     }
     
     @IBAction func on_click_file(_ sender: Any) {
+        
+        /*
         var detail = JSON(self.detail)
         var file_path = detail["desRutaArchivo"].stringValue
         file_path = file_path.replacingOccurrences(of: "~", with: "")
@@ -176,6 +178,19 @@ class DetailFinanciamientoViewController: BaseViewController {
         
         if  !file_path.isEmpty{
             openUrl(scheme: url)
-        }
+        }*/
+        
+        print("PDF")
+        var detail = JSON(self.detail)
+        var file_path = detail["pathArchivo"].stringValue
+        file_path = file_path.replacingOccurrences(of: "~", with: "")
+        file_path = file_path.replacingOccurrences(of: "\\", with: "")
+        let url =  "\(Defaults[.desRutaMultimedia]!)\(file_path)"
+        
+        print (url )
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailPdfViewControllerID") as! DetailPdfViewController
+        vc.url_string = url
+        self.show(vc, sender: nil)
     }
 }

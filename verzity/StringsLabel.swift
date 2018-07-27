@@ -19,6 +19,7 @@ class StringsLabel{
 
     static let account_invalid = "La información de la universidad se esta validando por el administrador, se le notificara por correo cuando este proceso concluya."
     
+    static let cancel_buy = "No podrá gozar los beneficios de VERZITY hasta que realice la adquisión de un paquete."
     // Patrones
     static let numero_letra = "AÁÀÄÂÃÅĄÆĀªaáàäâãåąæāªBbCÇĆČcçćčDĐdđEÉÈËÊĘĖĒeéèëêęėēFfGgHhĪĮÎÌÏÍIiíïìîįīIJjKkLlMmNŃnńÓOÒÖÔÕØŒŌºoóòöôõøœōºPpQqRrSŠsšTtUÚÜÙÛŪuúüùûūVvWwXxYyZz0123456789 "
     static let letras = "AÁÀÄÂÃÅĄÆĀªaáàäâãåąæāªBbCÇĆČcçćčDĐdđEÉÈËÊĘĖĒeéèëêęėēFfGgHhĪĮÎÌÏÍIiíïìîįīIJjKkLlMmNŃnńÓOÒÖÔÕØŒŌºoóòöôõøœōºPpQqRrSŠsšTtUÚÜÙÛŪuúüùûūVvWwXxYyZz "

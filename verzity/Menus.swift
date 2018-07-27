@@ -14,12 +14,14 @@ struct Menus{
         [
             "name":"Paquetes",
             "image":"ic_action_financiamiento.png",
-            "type": "package"
+            "type": "package",
+             "color": "#388E3C"
         ],
         [
             "name":"Postulados",
             "image":"ic_action_financiamiento.png",
-            "type": "postulate"
+            "type": "postulate",
+            "color": "#ff7b25"
         ],
        
         
@@ -29,28 +31,28 @@ struct Menus{
         [
             "name":"Buscar universidades",
             "image":"ic_searc_right.png",
-            "type": "find_university"
-        ],
-        [
-            "name":"Becas",
-            "image":"ic_action_ic_openbook.png",
-            "type": "becas"
+            "type": "find_university",
+            "color": "#388E3C"
+            
         ],
         [
             "name":"Financiamiento",
             "image":"ic_action_financiamiento.png",
-            "type": "financing"
+            "type": "financing",
+            "color": "#ff7b25"
         ],
         [
             "name":"Cupones y descuentos",
-            "image":"ic_action_cupon.png",
-            "type": "coupons"
+            "image":"ic_ticket",
+            "type": "coupons",
+            "color": "#F7BF25"
         ],
         [
-            "name":"Prueba",
-            "image":"ic_action_cupon.png",
-            "type": "travel"
-        ]
+            "name":"Becas",
+            "image":"ic_action_ic_openbook.png",
+            "type": "becas",
+            "color": "#32cb00"
+        ],
 
         
     ]

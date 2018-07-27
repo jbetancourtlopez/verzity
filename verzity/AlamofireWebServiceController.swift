@@ -21,7 +21,8 @@ class AlamofireWebServiceController {
     func sendRequest(url: String,  requestMethod: String,  jsonObject: String, completionHandler: @escaping (Any?, Error?) -> () ){
         
         let json_parameters: Parameters = ["json": jsonObject]
-        
+        print("Alamore")
+        debugPrint(json_parameters)
         if requestMethod == "GET" {
             Alamofire.request(url, method: .get, parameters: json_parameters)
                 .validate()

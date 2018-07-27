@@ -14,6 +14,8 @@ import SwiftyUserDefaults
 
 class DetailUniversityViewController: BaseViewController {
 
+    @IBOutlet var contentBottomView: UIView!
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var description_university: UILabel!
     @IBOutlet var name_universitity: UILabel!
     
@@ -40,10 +42,18 @@ class DetailUniversityViewController: BaseViewController {
     @IBOutlet var image_beca: UIImageView!
     @IBOutlet var label_beca: UITextView!
     @IBOutlet var button_beca: UIButton!
+    
+    
     // Financiamiento
     @IBOutlet var image_financing: UIImageView!
     @IBOutlet var label_financing: UITextView!
     @IBOutlet var button_financing: UIButton!
+    
+    
+    @IBOutlet var image_financing_top_contrain: NSLayoutConstraint!
+    @IBOutlet var button_financing_top_contrains: NSLayoutConstraint!
+    
+    @IBOutlet var label_financing_top_constrains: NSLayoutConstraint!
     
     var swipeGesture  = UISwipeGestureRecognizer()
     var webServiceController = WebServiceController()
@@ -63,7 +73,6 @@ class DetailUniversityViewController: BaseViewController {
         idUniversidad = idUniversidad as Int
        
         setup_ux()
-        print(idUniversidad)
         load_data()
         
         //Gestos
@@ -92,7 +101,6 @@ class DetailUniversityViewController: BaseViewController {
     func GetDetallesUniversidad(status: Int, response: AnyObject){
         
         var json = JSON(response)
-        debugPrint(json)
         if status == 1{
             self.detail_data = JSON(json["Data"]) as AnyObject
             let data = JSON(json["Data"])
@@ -117,9 +125,7 @@ class DetailUniversityViewController: BaseViewController {
                 }else{
                     self.count_current = self.count_current + 1
                 }
-                print("left")
             }else if sender.direction == .right{
-                print("right")
                 if (self.count_current <= 0){
                     self.count_current = self.list_images.count - 1
                 }else{
@@ -135,8 +141,6 @@ class DetailUniversityViewController: BaseViewController {
     }
     
     func set_image_slider(){
-        print("count_current: \(self.count_current)")
-        print("list_images_cont: \(self.list_images.count)")
         
         if self.list_images.count > 0 {
             let image_item = self.list_images[self.count_current]
@@ -232,9 +236,7 @@ class DetailUniversityViewController: BaseViewController {
         }
         hiddenGifIndicator(view: self.view)
     }
-    
-    
-    
+
     @IBAction func on_click_favorit(_ sender: Any) {
         print("Favorit")
         showGifIndicator(view: self.view)
@@ -249,8 +251,10 @@ class DetailUniversityViewController: BaseViewController {
     }
     
     func SetFavorito(status: Int, response: AnyObject){
+        
         var json = JSON(response)
         var data = JSON(json["Data"])
+        debugPrint(json)
         if status == 1{
             if  data["idFavoritos"].intValue == 0{
                 let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
@@ -260,7 +264,7 @@ class DetailUniversityViewController: BaseViewController {
                 button_favorit.setImage(image, for: .normal)
             }
         }else{
-            let image = UIImage(named: "ic_action_star")?.withRenderingMode(.alwaysTemplate)
+            let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
             button_favorit.setImage(image, for: .normal)
         }
         hiddenGifIndicator(view: self.view)
@@ -306,28 +310,28 @@ class DetailUniversityViewController: BaseViewController {
     }
     
     func set_data(){
-        //debugPrint(<#T##items: Any...##Any#>)
+      
         var university_json = JSON(self.detail_data)
         var address = JSON(university_json["Direcciones"])
+        
         var paquete_array = university_json["VentasPaquetes"].arrayValue
+        
         var fgAplicaBecas = false
         var fgAplicaFinanciamiento = false
         var fgAplicaPostulacion = false
+        
         if  paquete_array.count > 0 {
-            var paquete = JSON(paquete_array[0])
+            var paquete_json = JSON(paquete_array[0])
             print("Paquete")
+            
+            var paquete = JSON(paquete_json["Paquete"])
             debugPrint(paquete)
             
             fgAplicaBecas = paquete["fgAplicaBecas"].boolValue
             fgAplicaFinanciamiento = paquete["fgAplicaFinanciamiento"].boolValue
             fgAplicaPostulacion = paquete["fgAplicaPostulacion"].boolValue
-            
         }
        
-        
-        /*"fgAplicaBecas": false, "fgAplicaFinanciamiento": true, "fgAplicaPostulacion": false,*/
-        
-   
         
         var name_uniersity_text = university_json["nbUniversidad"].stringValue
         if  name_uniersity_text.isEmpty{
@@ -356,6 +360,13 @@ class DetailUniversityViewController: BaseViewController {
         
         name_universitity.text = name_uniersity_text
         description_university.text = university_json["desUniversidad"].stringValue
+        description_university.translatesAutoresizingMaskIntoConstraints = true
+        description_university.sizeToFit()
+        var height = description_university.frame.height
+        
+        scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 700 + height)
+        //contentBottomView.frame.
+        
         label_address.text = label_address_text
         label_web.text = label_web_text
         label_email.text = label_email_text
@@ -381,11 +392,31 @@ class DetailUniversityViewController: BaseViewController {
             button_postulate.isHidden = true
         }
         
+        if !fgAplicaBecas && fgAplicaFinanciamiento{
+            /*
+            image_beca.frame = CGRect(x: 0, y: 0, width: 50, height: 0)
+            button_beca.frame = CGRect(x: 0, y: 0, width: 50, height: 0)
+            label_beca.frame = CGRect(x: 0, y: 0, width: 50, height: 0)
+ 
+            
+           */ image_financing_top_contrain.constant = -35
+            button_financing_top_contrains.constant = -35
+            label_financing_top_constrains.constant = -35
+ 
+            
+        }
+        
         // Set Favorito
+       
+        
         let array_parameter = [
-            "idPersona": Defaults[.academic_idPersona],
-            "idUniversidad": idUniversidad
-        ]
+            "idUniversidad": idUniversidad as Int,
+            "idPersona": Defaults[.academic_idPersona]! as Int
+            ]  as [String : Any]
+        
+       // "idPersona": 86, "idUniversidad": 40
+        
+        debugPrint(array_parameter)
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.VerificarFavorito(parameters: parameter_json_string!, doneFunction: SetFavorito)

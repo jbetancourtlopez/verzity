@@ -10,19 +10,20 @@ import SwiftyJSON
 import SwiftyUserDefaults
 
 
-class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource{
+class MainViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate{
     
     var sidebarView: SidebarView!
     var blackScreen: UIView!
-    @IBOutlet weak var tableView: UITableView!
+    var webServiceController = WebServiceController()
+    
+    @IBOutlet var collectionView: UICollectionView!
+    
     var profile_menu:String = ""
     var menu_main = Menus.menu_main_academic
     weak var delegate:SidebarViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         setup_ux()
         
         profile_menu = getSettings(key: "profile_menu")
@@ -32,6 +33,17 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }else if profile_menu == "profile_university" {
             menu_main = Menus.menu_main_university as [AnyObject] as! [[String : String]]
         }
+        
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 3, left: 5, bottom: 0, right: 5)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 3
+        layout.minimumLineSpacing = 3
+        layout.itemSize = CGSize(width: ((self.view.frame.size.width/2) - 10), height: 120)
+        self.collectionView?.setCollectionViewLayout(layout, animated: false)
+        
+        
     }
 
     //On_click_Side_Menu
@@ -46,15 +58,40 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    // Collection View
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.menu_main.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+        let name = menu_main[indexPath.row]["name"]
+        let image = menu_main[indexPath.row]["image"]
+        
+        cell.name.text = name
+        cell.icon.image = UIImage(named: image!)
+        
+        cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
+        cell.icon.tintColor = UIColor.white
+        
+        cell.backgroundColor = hexStringToUIColor(hex: menu_main[indexPath.row]["color"]!)
+        
+        return cell
+    }
+    
     //Table View. -------
+    
+    /*
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.menu_main.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
-    }
+    }*/
     
+    /*
     // Set the spacing between sections
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5
@@ -65,8 +102,8 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
         return headerView
-    }
-    
+    }*/
+    /*
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
@@ -79,11 +116,11 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
         cell.icon.tintColor = Colors.green_dark
         return cell
-    }
+    }*/
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let menu_selected = menu_main[indexPath.section]["type"]
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+     
+        let menu_selected = menu_main[indexPath.row]["type"]
         switch String(menu_selected!) {
         case "find_university": //Promociones
             print("find_university")
@@ -116,7 +153,6 @@ class MainViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             self.show(vc, sender: nil)
  
             //showMessage(title: "En proceso ...", automatic: true)
-            
             break
         case "package": //Eventos
             print("package")
@@ -279,7 +315,8 @@ extension MainViewController: SidebarViewDelegate {
                 break
             case "sigout":
                 print("Salir")
-                sigout(type: 1)
+                
+                cerrarSesion()
                 break
         case "sigout_academic":
                 sigout(type: 2)
@@ -287,7 +324,6 @@ extension MainViewController: SidebarViewDelegate {
             default:
                 break
         }
-        
         
         /*Gradiente
         let gl = CAGradientLayer()
@@ -298,6 +334,29 @@ extension MainViewController: SidebarViewDelegate {
         //self.sidebarView.layer.addSublayer(gl)
          */
         
-   
     }
+    
+    func cerrarSesion(){
+        showGifIndicator(view: self.view)
+        let array_parameter = [
+            "cvDispositivo": Defaults[.cvDispositivo]!,
+            "cvFirebase": Defaults[.cvFirebase]!,
+            "idDispositivo": Defaults[.idDispositivo]!
+            ] as [String : Any]
+        
+        debugPrint(array_parameter)
+        
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.CerrarSesion(parameters: parameter_json_string!, doneFunction: cerrarSesion)
+    }
+    
+    func cerrarSesion(status: Int, response: AnyObject){
+        if status == 1{
+            sigout(type: 1)
+        }
+        sigout(type: 1)
+        
+    }
+    
 }

@@ -17,6 +17,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     var webServiceController = WebServiceController()
     var items:NSMutableArray = []
     var selected_idPaquete = 0;
+    var have_package = false
 
   
     // Init Paypal
@@ -42,11 +43,73 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = 60
         
+        
+        tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0)
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 1000.0
         setup_ux()
         load_data()
         setup_paypal()
+        setup_back_button()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.layoutSubviews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
+    func setup_back_button(){
+        let image = UIImage(named: "ic_file_download")?.withRenderingMode(.alwaysOriginal)
+        
+        
+        let button_back = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(on_click_back))
+        
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "back"), for: .normal)
+        button.setTitle("Inicio", for: .normal)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(on_click_back), for: .touchUpInside)
+
+        
+        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(customView: button)
+        
+        //self.navigationItem.leftBarButtonItem = button_back
+    }
+    
+    @objc func on_click_back(sender: AnyObject) {
+        print("Atras")
+        
+       
+        
+        if !have_package {
+            
+            let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
+                
+                _ = self.navigationController?.popToRootViewController(animated: false)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController
+                UIApplication.shared.keyWindow?.rootViewController = vc
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancelar", style: .default) { (action) -> Void in
+            }
+            
+            showAlert("¿Desea cancelar la compra?", message: StringsLabel.cancel_buy, okAction: yesAction, cancelAction: cancelAction, automatic: false)
+            
+            
+        }else{
+            _ = self.navigationController?.popToRootViewController(animated: false)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }
+      
+        
     }
     
     func load_data(){
@@ -64,6 +127,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
                 var item = JSON(list_items[i])
                 
                 if item["idPaquete"].intValue == Defaults[.package_idPaquete]{
+                    have_package = true
                     self.items.add(item)
                 }
                 
@@ -116,6 +180,14 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         return headerView
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PackageTableViewCell
         
@@ -131,6 +203,16 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         cell.title_top.text = item["nbPaquete"].stringValue
         cell.vigency.text = "\(item["dcDiasVigencia"].stringValue) días de vigencia. "
         cell.description_package.text = item["desPaquete"].stringValue
+        
+        //cell.description_package.translatesAutoresizingMaskIntoConstraints = true
+        //cell.description_package.sizeToFit()
+        //cell.description_package.isScrollEnabled = false
+        
+        var height = cell.description_package.frame.height
+        
+        //cell.content_package.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:(490 + 70))
+
+        cell.content_package.frame.size.height = 560
         
         // Swich
         cell.label_beca.text = "Aplica becas"
@@ -224,7 +306,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         }else{
             showMessage(title: response as! String, automatic: true)
         }
-       
     }
     
     @objc func on_click_buy(sender: UIButton){

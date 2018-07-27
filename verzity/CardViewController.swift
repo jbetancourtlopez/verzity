@@ -46,7 +46,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "financing":
             print("financing")
-            self.title = "Financiamiento"
+            self.title = "Financiamientos"
             let array_parameter = ["idUniversidad": idUniversidad]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
@@ -167,11 +167,15 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             lblDescription = "\(feFin[0])"
             
             var imagenesCupones = item["ImagenesCupones"].arrayValue
-            var cuponImagen = JSON(imagenesCupones[0])
+            pathImage = ""
+            if imagenesCupones.count > 0{
+                var cuponImagen = JSON(imagenesCupones[0])
+                
+                pathImage = cuponImagen["desRutaFoto"].stringValue
+                pathImage = pathImage.replacingOccurrences(of: "~", with: "")
+                pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
+            }
             
-            pathImage = cuponImagen["desRutaFoto"].stringValue
-            pathImage = pathImage.replacingOccurrences(of: "~", with: "")
-            pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
         }
         
         // ------

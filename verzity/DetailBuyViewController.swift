@@ -39,9 +39,13 @@ class DetailBuyViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupView()
+        
         animateView()
         set_data()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setupView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -57,12 +61,17 @@ class DetailBuyViewController: BaseViewController {
  */
         var json = JSON(info)
         var data = JSON(json["Data"])
+        
         Defaults[.package_idPaquete] = data["idPaquete"].intValue
         date_top.text = get_date_complete(date_complete_string: data["feVenta"].stringValue)
         
-        name.text = " NA"
+        
         vigency.text = get_date_complete(date_complete_string: data["feVigencia"].stringValue)
-        price.text = " NA"
+        
+        var paquete = JSON(data["Paquete"])
+        
+        name.text = paquete["nbPaquete"].stringValue
+        price.text = "MX $ " + paquete["dcCosto"].stringValue
     }
     
     func setupView() {

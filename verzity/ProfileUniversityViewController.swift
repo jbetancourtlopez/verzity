@@ -133,12 +133,11 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
                 "dcLongitud": data_form["longitud"],
             ],
             "nbUniversidad": data_form["first_name_university"]!,
-            "nbReprecentante": data_form["first_name_representative"]!,
             "desSitioWeb": data_form["first_web"]!,
             "desTelefono": data_form["first_phone"]!
             ] as [String : Any]
         
-        
+        debugPrint(array_parameter)
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.RegistrarUniversidad(parameters: parameter_json_string!, doneFunction: RegistrarUniversidad)

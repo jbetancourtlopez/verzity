@@ -18,6 +18,7 @@ class DetailViewController: BaseViewController {
     var webServiceController = WebServiceController()
     
     @IBOutlet var postulate_image: UIImageView!
+    @IBOutlet var postulate_image_name: UILabel!
     
     @IBOutlet var postulate_phone: UILabel!
     @IBOutlet var postulate_email: UILabel!
@@ -25,7 +26,7 @@ class DetailViewController: BaseViewController {
     @IBOutlet var postulate_description: UITextView!
     @IBOutlet var postulate_name_postulate: UILabel!
     @IBOutlet var postulate_location: UILabel!
-    @IBOutlet var postulate_image_name: UILabel!
+    
     
     @IBOutlet var postulate_date: UILabel!
     
@@ -83,7 +84,7 @@ class DetailViewController: BaseViewController {
         // Cargamos los datos
         showGifIndicator(view: self.view)
         let array_parameter = [
-            "idDispositivo": 0,
+            "idDispositivo": Defaults[.idDispositivo]!,
             "idNotificacion": self.idNotificacion
             ] as [String : Any]
         debugPrint(array_parameter)
@@ -141,6 +142,7 @@ class DetailViewController: BaseViewController {
         
         // Datos de la Persona
         postulate_name.text = persona["nbCompleto"].stringValue
+        postulate_image_name.text = persona["nbCompleto"].stringValue
         postulate_email.text = persona["desCorreo"].stringValue
         postulate_phone.text = persona["desTelefono"].stringValue
         
@@ -192,6 +194,7 @@ class DetailViewController: BaseViewController {
         // Datos de la Persona
         postulate_description.text = ""
         postulate_name.text = persona["nbCompleto"].stringValue
+        postulate_image_name.text = persona["nbCompleto"].stringValue
         postulate_email.text = persona["desCorreo"].stringValue
         postulate_phone.text = persona["desTelefono"].stringValue
         
@@ -217,20 +220,32 @@ class DetailViewController: BaseViewController {
     }
     
     @IBAction func on_click_email(_ sender: Any) {
-        let email = postulate_email.text
-        
+        print("Email")
+        let email = postulate_email.text!
+        print(email)
         if !FormValidate.validateEmail(postulate_email.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) == false {
-            let url = URL(string: "mailto:\(email)")
-            UIApplication.shared.openURL(url!)
+            //let url = URL(string: "mailto:\(email)")
+            //UIApplication.shared.openURL(url!)
+             print("Email 2")
+            let url = URL(string: "mailto://\(email)")
+            if UIApplication.shared.canOpenURL(url!) {
+                 print("Email 3")
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url!)
+                } else {
+                    UIApplication.shared.openURL(url!)
+                }
+            }
         }else{
             showMessage(title: StringsLabel.email_invalid, automatic: true)
         }
-        
     }
     
     @IBAction func on_click_phone(_ sender: Any) {
         
-        let busPhone = postulate_phone.text
+        let busPhone = postulate_phone.text!
+        
+        print(busPhone)
         
         if let url = URL(string: "tel://\(busPhone)"), UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
