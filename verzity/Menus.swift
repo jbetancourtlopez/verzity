@@ -19,7 +19,7 @@ struct Menus{
         ],
         [
             "name":"Postulados",
-            "image":"ic_action_financiamiento.png",
+            "image":"ic_mortarboard",
             "type": "postulate",
             "color": "#ff7b25"
         ],

@@ -73,7 +73,6 @@
 		9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69420E7337A004D7FC7 /* VideoViewController.swift */; };
 		9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641820FA448C00876AC0 /* SplashViewController.swift */; };
 		9286641B20FCD8D000876AC0 /* SelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */; };
-		9286641D20FE521400876AC0 /* fileprovider.png in Resources */ = {isa = PBXBuildFile; fileRef = 9286641C20FE521300876AC0 /* fileprovider.png */; };
 		92A64B7420EE78B500E96152 /* ic_telefono_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */; };
 		92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7520EE8A3B00E96152 /* StringsLabel.swift */; };
 		92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7720EE8D8300E96152 /* FormValidate.swift */; };
@@ -106,6 +105,8 @@
 		92E698C120EAFE8E00F69FCD /* QrCouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */; };
 		92E698C320EB146400F69FCD /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698C220EB146400F69FCD /* NotificationsViewController.swift */; };
 		92E698C520EB291000F69FCD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E698C420EB291000F69FCD /* DetailViewController.swift */; };
+		92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19A21124F3900FD60EF /* MainTableViewController.swift */; };
+		92F9D19D2112DF5D00FD60EF /* FTPUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19C2112DF5D00FD60EF /* FTPUpload.swift */; };
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
 /* End PBXBuildFile section */
 
@@ -178,7 +179,6 @@
 		9276B69420E7337A004D7FC7 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		9286641820FA448C00876AC0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationViewController.swift; sourceTree = "<group>"; };
-		9286641C20FE521300876AC0 /* fileprovider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fileprovider.png; path = ../../fileprovider.png; sourceTree = "<group>"; };
 		92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_telefono_gray.png; sourceTree = "<group>"; };
 		92A64B7520EE8A3B00E96152 /* StringsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsLabel.swift; sourceTree = "<group>"; };
 		92A64B7720EE8D8300E96152 /* FormValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidate.swift; sourceTree = "<group>"; };
@@ -215,6 +215,8 @@
 		92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCouponViewController.swift; sourceTree = "<group>"; };
 		92E698C220EB146400F69FCD /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		92E698C420EB291000F69FCD /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		92F9D19A21124F3900FD60EF /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
+		92F9D19C2112DF5D00FD60EF /* FTPUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPUpload.swift; sourceTree = "<group>"; };
 		94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_verzity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */,
 				92A64B7B20EFE8A900E96152 /* verzity-Bridging-Header.h */,
 				922892AA20F2B3260021DB32 /* CustomSwich.swift */,
+				92F9D19C2112DF5D00FD60EF /* FTPUpload.swift */,
 			);
 			path = system;
 			sourceTree = "<group>";
@@ -366,7 +369,6 @@
 				924132EE20E2F7AD00CEBC81 /* DetailUniversityViewController.swift */,
 				92E698C420EB291000F69FCD /* DetailViewController.swift */,
 				92A64B7F20EFF33700E96152 /* ExampleViewController.swift */,
-				9286641C20FE521300876AC0 /* fileprovider.png */,
 				924132E420E2881300CEBC81 /* FindMapViewController.swift */,
 				924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */,
 				9267014820D98EFB00E638A1 /* ForgetViewController.swift */,
@@ -375,6 +377,7 @@
 				924132EC20E2F10900CEBC81 /* ListUniversitiesViewController.swift */,
 				9267011820D8462400E638A1 /* LoginViewController.swift */,
 				92682D1D20DB21A000E6C4A8 /* MainViewController.swift */,
+				92F9D19A21124F3900FD60EF /* MainTableViewController.swift */,
 				922ABFB520F6B8EF00C5A56C /* Map */,
 				92E698C220EB146400F69FCD /* NotificationsViewController.swift */,
 				92DD410520EBC90D0035EF4E /* PackagesViewController.swift */,
@@ -552,7 +555,6 @@
 				92682D2A20DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png in Resources */,
 				922ABFBC20F6BA0300C5A56C /* DetailMapView.xib in Resources */,
 				92B0F6142100CBEF0003F58F /* ic_action_mail_gray.png in Resources */,
-				9286641D20FE521400876AC0 /* fileprovider.png in Resources */,
 				924132F320E422EC00CEBC81 /* loading_data.gif in Resources */,
 				92B6A3D420F957BF00987258 /* GoogleService-Info.plist in Resources */,
 				9267015120D9F76C00E638A1 /* back_white.png in Resources */,
@@ -679,6 +681,7 @@
 				922892AB20F2B3260021DB32 /* CustomSwich.swift in Sources */,
 				922ABFBA20F6BA0300C5A56C /* CustomAnnotation.swift in Sources */,
 				92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */,
+				92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */,
 				924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */,
 				9267013F20D84AD000E638A1 /* Colors.swift in Sources */,
 				92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */,
@@ -698,6 +701,7 @@
 				9267011720D8462400E638A1 /* AppDelegate.swift in Sources */,
 				92DD410620EBC90D0035EF4E /* PackagesViewController.swift in Sources */,
 				92226FDE20F465C600ED30E0 /* ProfileUniversityViewController.swift in Sources */,
+				92F9D19D2112DF5D00FD60EF /* FTPUpload.swift in Sources */,
 				92A64B7E20EFE8AD00E96152 /* YTPlayerView.m in Sources */,
 				92682D3420DC22FC00E6C4A8 /* AlamofireWebServiceController.swift in Sources */,
 			);

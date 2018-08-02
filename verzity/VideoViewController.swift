@@ -11,6 +11,8 @@ import AVFoundation
 import AVKit
 import SwiftyJSON
 import Kingfisher
+import SwiftyUserDefaults
+
 
 class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -78,7 +80,14 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
             //"https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
             let url_string = item["desRutaVideo"].stringValue
             
-            let video_url = NSURL(string: url_string)
+            
+            var desRutaVideo = item["desRutaVideo"].stringValue
+            desRutaVideo = desRutaVideo.replacingOccurrences(of: "~", with: "")
+            desRutaVideo = desRutaVideo.replacingOccurrences(of: "\\", with: "")
+            
+            var url_multimedia = Defaults[.desRutaMultimedia]! + desRutaVideo
+            
+            let video_url = NSURL(string: url_multimedia)
             let avPlayer = AVPlayer(url: video_url as! URL)
             cell.playerView?.playerLayer.player = avPlayer
             cell.playerView.player?.play()

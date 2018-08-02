@@ -46,7 +46,12 @@ class FormValidate{
         }
     }
     
-    // Validar Max Length
+    static func validate_min_length(_ texfield: UITextField, maxLength: Int)->Bool{
+        guard let text = texfield.text else { return true }
+        return text.count >= maxLength
+    }
+    
+    // Validar Max Length // No entendi como se usa
     static func validateMaxLength(_ textField: UITextField, str: String, range: NSRange, maxLength: Int)->Bool{
         guard let text = textField.text else { return true }
         let newLength = text.count + str.count - range.length

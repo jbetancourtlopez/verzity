@@ -33,7 +33,7 @@ func get_day_of_week(today: String) -> String {
     var array_days = ["", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
     
     
-    return array_days[day!]
+    return array_days[day! - 1]
 }
 
 /*

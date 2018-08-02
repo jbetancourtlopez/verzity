@@ -69,6 +69,9 @@ class DetailViewController: BaseViewController {
         icon_location.image = icon_location.image?.withRenderingMode(.alwaysTemplate)
         icon_location.tintColor = Colors.gray
         
+        self.postulate_image.layer.masksToBounds = true
+        self.postulate_image.cornerRadius = 60
+        
         
         let image = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
         button_phone.setImage(image, for: .normal)
@@ -114,7 +117,6 @@ class DetailViewController: BaseViewController {
         var beca = JSON(data_json["beca"])
         var financiamiento = JSON(data_json["financiamiento"])
         
-        
         // Descripcion
         var postulate_description_text = ""
         
@@ -149,32 +151,57 @@ class DetailViewController: BaseViewController {
         var location_json = JSON(persona["Direcciones"])
         var text_location = ""
         if location_json["nbPais"].stringValue == "México"{
-            text_location = "\(location_json["desDireccion"].stringValue), \(location_json["nbCiudad"].stringValue), \(location_json["nbMunicipio"].stringValue), \(location_json["nbEstado"].stringValue), \(location_json["nbPais"].stringValue), \(location_json["numCodigoPostal"].stringValue)"
+
+            
+            if !(location_json["desDireccion"].stringValue).isEmpty{
+                text_location += location_json["desDireccion"].stringValue + ", "
+            }
+            
+            if !(location_json["nbMunicipio"].stringValue).isEmpty{
+                text_location += location_json["nbMunicipio"].stringValue + ", "
+            }
+            
+            if !(location_json["nbEstado"].stringValue).isEmpty{
+                text_location += location_json["nbEstado"].stringValue + ", "
+            }
+            
+            if !(location_json["nbPais"].stringValue).isEmpty{
+                text_location += location_json["nbPais"].stringValue + ", "
+            }
+            
+            if !(location_json["numCodigoPostal"].stringValue).isEmpty{
+                text_location += location_json["numCodigoPostal"].stringValue
+            }
+            
         } else{
             text_location = location_json["nbPais"].stringValue
         }
-        
         postulate_location.text = text_location
-        
-        
         // Imagen
+        
         var pathImage = persona["pathFoto"].stringValue
         pathImage = pathImage.replacingOccurrences(of: "~", with: "")
         pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Defaults[.desRutaFTP]))\(pathImage)"
-        let URL = Foundation.URL(string: url)
+        
+        var folder = Defaults[.desCarpetaMultimediaFTP]
+        folder = folder?.replacingOccurrences(of: "~", with: "")
+        
+        var url_multimedia = Defaults[.desRutaMultimedia]! + folder! + pathImage
+        
+        let URL = Foundation.URL(string: url_multimedia)
         let image_default = UIImage(named: "ic_user_profile.png")
         postulate_image.kf.setImage(with: URL, placeholder: image_default)
         
     }
 
     func set_data_postulado(){
-        //debugPrint(self.detail)
+        debugPrint(self.detail)
         
         var data_json = JSON(self.detail)
         var persona = JSON(data_json["person"])
         var type = JSON(data_json["type"])
         
+        let type_name = JSON(data_json["type_name"])
         
         // Fecha
         let fechaPostulacion = data_json["fechaPostulacion"].stringValue
@@ -186,10 +213,29 @@ class DetailViewController: BaseViewController {
         
         // Titulo
         let nbLicenciatura = type["nbLicenciatura"].stringValue
-        let postulate_description_text = persona["nbCompleto"].stringValue + " Se ha postulado al programa académico " + nbLicenciatura
+        
+        var type_text = ""
+        
+        if  type_name == "licenciatura" {
+            type_text = " Se ha postulado al programa académico "
+        } else if  type_name == "beca" {
+            type_text = " Se ha postulado a al beca "
+        } else if  type_name == "financiamiento" {
+            type_text = " Se ha postulado al financiamiento "
+        }
+        
+        let postulate_description_text = persona["nbCompleto"].stringValue + type_text + nbLicenciatura
+        
+        
         
         // Descripcion
         postulate_name_postulate.text = postulate_description_text
+        
+        
+        
+        
+        
+        
         
         // Datos de la Persona
         postulate_description.text = ""
@@ -201,7 +247,27 @@ class DetailViewController: BaseViewController {
         var location_json = JSON(persona["Direcciones"])
         var text_location = ""
         if location_json["nbPais"].stringValue == "México"{
-            text_location = "\(location_json["desDireccion"].stringValue), \(location_json["nbCiudad"].stringValue), \(location_json["nbMunicipio"].stringValue), \(location_json["nbEstado"].stringValue), \(location_json["nbPais"].stringValue), \(location_json["numCodigoPostal"].stringValue)"
+            
+            if !(location_json["desDireccion"].stringValue).isEmpty{
+                text_location += location_json["desDireccion"].stringValue + ", "
+            }
+            
+            if !(location_json["nbMunicipio"].stringValue).isEmpty{
+                text_location += location_json["nbMunicipio"].stringValue + ", "
+            }
+            
+            if !(location_json["nbEstado"].stringValue).isEmpty{
+                text_location += location_json["nbEstado"].stringValue + ", "
+            }
+            
+            if !(location_json["nbPais"].stringValue).isEmpty{
+                text_location += location_json["nbPais"].stringValue + ", "
+            }
+            
+            if !(location_json["numCodigoPostal"].stringValue).isEmpty{
+                text_location += location_json["numCodigoPostal"].stringValue
+            }
+            
         } else{
             text_location = location_json["nbPais"].stringValue
         }
@@ -210,11 +276,17 @@ class DetailViewController: BaseViewController {
         
         
         // Imagen
+        
         var pathImage = persona["pathFoto"].stringValue
         pathImage = pathImage.replacingOccurrences(of: "~", with: "")
         pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Defaults[.desRutaFTP]))\(pathImage)"
-        let URL = Foundation.URL(string: url)
+        
+        var folder = Defaults[.desCarpetaMultimediaFTP]
+        folder = folder?.replacingOccurrences(of: "~", with: "")
+        
+        var url_multimedia = Defaults[.desRutaMultimedia]! + folder! + pathImage
+        
+        let URL = Foundation.URL(string: url_multimedia)
         let image_default = UIImage(named: "ic_user_profile.png")
         postulate_image.kf.setImage(with: URL, placeholder: image_default)
     }

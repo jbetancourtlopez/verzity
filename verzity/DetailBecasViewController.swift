@@ -60,6 +60,7 @@ class DetailBecasViewController: BaseViewController {
     }
     
     @IBAction func on_click_file(_ sender: Any) {
+        /*
         var detail = JSON(self.detail)
         var file_path = detail["desRutaArchivo"].stringValue
         file_path = file_path.replacingOccurrences(of: "~", with: "")
@@ -69,16 +70,34 @@ class DetailBecasViewController: BaseViewController {
         if  !file_path.isEmpty{
             openUrl(scheme: url)
         }
+        */
+        
+        print("PDF")
+        var detail = JSON(self.detail)
+        var file_path = detail["desRutaArchivo"].stringValue
+        file_path = file_path.replacingOccurrences(of: "~", with: "")
+        file_path = file_path.replacingOccurrences(of: "\\", with: "")
+        let url =  "\(Defaults[.desRutaMultimedia]!)\(file_path)"
+        
+        print (url )
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailPdfViewControllerID") as! DetailPdfViewController
+        vc.url_string = url
+        self.show(vc, sender: nil)
     }
     
     @IBAction func on_click_postulate(_ sender: Any) {
-        let idPersona = Defaults[.academic_idPersona]
-        if  (idPersona! > 0){
+        let idPersona = Defaults[.academic_idPersona]!
+        
+        let have_name = Defaults[.academic_name] != ""
+        let have_email = Defaults[.academic_email] != ""
+        
+        if  (idPersona > 0 && have_name && have_email){
             showGifIndicator(view: self.view)
             
             var detail = JSON(self.detail)
             let array_parameter = [
-                "idPersona": idPersona!,
+                "idPersona": idPersona,
                 "idBeca": detail["idBeca"].intValue
                 ] as [String : Any]
             

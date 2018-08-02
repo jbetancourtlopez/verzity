@@ -336,6 +336,33 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         return count_error
     }
     
+    @objc(textField:shouldChangeCharactersIn:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if string.count == 0 {
+            return true
+        }
+        
+        
+        
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        
+        switch textField {
+            case phone_profile:
+                return newString.length <= 10
+        case cp_profile:
+            return newString.length <= 5
+            default:
+                return true
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
+    }
+    
 
 
 }

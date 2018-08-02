@@ -83,9 +83,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     
     @objc func on_click_back(sender: AnyObject) {
         print("Atras")
-        
-       
-        
         if !have_package {
             
             let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
@@ -130,9 +127,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
                     have_package = true
                     self.items.add(item)
                 }
-                
             }
-            
             
             for i in 0..<list_items.count{
                 var item = JSON(list_items[i])
@@ -140,9 +135,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
                 if item["idPaquete"].intValue != Defaults[.package_idPaquete]{
                     self.items.add(item)
                 }
-                
             }
-            
         }
         tableView.reloadData()
         hiddenGifIndicator(view: self.view)
@@ -192,13 +185,24 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PackageTableViewCell
         
         var item = JSON(items[indexPath.section])
+        debugPrint(item)
         
         //Evento al Boton
         cell.button_buy.addTarget(self, action: #selector(self.on_click_buy), for:.touchUpInside)
         cell.button_buy.tag = indexPath.section
         
         // Precio
-        cell.price.text = "\(Double(item["dcCosto"].intValue))"
+   
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
+        
+        let amount = item["dcCosto"].doubleValue
+        let formattedString = formatter.string(for: amount)
+        //cell.price.text = formattedString! + " MXN"
+        
+        cell.price.text = String(format: "$ %.02f MXN", item["dcCosto"].doubleValue)
+        
         
         cell.title_top.text = item["nbPaquete"].stringValue
         cell.vigency.text = "\(item["dcDiasVigencia"].stringValue) días de vigencia. "
@@ -209,27 +213,46 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         //cell.description_package.isScrollEnabled = false
         
         var height = cell.description_package.frame.height
-        
-        //cell.content_package.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:(490 + 70))
 
         cell.content_package.frame.size.height = 560
         
         // Swich
-        cell.label_beca.text = "Aplica becas"
-        cell.swich_beca.isOn = item["fgAplicaBecas"].boolValue
-        
         cell.label_financing.text = "Aplica financiamiento"
-        cell.swich_financing.isOn = item["fgAplicaFinanciamiento"].boolValue
+        let is_financing = item["fgAplicaFinanciamiento"].boolValue
+        if (is_financing) {
+            cell.image_financing.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.image_financing.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        cell.label_beca.text = "Aplica becas"
+        let is_beca = item["fgAplicaBecas"].boolValue
+        if (is_beca) {
+            cell.image_becas.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.image_becas.image = UIImage(named: "ic_action_close_check")
+        }
+        
         
         cell.label_postulacion.text = "Aplica postulación"
-        cell.swich_postulacion.isOn = item["fgAplicaPostulacion"].boolValue
+        let is_postulacion = item["fgAplicaPostulacion"].boolValue
+        if (is_postulacion) {
+            print("Postulacion true")
+            cell.image_postulacion.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.image_postulacion.image = UIImage(named: "ic_action_close_check")
+        }
         
-        print("Paq Actual: \(Defaults[.package_idPaquete])")
-        print("For Paq: \(item["idPaquete"].intValue)" )
+        print("D: \(Defaults[.package_idPaquete]!)")
         
-        if item["idPaquete"].intValue == Defaults[.package_idPaquete]{
+         print("I: \(item["idPaquete"].intValue)")
+        
+        if item["idPaquete"].intValue == Defaults[.package_idPaquete]!{
             cell.button_buy.setTitle("PAQUETE ACTUAL", for: .normal)
             cell.button_buy.isEnabled = false
+        }else{
+            cell.button_buy.setTitle("COMPRAR", for: .normal)
+            cell.button_buy.isEnabled = true
         }
         
         // setup_ux
@@ -292,10 +315,8 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     
     func SaveVentaPaquete(status: Int, response: AnyObject){
          hiddenGifIndicator(view: self.view)
-        var json = JSON(response)
+        let json = JSON(response)
         if status == 1{
-            
-            
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
             customAlert.info = json as AnyObject
             customAlert.providesPresentationContextTransitionStyle = true
@@ -323,23 +344,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     }
     
     func payment(index:Int){
-        /*
-         
-         "idPaquete": 11,
-         "cvPaquete": "CV007",
-         "nbPaquete": "PAQUETE 007",
-         "desPaquete": "ESTE ES UN PAQUETE DE PRUEBA",
-         "dcDiasVigencia": 10,
-         "fgAplicaBecas": true,
-         "fgAplicaFinanciamiento": false,
-         "fgAplicaPostulacion": false,
-         "dcCosto": 1.0,
-         "feRegistro": "2018-04-23T18:53:07.133",
-         "idEstatus": 0,
-         "Estatus": null,
-         "VentasPaquetes": []
-         */
-        
         var package = JSON(self.items[index])
         
         // Process Payment once the pay button is clicked.
@@ -376,6 +380,8 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         }
         else {
             print("Payment not processalbe: \(payment)")
+            
+          
         }
         
         
@@ -386,7 +392,18 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
 
 extension PackagesViewController: DetailBuyViewControllerDelegate {
     func okButtonTapped() {
-     
+        
+        if  (Defaults[.university_idUniveridad]! <= 0 || Defaults[.university_desTelefono] == "" ||  Defaults[.university_desUniversidad] == ""){
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
+            self.show(vc, sender: nil)
+            
+        }else{
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
+            self.show(vc, sender: nil)
+            
+        }
     }
     
 

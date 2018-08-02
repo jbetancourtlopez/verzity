@@ -125,7 +125,6 @@ class SelectLocationViewController: UIViewController, UISearchBarDelegate, CLLoc
             }
             self.adress = dir
             self.location_label.text = dir
-
         }
         
     }

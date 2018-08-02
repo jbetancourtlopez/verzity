@@ -61,7 +61,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         button_university.tintColor = Colors.gray
         
         
-        let image_file = UIImage(named: "ic_file_download")?.withRenderingMode(.alwaysTemplate)
+        let image_file = UIImage(named: "ic_action_remove_red_eye")?.withRenderingMode(.alwaysTemplate)
         button_file.setImage(image_file, for: .normal)
         button_file.tintColor = Colors.gray
     }
@@ -91,7 +91,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         var desSitioWeb = universidad["desSitioWeb"].stringValue
         if desSitioWeb.isEmpty {
             label_web.isHidden = true
-            
+            icon_web.isHidden = true
         }
 
         // Name universidad
@@ -119,12 +119,17 @@ class DetailFinanciamientoViewController: BaseViewController {
 
    
     @IBAction func on_clic_request(_ sender: Any) {
-        let idPersona = Defaults[.academic_idPersona] as! Int
+        
+        let idPersona = Defaults[.academic_idPersona]!
         
         var detail = JSON(self.detail)
         let idFinanciamiento = detail["idFinanciamiento"].stringValue
         
-        if  (idPersona > 0){
+        
+        let have_name = Defaults[.academic_name] != ""
+        let have_email = Defaults[.academic_email] != ""
+        
+        if  (idPersona > 0 && have_name && have_email){
             showGifIndicator(view: self.view)
             
             // FIX - Armar los parametros

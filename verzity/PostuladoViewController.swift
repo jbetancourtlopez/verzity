@@ -62,6 +62,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
                         "NombreSeccion" : JSON(item_json["NombreSeccion"]),
                         
                         "fechaPostulacion": item_json["fechaPostulacion"].stringValue,
+                        "type_name": "licenciatura",
                         "type":  JSON(item_json["licenciatura"])
                     ]  as [String : Any]
                     list_licensature.append(item)
@@ -72,6 +73,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
                         "person" : JSON(item_json["persona"]),
                          "NombreSeccion" : JSON(item_json["NombreSeccion"]),
                         "fechaPostulacion": item_json["fechaPostulacion"].stringValue,
+                        "type_name": "beca",
                         "type": JSON(item_json["beca"])
                         ] as [String : Any]
                     list_becas.append(item)
@@ -81,7 +83,8 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
                         "person" : JSON(item_json["persona"]),
                          "NombreSeccion" : JSON(item_json["NombreSeccion"]),
                          "fechaPostulacion": item_json["fechaPostulacion"].stringValue,
-                        "type": JSON(item_json["financiamiento"])
+                         "type_name": "financiamiento",
+                         "type": JSON(item_json["financiamiento"])
                         ] as [String : Any]
                     list_financing.append(item)
                 }

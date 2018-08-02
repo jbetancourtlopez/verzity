@@ -213,18 +213,29 @@ class DetailUniversityViewController: BaseViewController {
     }
     
     func selected_postulate(name: String, idLicenciatura: Int){
-        //alert.
         print("Postulado Metodo: \(name)")
+        
+        
+        let idPersona = Defaults[.academic_idPersona]!
+        let have_name = Defaults[.academic_name] != ""
+        let have_email = Defaults[.academic_email] != ""
         showGifIndicator(view: self.view)
         
-        let array_parameter = [
-            "idUniversidad": idUniversidad,
-            "idLicenciatura": idLicenciatura
-            ] as [String : Any]
-        
-        let parameter_json = JSON(array_parameter)
-        let parameter_json_string = parameter_json.rawString()
-        webServiceController.SetFavorito(parameters: parameter_json_string!, doneFunction: PostularseLicenciatura)
+        if  (idPersona > 0 && have_name && have_email){
+            let array_parameter = [
+                "idPostuladoUniversidad": 0,
+                "idUniversidad": idUniversidad,
+                "idPersona": idPersona,
+                "idLicenciatura": idLicenciatura
+                ] as [String : Any]
+            
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            webServiceController.PostularseUniversidad(parameters: parameter_json_string!, doneFunction: PostularseLicenciatura)
+        }else{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+            self.show(vc, sender: nil)
+        }
     }
     
     func PostularseLicenciatura(status: Int, response: AnyObject){

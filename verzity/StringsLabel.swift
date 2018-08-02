@@ -28,10 +28,13 @@ class StringsLabel{
   
     
     // Validacion de datos de Formularios
-    static let required = "Campo requerido"
-    static let phone_invalid = "Ingrese un número de télefono Valido"
-    static let email_invalid = "Email invalido"
-    
+    static let required = "Campo requerido."
+    static let phone_invalid = "Ingrese un número de télefono valido."
+    static let email_invalid = "Ingrese un correo electrónico valido."
+    static let acept_invalid = "Debe estar de acuerdo con los términos."
+    static let password_coinciden_invalid = "La contraseña y la confirmación no coinciden."
+    static let password_invalid = "La contraseña debe tener como mínimo 8 caracteres de longitud."
+
     // Errores
     static let error_conexion = "Ocurrio un error al establecer contacto con el servidor. Favor de verificar su conexión a internet"
     

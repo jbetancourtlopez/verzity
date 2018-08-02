@@ -9,11 +9,12 @@
 import UIKit
 import FloatableTextField
 import SwiftyJSON
+import SwiftyUserDefaults
 import FilesProvider
 
 
 
-class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, FileProviderDelegate{
+class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate{
     
     // oulets
     @IBOutlet var import_image: UIButton!
@@ -25,6 +26,8 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     @IBOutlet var password: FloatableTextField!
     @IBOutlet var email: FloatableTextField!
     @IBOutlet var phone_representative: FloatableTextField!
+    
+    @IBOutlet var accept_error: UILabel!
     
     // Contrains
     @IBOutlet var topContrainstLabelTerminos: NSLayoutConstraint!
@@ -38,15 +41,22 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     var facebook_id: String = ""
     var is_facebook:Int = 0
     
-    var webServiceController = WebServiceController()
-    
     // FTP
-    let server: URL = URL(string: "http://smarterasp.net")!
+    let server = "ftp.smarterasp.net"
     let ftp_username = "ftpVerzity"
     let ftp_password = "ftp.Verzity"
+    
     let path_folder = "~/Upload/Usuarios/"
     
-    var webdav: WebDAVFileProvider?
+    let serverd = "reservanty.com"
+    let ftp_usernamed = "reservanty"
+    let ftp_passwordd = "AFRJ3vkd#_8y"
+    
+    var ftp:FTPUpload!
+    
+    var webServiceController = WebServiceController()
+    
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,9 +64,8 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         setup_textfield()
         setdata_facebook()
         
-        let credential = URLCredential(user: self.ftp_username, password: self.ftp_password, persistence: URLCredential.Persistence.permanent)
-        webdav = WebDAVFileProvider(baseURL: server, credential: credential)
-        webdav?.delegate = self as FileProviderDelegate
+        // Ftp
+        ftp = FTPUpload(baseUrl: serverd, userName: ftp_usernamed, password: ftp_passwordd, directoryPath: "/")
         
     }
     
@@ -102,43 +111,23 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-       
-        debugPrint(info)
         
-        
-        let localUrl = (info[UIImagePickerControllerMediaURL] ?? info[UIImagePickerControllerReferenceURL]) as? URL
-            
-        print (localUrl)
-        //if you want to get the image name
-        let imageName = localUrl?.path
-        print(imageName)
-            
-            
-            
-      
-        
-        /*
-        
-        let localURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("fileprovider.png")
-        
-        webdav?.copyItem(localFile: localURL, to: remotePath, completionHandler: nil)
-        
-        var uIImagePickerControllerReferenceURL = info[UIImagePickerControllerReferenceURL] as! URL
-        var uIImagePickerControllerImageURL = info["UIImagePickerControllerImageURL"] as! URL
-        
-        */
-        
-        let remotePath = "/fileprovider.png"
-        //webdav?.copyItem(localFile: localUrl!, to: remotePath, completionHandler: nil)
-        
-        
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             img_profile.image = image
         }else{
             showMessage(title: "Error al cargar la imagen", automatic: true)
         }
+        
+        let data = UIImageJPEGRepresentation(img_profile.image!, 1.0)
+        //self.ftp.send(data: data!, with: "/example_ios.jpg", success: success)
+        
+        
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func success(is_sucess: Bool){
+        print("Imagen cargada con exito")
+        print(is_sucess)
     }
     
     func setup_ux(){
@@ -164,12 +153,30 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         password.floatableDelegate = self
         email.floatableDelegate = self
         phone_representative.floatableDelegate = self
+        accept_error.isHidden = true
     }
     
-
+    @objc(textField:shouldChangeCharactersIn:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if string.count == 0 {
+            return true
+        }
+      
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        
+        switch textField {
+            case phone_representative:
+                return newString.length <= 10
+            default:
+                return true
+        }
+    }
+    
+  
     @IBAction func on_click_register(_ sender: Any) {
         print("Registro")
-        //upload(name_image: "asset.JPG")
         
         
         if validate_form() == 0 {
@@ -178,30 +185,29 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             let cvDispositivo =  UIDevice.current.identifierForVendor!.uuidString
 
             let array_parameter = [
-                "pwdContrasenia": password.text!,
-                "idUsuario": 0,
-                "nbUsuario": email.text!,
-                "Personas": [
-                    "desCorreo": email.text! as String,
-                    "Dispositivos": [
+                    "pwdContrasenia": password.text!,
+                    "idUsuario": 0,
+                    "nbUsuario": email.text!,
+                    "Personas": [
+                        "desCorreo": email.text! as String,
+                        "Dispositivos": [
+                                [
+                                    "cvDispositivo": Defaults[.cvDispositivo]!,
+                                    "cvFirebase": Defaults[.cvFirebase]!,
+                                    "idDispositivo": 0
+                                ]
+                        ],
+                        "idPersona": 0,
+                        "nbCompleto": name_representative.text!,
+                        "desTelefono": phone_representative.text! as String,
+                        "Universidades": [
                             [
-                                "cvDispositivo": cvDispositivo,
-                                "cvFirebase": "Fix",
-                                "idDispositivo": 0
+                            "idUniversidad": 0,
+                            "nbUniversidad": name_university.text!,
+                            "nbReprecentante": name_representative.text! as String
                             ]
+                        ]
                     ]
-                ],
-                "idPersona": 0,
-                "nbCompleto": name_representative.text!,
-                "desTelefono": phone_representative.text! as String,
-                "Universidades": [
-                    [
-                    "idUniversidad": 0,
-                    "nbUniversidad": name_university.text!,
-                    "nbReprecentante": name_representative.text! as String
-                    ]
-                ]
-                
                 ] as [String : Any]
             
             
@@ -281,83 +287,38 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
                 password.setState(.FAILED, with: StringsLabel.required)
                 count_error = count_error + 1
             }else{
-                if password.text != confirm_password.text{
-                    confirm_password.setState(.FAILED, with: "Las contraseñas no coinciden")
-                    count_error = count_error + 1
+                
+                if FormValidate.validate_min_length(password, maxLength: 8){
+                    if password.text != confirm_password.text{
+                        confirm_password.setState(.FAILED, with: StringsLabel.password_coinciden_invalid)
+                        count_error = count_error + 1
+                    }else{
+                        confirm_password.setState(.DEFAULT, with: "")
+                        password.setState(.DEFAULT, with: "")
+                    }
                 }else{
-                    confirm_password.setState(.DEFAULT, with: "")
-                    password.setState(.DEFAULT, with: "")
+                    password.setState(.FAILED, with: StringsLabel.password_invalid)
+                    count_error = count_error + 1
                 }
+                
+                
             }
         }
        
         
         if  !swich_acept.isOn {
             count_error = count_error + 1
+            accept_error.isHidden = false
+            accept_error.text = StringsLabel.acept_invalid
+        }else{
+            accept_error.isHidden = true
         }
       
         return count_error
     }
     
     
-    func upload(name_image: String){
-        print("upload")
-        let localURL = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask).first!.appendingPathComponent(name_image)
     
-
-        print(localURL)
-        let remotePath = "/\(name_image)"
-        
-        webdav?.copyItem(localFile: localURL, to: remotePath, completionHandler: nil)
-        
-    }
-    
-    
-    // FilesProvider
-    func fileproviderSucceed(_ fileProvider: FileProviderOperations, operation: FileOperationType) {
-        switch operation {
-        case .copy(source: let source, destination: let dest):
-            print("\(source) copied to \(dest).")
-        case .remove(path: let path):
-            print("\(path) has been deleted.")
-        default:
-            if let destination = operation.destination {
-                print("\(operation.actionDescription) from \(operation.source) to \(destination) succeed.")
-            } else {
-                print("\(operation.actionDescription) on \(operation.source) succeed.")
-            }
-        }
-    }
-    
-    func fileproviderFailed(_ fileProvider: FileProviderOperations, operation: FileOperationType, error: Error) {
-        switch operation {
-        case .copy(source: let source, destination: let dest):
-            print("copying \(source) to \(dest) has been failed.")
-        case .remove:
-            print("file can't be deleted.")
-        default:
-            if let destination = operation.destination {
-                print("\(operation.actionDescription) from \(operation.source) to \(destination) failed.")
-            } else {
-                print("\(operation.actionDescription) on \(operation.source) failed.")
-            }
-        }
-    }
-    
-    func fileproviderProgress(_ fileProvider: FileProviderOperations, operation: FileOperationType, progress: Float) {
-        print("Entro")
-        switch operation {
-        case .copy(source: let source, destination: let dest) where dest.hasPrefix("file://"):
-            print("Downloading \(source) to \((dest as NSString).lastPathComponent): \(progress * 100) completed.")
-        case .copy(source: let source, destination: let dest) where source.hasPrefix("file://"):
-            print("Uploading \((source as NSString).lastPathComponent) to \(dest): \(progress * 100) completed.")
-        case .copy(source: let source, destination: let dest):
-            print("Copiando")
-            print("Copy \(source) to \(dest): \(progress * 100) completed.")
-        default:
-            break
-        }
-    }
 }
 
 extension UIView {

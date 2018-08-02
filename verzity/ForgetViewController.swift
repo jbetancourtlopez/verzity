@@ -6,12 +6,13 @@
 //  Copyright © 2018 Jossue Betancourt. All rights reserved.
 //
 import UIKit
+import FloatableTextField
 import SwiftyJSON
 
-class ForgetViewController: BaseViewController {
+class ForgetViewController: BaseViewController, FloatableTextFieldDelegate {
     
     @IBOutlet weak var alertView: UIView!
-    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var email: FloatableTextField!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var okButton: UIButton!
     
@@ -22,7 +23,7 @@ class ForgetViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        email.becomeFirstResponder()
+       // email.becomeFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +39,7 @@ class ForgetViewController: BaseViewController {
     
     
     func setupView() {
+        email.floatableDelegate = self
         alertView.layer.cornerRadius = 2
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
@@ -52,14 +54,14 @@ class ForgetViewController: BaseViewController {
     }
     
     @IBAction func onTapCancelButton(_ sender: Any) {
-        email.resignFirstResponder()
+       // email.resignFirstResponder()
         delegate?.cancelButtonTapped()
         self.dismiss(animated: true, completion: nil)
     }
     
 
     @IBAction func onTapOkButton(_ sender: Any) {
-        email.resignFirstResponder()
+        //email.resignFirstResponder()
         delegate?.okButtonTapped(textFieldValue: email.text!)
         self.dismiss(animated: true, completion: nil)
         

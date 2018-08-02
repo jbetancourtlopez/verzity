@@ -43,7 +43,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         
         
         Defaults[.cvDispositivo] = UIDevice.current.identifierForVendor!.uuidString
-        print("Firebase Login: \(Defaults[.cvFirebase])")
+        print("Firebase Login: \(Defaults[.cvFirebase]!)")
        
         // End Facebook
         // var image_facebook = UIImage(named: "icon_face_white")
@@ -104,38 +104,38 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             
             if  type == "normal"{
                 array_parameter_new = [
-                    "pwdContrasenia": password.text,
+                    "pwdContrasenia": password.text!,
                     "Personas": [
                         "Dispositivos": [
                             [
-                                "cvDispositivo": Defaults[.cvDispositivo],
-                                "cvFirebase":Defaults[.cvFirebase],
+                                "cvDispositivo": Defaults[.cvDispositivo]!,
+                                "cvFirebase":Defaults[.cvFirebase]!,
                                 "idDispositivo": 0
                             ]
                         ],
                         "idDireccion": 0,
                         "idPersona": 0
                     ],
-                    "nbUsuario": email.text,
+                    "nbUsuario": email.text!,
                     "idUsuario": 0
                     ] as [String : Any]
             }else{
                 
                 array_parameter_new = [
-                    "cvFacebook": password.text,
+                    "cvFacebook": password.text!,
                     "pwdContrasenia": "",
                     "Personas": [
                         "Dispositivos": [
                             [
-                                "cvDispositivo": Defaults[.cvDispositivo],
-                                "cvFirebase":Defaults[.cvFirebase],
+                                "cvDispositivo": Defaults[.cvDispositivo]!,
+                                "cvFirebase":Defaults[.cvFirebase]!,
                                 "idDispositivo": 0
                             ]
                         ],
                         "idDireccion": 0,
                         "idPersona": 0
                     ],
-                    "nbUsuario": email.text,
+                    "nbUsuario": email.text!,
                     "idUsuario": 0
                     ] as [String : Any]
             }

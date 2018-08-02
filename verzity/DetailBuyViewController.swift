@@ -71,7 +71,7 @@ class DetailBuyViewController: BaseViewController {
         var paquete = JSON(data["Paquete"])
         
         name.text = paquete["nbPaquete"].stringValue
-        price.text = "MX $ " + paquete["dcCosto"].stringValue
+        price.text = String(format: "$ %.02f MXN", paquete["dcCosto"].doubleValue)
     }
     
     func setupView() {

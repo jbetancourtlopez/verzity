@@ -114,4 +114,24 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
         first_phone.text = Defaults[.university_desTelefono]
         first_email.text = Defaults[.university_desCorreo]
     }
+    
+    @objc(textField:shouldChangeCharactersIn:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if string.count == 0 {
+            return true
+        }
+        
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        
+        switch textField {
+            case first_phone:
+                return newString.length <= 10
+            default:
+                return true
+        }
+    }
+    
+
 }

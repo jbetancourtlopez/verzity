@@ -10,6 +10,8 @@ import UIKit
 import FloatableTextField
 import SwiftyJSON
 import SwiftyUserDefaults
+import MapKit
+
 
 
 class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate, FloatableTextFieldDelegate {
@@ -36,6 +38,8 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     var name_country = ""
     var latitud: Double = 0.0
     var longitud: Double = 0.0
+    
+    let geocoder = CLGeocoder()
     
     
     override func viewDidLoad() {
@@ -235,9 +239,82 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         second_municipio.text = Defaults[.add_uni_nbMunicipio]
         second_city.text = Defaults[.add_uni_nbCiudad]
         second_description.text = Defaults[.add_uni_desDireccion]
-        second_location.text = Defaults[.add_uni_desDireccion]
+        
+        print(Defaults[.add_uni_dcLatitud])
+        
+        print(Defaults[.add_uni_desDireccion])
+        
+        print(Defaults[.add_uni_nbPais]!)
+        
+       
         self.latitud = Defaults[.add_uni_dcLatitud]!
         self.longitud = Defaults[.add_uni_dcLongitud]!
+        
+        // Genero la location_text
+        geocoderLocation(newLocation: CLLocation(latitude: Defaults[.add_uni_dcLatitud]!, longitude: Defaults[.add_uni_dcLongitud]!))
+    }
+    
+    @objc(textField:shouldChangeCharactersIn:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if string.count == 0 {
+            return true
+        }
+        
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        
+        switch textField {
+        case second_cp:
+            return newString.length <= 5
+        default:
+            return true
+        }
+    }
+    
+    func geocoderLocation(newLocation: CLLocation) {
+        var dir  = ""
+        geocoder.reverseGeocodeLocation(newLocation) { (placemarks, error) in
+            if error == nil {
+                dir = "No se ha podido determinar la dirección"
+            }
+            if let placemark = placemarks?.first {
+                dir = self.stringFromPlacemark(placemark: placemark)
+            }
+            self.second_location.text = dir
+        }
+    }
+    
+    func stringFromPlacemark(placemark: CLPlacemark) -> String {
+        var line = ""
+        
+        if let p = placemark.thoroughfare {
+            line += p + ", "
+        }
+        if let p = placemark.subThoroughfare {
+            line += p + ", "
+        }
+        
+        if let p = placemark.subLocality {
+            line += p + ", "
+        }
+        
+        
+        if let p = placemark.postalCode {
+            line += " " + p
+        }
+        
+        if let p = placemark.locality {
+            line += ", " + p
+        }
+        if let p = placemark.administrativeArea {
+            line += ", " + p
+        }
+        if let p = placemark.country {
+            line += ", " + p
+        }
+        
+        return line
     }
     
 }

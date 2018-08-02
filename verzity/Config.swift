@@ -36,7 +36,7 @@ final class Singleton {
     static let GetCuponesVigentes = "GetCuponesVigentes"
     static let GetDetalleCupon = "GetDetalleCupon"
     static let IngresarAppUniversitario = "IngresarAppUniversitario"
-    static let SolicitarFinanciamientos = "SolicitarFinanciamientos"
+    static let SolicitarFinanciamientos = "SolicitarFinanciamiento"
     static let GetFinanciamientosVigentes = "GetFinanciamientosVigentes"
     static let CrearCuentaAcceso = "CrearCuentaAcceso"
     static let IngresarAppUniversidad = "IngresarAppUniversidad"

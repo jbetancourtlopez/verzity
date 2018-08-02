@@ -33,17 +33,6 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
         }else if profile_menu == "profile_university" {
             menu_main = Menus.menu_main_university as [AnyObject] as! [[String : String]]
         }
-        
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 3, left: 5, bottom: 0, right: 5)
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 3
-        layout.minimumLineSpacing = 3
-        layout.itemSize = CGSize(width: ((self.view.frame.size.width/2) - 10), height: 120)
-        self.collectionView?.setCollectionViewLayout(layout, animated: false)
-        
-        
     }
 
     //On_click_Side_Menu
@@ -65,7 +54,13 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+        
+        if profile_menu == "profile_university" {
+            print("Cell Universidad")
+           cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellUniversity", for: indexPath) as! CollectionViewCell
+        }
+        
         let name = menu_main[indexPath.row]["name"]
         let image = menu_main[indexPath.row]["image"]
         
@@ -73,9 +68,17 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
         cell.icon.image = UIImage(named: image!)
         
         cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
-        cell.icon.tintColor = UIColor.white
         
-        cell.backgroundColor = hexStringToUIColor(hex: menu_main[indexPath.row]["color"]!)
+        
+        if profile_menu == "profile_academic" {
+            cell.icon.tintColor = UIColor.white
+        }else{
+            cell.icon.tintColor = Colors.green_dark
+        }
+        
+        if profile_menu == "profile_academic" {
+            cell.backgroundColor = hexStringToUIColor(hex: menu_main[indexPath.row]["color"]!)
+        }
         
         return cell
     }
@@ -181,6 +184,28 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
     
     func setup_ux(){
         
+        profile_menu = getSettings(key: "profile_menu")
+        // UX CollectionView
+        if profile_menu == "profile_academic" {
+            let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+            layout.sectionInset = UIEdgeInsets(top: 3, left: 5, bottom: 0, right: 5)
+            layout.scrollDirection = .vertical
+            layout.minimumInteritemSpacing = 3
+            layout.minimumLineSpacing = 3
+            layout.itemSize = CGSize(width: ((self.view.frame.size.width/2) - 10), height: 120)
+            self.collectionView?.setCollectionViewLayout(layout, animated: false)
+            
+        } else if profile_menu == "profile_university" {
+            print ("UX Cell Universidad")
+            let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+            layout.sectionInset = UIEdgeInsets(top: 3, left: 5, bottom: 0, right: 5)
+            layout.scrollDirection = .vertical
+            layout.minimumInteritemSpacing = 3
+            layout.minimumLineSpacing = 3
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 10, height: 58)
+            self.collectionView?.setCollectionViewLayout(layout, animated: false)
+        }
+        
         self.navigationItem.backBarButtonItem?.title = ""
         
         //SideBar
@@ -221,7 +246,6 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
         Defaults[.academic_dcLatitud] = ""
         Defaults[.academic_dcLongitud] = ""
 
-        
         //Paquete
         Defaults[.package_idUniveridad] = 0
         Defaults[.package_idPaquete] = 0
@@ -237,26 +261,7 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
         Defaults[.university_desCorreo] = ""
         Defaults[.university_idPersona] = 0
 
-        /*
-        //Persona Universidad
-        Defaults[.representative_nbCompleto] = ""
-        Defaults[.representative_desTelefono] = ""
-        Defaults[.representative_desCorreo] = ""
-        Defaults[.representative_pathFoto] = ""
-
-        // Direccion Representante
-        Defaults[.add_rep_desDireccion] = ""
-        Defaults[.add_rep_numCodigoPostal] = ""
-        Defaults[.add_rep_nbPais] = ""
-        Defaults[.add_rep_nbEstado] = ""
-        Defaults[.add_rep_nbMunicipio] = ""
-        Defaults[.add_rep_nbCiudad] = ""
-        Defaults[.add_rep_dcLatitud] = ""
-        Defaults[.add_rep_dcLongitud] = ""
-        */
-
         // Direccion Universidad
-        
         Defaults[.add_uni_idDireccion] = 0
         Defaults[.add_uni_desDireccion] = ""
         Defaults[.add_uni_numCodigoPostal] = ""
@@ -315,7 +320,6 @@ extension MainViewController: SidebarViewDelegate {
                 break
             case "sigout":
                 print("Salir")
-                
                 cerrarSesion()
                 break
         case "sigout_academic":
@@ -324,16 +328,6 @@ extension MainViewController: SidebarViewDelegate {
             default:
                 break
         }
-        
-        /*Gradiente
-        let gl = CAGradientLayer()
-        gl.colors = [Colors.green_light, Colors.green_dark]
-        gl.locations = [0.0, 1.0]
-        gl.frame = CGRect(x: 0, y: 0, width: 0, height: self.sidebarView.frame.height)
-        self.sidebarView.layer.insertSublayer(gl, at: 0)
-        //self.sidebarView.layer.addSublayer(gl)
-         */
-        
     }
     
     func cerrarSesion(){
@@ -356,7 +350,6 @@ extension MainViewController: SidebarViewDelegate {
             sigout(type: 1)
         }
         sigout(type: 1)
-        
     }
     
 }

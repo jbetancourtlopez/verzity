@@ -64,25 +64,27 @@ class HeaderTableViewCell: UITableViewCell {
 
 class PackageTableViewCell: UITableViewCell {
 
-    
-    
     @IBOutlet var content_package: UIView!
     @IBOutlet var title_top: UILabel!
     
     @IBOutlet var label_financing: UILabel!
     @IBOutlet var price: UILabel!
     
-    @IBOutlet var swich_beca: UISwitch!
-    @IBOutlet var swich_financing: UISwitch!
-   // @IBOutlet var description_package: UILabel!
-    
     @IBOutlet var description_package: UITextView!
     @IBOutlet var label_postulacion: UILabel!
-    @IBOutlet var swich_postulacion: UISwitch!
     @IBOutlet var button_buy: UIButton!
     @IBOutlet var label_beca: UILabel!
     @IBOutlet var vigency: UILabel!
+    
+    @IBOutlet var image_financing: UIImageView!
+    @IBOutlet var image_becas: UIImageView!
+    @IBOutlet var image_postulacion: UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
 }
+
 
 
 

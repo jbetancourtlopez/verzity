@@ -93,10 +93,16 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         
         if  type == "find_next_to_me" {
             
+            var name_state = ""
+            if  (Defaults[.academic_state]?.isEmpty)! {
+                name_state = Defaults[.academic_state]!
+            }else{
+                name_state = "Yucatán"
+            }
+            
             let array_parameter = [
-                "nombreEstado": !(Defaults[.academic_state]?.isEmpty)! ? Defaults[.academic_state]! : "Yucatán",
-                "extranjero": false
-                ] as [String : Any]
+                "nombreEstado": name_state
+            ] as [String : Any]
             debugPrint(array_parameter)
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
