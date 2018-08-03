@@ -47,8 +47,6 @@
 		9267013720D849C900E638A1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267013620D849C900E638A1 /* BaseViewController.swift */; };
 		9267013D20D84A8C00E638A1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267013C20D84A8C00E638A1 /* Config.swift */; };
 		9267013F20D84AD000E638A1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267013E20D84AD000E638A1 /* Colors.swift */; };
-		9267014520D8B98C00E638A1 /* logo_verde.png in Resources */ = {isa = PBXBuildFile; fileRef = 9267014420D8B98C00E638A1 /* logo_verde.png */; };
-		9267014720D8B9A200E638A1 /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 9267014620D8B9A200E638A1 /* logo_white.png */; };
 		9267014920D98EFB00E638A1 /* ForgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267014820D98EFB00E638A1 /* ForgetViewController.swift */; };
 		9267014B20D9994800E638A1 /* ic_action_mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 9267014A20D9994700E638A1 /* ic_action_mail.png */; };
 		9267014D20D99C9F00E638A1 /* ForgetViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267014C20D99C9F00E638A1 /* ForgetViewControllerDelegate.swift */; };
@@ -73,6 +71,8 @@
 		9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69420E7337A004D7FC7 /* VideoViewController.swift */; };
 		9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641820FA448C00876AC0 /* SplashViewController.swift */; };
 		9286641B20FCD8D000876AC0 /* SelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */; };
+		928C1C0B21142D1100B1E131 /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 928C1C0A21142D1100B1E131 /* logo_white.png */; };
+		928C1C0D21142D4300B1E131 /* logo_verde.png in Resources */ = {isa = PBXBuildFile; fileRef = 928C1C0C21142D4300B1E131 /* logo_verde.png */; };
 		92A64B7420EE78B500E96152 /* ic_telefono_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */; };
 		92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7520EE8A3B00E96152 /* StringsLabel.swift */; };
 		92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7720EE8D8300E96152 /* FormValidate.swift */; };
@@ -80,8 +80,6 @@
 		92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7F20EFF33700E96152 /* ExampleViewController.swift */; };
 		92A64B8220F087E400E96152 /* DetailFinanciamientoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */; };
 		92B0F60E2100C7E40003F58F /* DetailMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */; };
-		92B0F6102100CBA10003F58F /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0F60F2100CB9E0003F58F /* logo_white.png */; };
-		92B0F6122100CBA90003F58F /* logo_verde.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0F6112100CBA60003F58F /* logo_verde.png */; };
 		92B0F6142100CBEF0003F58F /* ic_action_mail_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */; };
 		92B0F6162100ED490003F58F /* DetailBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0F6152100ED490003F58F /* DetailBuyViewController.swift */; };
 		92B6A3B020F7B28B00987258 /* icon_face_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B6A3AF20F7B28A00987258 /* icon_face_white.png */; };
@@ -153,8 +151,6 @@
 		9267013620D849C900E638A1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9267013C20D84A8C00E638A1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		9267013E20D84AD000E638A1 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		9267014420D8B98C00E638A1 /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_verde.png; sourceTree = "<group>"; };
-		9267014620D8B9A200E638A1 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_white.png; sourceTree = "<group>"; };
 		9267014820D98EFB00E638A1 /* ForgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetViewController.swift; sourceTree = "<group>"; };
 		9267014A20D9994700E638A1 /* ic_action_mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_mail.png; sourceTree = "<group>"; };
 		9267014C20D99C9F00E638A1 /* ForgetViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +175,8 @@
 		9276B69420E7337A004D7FC7 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		9286641820FA448C00876AC0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationViewController.swift; sourceTree = "<group>"; };
+		928C1C0A21142D1100B1E131 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_white.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Logos/logo_white/ios/AppIcon.appiconset/logo_white.png"; sourceTree = "<group>"; };
+		928C1C0C21142D4300B1E131 /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_verde.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Logos/logo_green/ios/AppIcon.appiconset/logo_verde.png"; sourceTree = "<group>"; };
 		92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_telefono_gray.png; sourceTree = "<group>"; };
 		92A64B7520EE8A3B00E96152 /* StringsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsLabel.swift; sourceTree = "<group>"; };
 		92A64B7720EE8D8300E96152 /* FormValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidate.swift; sourceTree = "<group>"; };
@@ -188,8 +186,6 @@
 		92A64B7F20EFF33700E96152 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFinanciamientoViewController.swift; sourceTree = "<group>"; };
 		92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapViewController.swift; sourceTree = "<group>"; };
-		92B0F60F2100CB9E0003F58F /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_white.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Logotipo/logo_white.png"; sourceTree = "<group>"; };
-		92B0F6112100CBA60003F58F /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_verde.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Logotipo/logo_verde.png"; sourceTree = "<group>"; };
 		92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_action_mail_gray.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Iconografia/ic_action_mail_gray.png"; sourceTree = "<group>"; };
 		92B0F6152100ED490003F58F /* DetailBuyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBuyViewController.swift; sourceTree = "<group>"; };
 		92B6A3AF20F7B28A00987258 /* icon_face_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_face_white.png; sourceTree = "<group>"; };
@@ -431,25 +427,23 @@
 				92226FE820F5E02F00ED30E0 /* ic_action_descripcion_gray.png */,
 				92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */,
 				9267015420DAB3D600E638A1 /* ic_action_ic_contrasea.png */,
-				92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */,
 				92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */,
+				92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */,
 				92226FD320F4354700ED30E0 /* ic_action_mail_gray.png */,
 				9267014A20D9994700E638A1 /* ic_action_mail.png */,
 				92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */,
 				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
-				92B6A3AF20F7B28A00987258 /* icon_face_white.png */,
 				92682D2B20DB8E1800E6C4A8 /* ic_menu.png */,
 				92226FD920F4371300ED30E0 /* ic_school_gray.png */,
+				928C1C0C21142D4300B1E131 /* logo_verde.png */,
 				92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */,
 				9267015520DAB3D700E638A1 /* ic_telefono.png */,
-				92B0F60F2100CB9E0003F58F /* logo_white.png */,
 				9267015220DA9AFC00E638A1 /* ic_user_gray.png */,
-				92B0F6112100CBA60003F58F /* logo_verde.png */,
 				922892AC20F2DE5B0021DB32 /* ic_user_profile.png */,
+				92B6A3AF20F7B28A00987258 /* icon_face_white.png */,
 				924132F220E422EB00CEBC81 /* loading_data.gif */,
 				92682D2520DB7B9D00E6C4A8 /* loading.gif */,
-				9267014420D8B98C00E638A1 /* logo_verde.png */,
-				9267014620D8B9A200E638A1 /* logo_white.png */,
+				928C1C0A21142D1100B1E131 /* logo_white.png */,
 				92DD410920EC218D0035EF4E /* PayPal.jpg */,
 			);
 			path = assets;
@@ -536,11 +530,10 @@
 				9267014B20D9994800E638A1 /* ic_action_mail.png in Resources */,
 				924132EB20E2B6A300CEBC81 /* CustomView.xib in Resources */,
 				9267015720DAB3D900E638A1 /* ic_action_ic_contrasea.png in Resources */,
-				92B0F6122100CBA90003F58F /* logo_verde.png in Resources */,
-				9267014720D8B9A200E638A1 /* logo_white.png in Resources */,
 				92226FD820F4367700ED30E0 /* ic_action_ciudad_gray.png in Resources */,
 				92682D3820DD62A700E6C4A8 /* default.png in Resources */,
 				92226FD420F4354A00ED30E0 /* ic_action_mail_gray.png in Resources */,
+				928C1C0D21142D4300B1E131 /* logo_verde.png in Resources */,
 				92DD410A20EC218F0035EF4E /* PayPal.jpg in Resources */,
 				9267012420D8462600E638A1 /* LaunchScreen.storyboard in Resources */,
 				9267012120D8462600E638A1 /* Assets.xcassets in Resources */,
@@ -549,6 +542,7 @@
 				92226FD620F4362000ED30E0 /* ic_action_estado_gray.png in Resources */,
 				9267011C20D8462400E638A1 /* Main.storyboard in Resources */,
 				92682D2D20DB8E1900E6C4A8 /* ic_menu.png in Resources */,
+				928C1C0B21142D1100B1E131 /* logo_white.png in Resources */,
 				92B6A3B020F7B28B00987258 /* icon_face_white.png in Resources */,
 				92226FDA20F4371600ED30E0 /* ic_school_gray.png in Resources */,
 				922892AD20F2DE5C0021DB32 /* ic_user_profile.png in Resources */,
@@ -560,9 +554,7 @@
 				9267015120D9F76C00E638A1 /* back_white.png in Resources */,
 				92682D2620DB7B9E00E6C4A8 /* loading.gif in Resources */,
 				92682D3020DB8EE600E6C4A8 /* ic_dots.png in Resources */,
-				92B0F6102100CBA10003F58F /* logo_white.png in Resources */,
 				92226FEB20F5E07900ED30E0 /* ic_action_web_gray.png in Resources */,
-				9267014520D8B98C00E638A1 /* logo_verde.png in Resources */,
 				9267015320DA9AFC00E638A1 /* ic_user_gray.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

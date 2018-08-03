@@ -41,22 +41,27 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     var facebook_id: String = ""
     var is_facebook:Int = 0
     
+    var name_image = ""
+    
     // FTP
-    let server = "ftp.smarterasp.net"
-    let ftp_username = "ftpVerzity"
-    let ftp_password = "ftp.Verzity"
+    let server = Defaults[.desRutaFTP]!
+    let ftp_username = Defaults[.nbUsuarioFTP]!
+    let ftp_password = Defaults[.desCarpetaMultimediaFTP]!
+    let path_folder = Defaults[.pdwContraseniaFTP]!
     
-    let path_folder = "~/Upload/Usuarios/"
     
-    let serverd = "reservanty.com"
-    let ftp_usernamed = "reservanty"
-    let ftp_passwordd = "AFRJ3vkd#_8y"
+    /*
+     "ftp.smarterasp.net"
+     "ftpVerzity"
+     "ftp.Verzity"
+    */
+    
+    let serverd = "ftp.smarterasp.net" //"jossuebetancourt.com/" //"reservanty.com"
+    let ftp_usernamed = "ftpVerzity" //"develop@jossuebetancourt.com" //"reservanty"
+    let ftp_passwordd = "ftp.Verzity" //"qwerty123*" //"AFRJ3vkd#_8y"
     
     var ftp:FTPUpload!
-    
     var webServiceController = WebServiceController()
-    
-  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,12 +122,14 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         }else{
             showMessage(title: "Error al cargar la imagen", automatic: true)
         }
-        
+        self.dismiss(animated: true, completion: upload_photo)
+    }
+    
+    func upload_photo(){
+        print("Callback")
         let data = UIImageJPEGRepresentation(img_profile.image!, 1.0)
-        //self.ftp.send(data: data!, with: "/example_ios.jpg", success: success)
-        
-        
-        self.dismiss(animated: true, completion: nil)
+        self.name_image = randomString(length: 11) + "_ios.jpg"
+        self.ftp.send(data: data!, with: name_image, success: success)
     }
     
     func success(is_sucess: Bool){
@@ -178,7 +185,6 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     @IBAction func on_click_register(_ sender: Any) {
         print("Registro")
         
-        
         if validate_form() == 0 {
             
             showGifIndicator(view: self.view)
@@ -198,6 +204,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
                                 ]
                         ],
                         "idPersona": 0,
+                        "pathFoto": self.path_folder + self.name_image,
                         "nbCompleto": name_representative.text!,
                         "desTelefono": phone_representative.text! as String,
                         "Universidades": [
@@ -215,7 +222,6 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.CrearCuentaAcceso(parameters: parameter_json_string!, doneFunction: CrearCuentaAcceso)
- 
  
         }
     }
