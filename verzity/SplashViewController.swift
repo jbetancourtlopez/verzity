@@ -27,14 +27,16 @@ class SplashViewController: BaseViewController {
      // Firebase Event
     @objc func displayFCMToken(notification: NSNotification){
         guard let userInfo = notification.userInfo else {return}
-        print("Debug-FirebaseToken Splash: \(userInfo["token"])")
+        print("Debug-FirebaseToken Splash: \(userInfo["token"]!)")
         if let fcmToken = userInfo["token"] as? String {
             Defaults[.cvFirebase] = fcmToken
+            print(Defaults[.cvFirebase]!)
         }
     }
     
     func load_settings() {
         showGifIndicator(view: self.view)
+        print("Carga de Settings")
         let array_parameter = ["": ""]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
@@ -110,9 +112,14 @@ class SplashViewController: BaseViewController {
                 let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
                 UIApplication.shared.keyWindow?.rootViewController = vc
             }else{
+                
+                _ = self.navigationController?.popToRootViewController(animated: false)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
+                UIApplication.shared.keyWindow?.rootViewController = vc
+                
                 print("package")
-                let vc = storyboard?.instantiateViewController(withIdentifier: "PackagesViewControllerID") as! PackagesViewController
-                self.show(vc, sender: nil)
+                /**/
             }
             
         }else{

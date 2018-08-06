@@ -50,10 +50,10 @@ class DetailFinanciamientoViewController: BaseViewController {
         icon_file.tintColor = Colors.gray
 
         icon_web.image = icon_web.image?.withRenderingMode(.alwaysTemplate)
-        icon_web.tintColor = Colors.gray
+        icon_web.tintColor = hexStringToUIColor(hex: "#1d47f1")
 
         icon_university.image = icon_university.image?.withRenderingMode(.alwaysTemplate)
-        icon_university.tintColor = Colors.gray
+        icon_university.tintColor = hexStringToUIColor(hex: "#1d47f1")
         
         
         let image = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
@@ -88,7 +88,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         financing_title.text = detail["nbFinanciamiento"].stringValue
         
         // Web
-        var desSitioWeb = universidad["desSitioWeb"].stringValue
+        var desSitioWeb = detail["urlSitio"].stringValue
         if desSitioWeb.isEmpty {
             label_web.isHidden = true
             icon_web.isHidden = true

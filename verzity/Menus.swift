@@ -13,15 +13,15 @@ struct Menus{
     static let menu_main_university = [
         [
             "name":"Paquetes",
-            "image":"ic_action_financiamiento.png",
+            "image":"ic_comprar_paquete",
             "type": "package",
-             "color": "#388E3C"
+             "color": "#ff7b25"
         ],
         [
             "name":"Postulados",
             "image":"ic_mortarboard",
             "type": "postulate",
-            "color": "#ff7b25"
+            "color": "#1d47f1"
         ],
        
         
@@ -61,27 +61,32 @@ struct Menus{
         [
             "name":"Universidad",
             "image":"ic_action_ic_school.png",
-            "type": "find_university"
+            "type": "find_university",
+            "color": "#388E3C"
         ],
         [
             "name":"Programas académicos",
             "image":"ic_mortarboard.png",
-            "type": "find_academics"
+            "type": "find_academics",
+            "color": "#1d47f1"
         ],
         [
             "name":"Cerca de mi",
             "image":"ic_gps.png",
-            "type": "find_next_to_me"
+            "type": "find_next_to_me",
+            "color": "#ff0106"
         ],
         [
             "name":"En EE. UU.",
             "image":"ic_action_aeroplane.png",
-            "type": "find_euu"
+            "type": "find_euu",
+            "color": "#b47102"
         ],
         [
             "name":"Favoritos",
             "image":"ic_action_star_border.png",
-            "type": "find_favorit"
+            "type": "find_favorit",
+            "color": "#F7BF25"
         ]
         
     ]

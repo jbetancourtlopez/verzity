@@ -64,7 +64,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     }
     
     func setup_back_button(){
-        let image = UIImage(named: "ic_file_download")?.withRenderingMode(.alwaysOriginal)
+        let image = UIImage(named: "back")?.withRenderingMode(.alwaysOriginal)
         
         
         let button_back = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(on_click_back))
@@ -78,7 +78,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(customView: button)
         
-        //self.navigationItem.leftBarButtonItem = button_back
+        self.navigationItem.leftBarButtonItem = button_back
     }
     
     @objc func on_click_back(sender: AnyObject) {

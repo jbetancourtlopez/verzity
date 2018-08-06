@@ -49,20 +49,18 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>youtube.com</key>
+            <key>youtube.com</key>
 			<dict>
                 <key>NSIncludesSubdomains</key>
                 <true/>
                 <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
                 <false/>
-                 <!--
 				<key>NSIncludesSubdomains</key>
 				<true/>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
-				<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.2</string>
-                -->
+				<!--<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string> -->
 			</dict>
 		</dict>
 	</dict>

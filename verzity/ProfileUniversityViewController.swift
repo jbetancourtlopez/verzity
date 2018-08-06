@@ -180,11 +180,19 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
             Defaults[.add_uni_dcLatitud] = direccion["dcLatitud"].doubleValue
             Defaults[.add_uni_dcLongitud] = direccion["dcLongitud"].doubleValue
             
+            Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
+
             
         }else {
             showMessage(title: response as! String, automatic: true)
         }
         
+    }
+    
+    
+    @objc func go_home(){
+        let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
+        self.show(vc, sender: nil)
     }
     
     

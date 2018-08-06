@@ -21,10 +21,13 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
     var profile_menu:String = ""
     var menu_main = Menus.menu_main_academic
     weak var delegate:SidebarViewDelegate?
+    var have_paquete = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
+        
+        have_paquete = have_paquete as Int
         
         profile_menu = getSettings(key: "profile_menu")
         
@@ -32,6 +35,18 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
             menu_main = Menus.menu_main_academic  as [AnyObject] as! [[String : String]]
         }else if profile_menu == "profile_university" {
             menu_main = Menus.menu_main_university as [AnyObject] as! [[String : String]]
+            validate_package()
+        }
+        
+        
+        
+    }
+    
+    func validate_package(){
+        
+        if  Defaults[.package_idPaquete] == 0{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "PackagesViewControllerID") as! PackagesViewController
+            self.show(vc, sender: nil)
         }
     }
 
@@ -73,7 +88,7 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
         if profile_menu == "profile_academic" {
             cell.icon.tintColor = UIColor.white
         }else{
-            cell.icon.tintColor = Colors.green_dark
+            cell.icon.tintColor = hexStringToUIColor(hex: menu_main[indexPath.row]["color"]!)
         }
         
         if profile_menu == "profile_academic" {

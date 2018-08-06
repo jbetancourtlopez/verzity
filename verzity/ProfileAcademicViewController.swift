@@ -191,10 +191,24 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             Defaults[.academic_state] = direcciones["nbEstado"].stringValue
             Defaults[.academic_description] = direcciones["desDireccion"].stringValue
             
+            print("Perfil Universitario")
+            
+            
+            Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
+            
+            
+            
         }else{
             showMessage(title: response as! String, automatic: true)
+            
+          
         }
         hiddenGifIndicator(view: self.view)
+    }
+    
+    @objc func go_home(){
+        let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
+        self.show(vc, sender: nil)
     }
     
     func get_data_profile(){

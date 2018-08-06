@@ -56,7 +56,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
      "ftp.Verzity"
     */
     
-    let serverd = "ftp.smarterasp.net" //"jossuebetancourt.com/" //"reservanty.com"
+    let serverd = "ftp://ftp.smarterasp.net:21" //"http://208.118.63.76:21" ////"jossuebetancourt.com/" //"reservanty.com"
     let ftp_usernamed = "ftpVerzity" //"develop@jossuebetancourt.com" //"reservanty"
     let ftp_passwordd = "ftp.Verzity" //"qwerty123*" //"AFRJ3vkd#_8y"
     
@@ -229,16 +229,77 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     
     func CrearCuentaAcceso(status: Int, response: AnyObject){
         let json = JSON(response)
-        
+        debugPrint(json)
+        hiddenGifIndicator(view: self.view)
         if status == 1{
+            
+            var json = JSON(response)
+            let data = JSON(json["Data"])
+            
+            let personas = JSON(data["Personas"])
+            let universidades_list = personas["Universidades"].array
+            let universidades = JSON(universidades_list![0])
+            let paquete_list = JSON(universidades["VentasPaquetes"])
+            let paquete = JSON(paquete_list[0])
+            let dispositivos_array = personas["Dispositivos"].arrayValue
+            
+            
+            setSettings(key: "profile_menu", value: "profile_university")
+            Defaults[.type_user] = 2
+            
+            //Dispostivo
+            
+            Defaults[.idDispositivo] = 0
+            if dispositivos_array.count > 0{
+                var dispositivo = JSON(dispositivos_array[0])
+                Defaults[.idDispositivo] = dispositivo["idDispositivo"].intValue
+            }
+            
+            //Paquete
+            Defaults[.package_idUniveridad] = paquete["idUniversidad"].intValue
+            Defaults[.package_idPaquete] = paquete["idPaquete"].intValue
+            
+            //Universidad
+            Defaults[.university_idUniveridad] = universidades["idUniversidad"].intValue
+            Defaults[.university_pathLogo] = universidades["pathLogo"].stringValue
+            Defaults[.university_nbUniversidad] = universidades["nbUniversidad"].stringValue
+            Defaults[.university_nbReprecentante] = universidades["nbReprecentante"].stringValue
+            Defaults[.university_desUniversidad] = universidades["desUniversidad"].stringValue
+            Defaults[.university_desSitioWeb] = universidades["desSitioWeb"].stringValue
+            Defaults[.university_desTelefono] = universidades["desTelefono"].stringValue
+            Defaults[.university_desCorreo] = universidades["desCorreo"].stringValue
+            Defaults[.university_idPersona] = universidades["idPersona"].intValue
+            
+        
+            // Representante
+            Defaults[.academic_idPersona] = personas["idPersona"].intValue
+            
+            Defaults[.academic_name] = personas["nbCompleto"].stringValue
+            Defaults[.academic_email] = personas["desCorreo"].stringValue
+            Defaults[.academic_phone] =  personas["desTelefono"].stringValue
+            Defaults[.academic_pathFoto] = personas["pathFoto"].stringValue
+            
+       
+            
+            //performSegue(withIdentifier: "showSplash", sender: self)
+            
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "SplashViewControllerID") as! SplashViewController
+            self.show(vc, sender: nil)
+ 
+            
+            /*
             let alertController = UIAlertController(title: "Atención", message: "Se enviará la información para que sea verificada por el administrador, por favor espere el correo de confirmación del registro de la universidad.", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
             alertController.addAction(defaultAction)
              present(alertController, animated: true, completion: nil)
+             */
+            
+            
         }else {
             showMessage(title: response as! String, automatic: true)
         }
-        hiddenGifIndicator(view: self.view)
+        
     }
     
     

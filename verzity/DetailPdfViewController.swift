@@ -30,22 +30,19 @@ class DetailPdfViewController: BaseViewController, UIWebViewDelegate {
         let image = UIImage(named: "ic_file_download")?.withRenderingMode(.alwaysOriginal)
         let button_find = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(on_click_find))
         
-        //self.navigationItem.rightBarButtonItem = button_find
+        self.navigationItem.rightBarButtonItem = button_find
     }
     
     @objc func on_click_find(sender: AnyObject) {
         print("Download")
         if let URL = NSURL(string: url_string) {
             
-            let fileManager = FileManager.default
-            let local_url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
             
-            let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-           
-            let url = URL as URL
-            let destinationUrl = documentsUrl.appendingPathComponent(url.lastPathComponent)
+            // Ibook
             
-            Downloader.load(url: URL as URL, to: destinationUrl, completion: download)
+            
+            openUrl(scheme: self.url_string)
+
         }
         
     }

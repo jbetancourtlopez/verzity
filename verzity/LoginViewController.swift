@@ -248,7 +248,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         print("on_click_aqui")
         
         let array_parameter = [
-            "cvFirebase": Defaults[.cvFirebase],
+            "cvFirebase": Defaults[.cvFirebase]!,
             "cvDispositivo": Defaults[.cvDispositivo]!,
             "idDispositivo": 0
             ] as [String : Any]
@@ -276,9 +276,10 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             
             var nbCompleto = persona_json["nbCompleto"].stringValue
             var desCorreo = persona_json["desCorreo"].stringValue
-            
+            var desTelefono = persona_json["desTelefono"].stringValue
             if nbCompleto == "temp" {
                 nbCompleto = ""
+                desTelefono = ""
             }
             
             if desCorreo == "temp@email.com" {
@@ -291,7 +292,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
 
             Defaults[.academic_name] = nbCompleto
             Defaults[.academic_email] = desCorreo
-            Defaults[.academic_phone] =  persona_json["desTelefono"].stringValue
+            Defaults[.academic_phone] = desTelefono
             Defaults[.academic_nbPais] = direcciones["nbPais"].stringValue
             Defaults[.academic_cp] = direcciones["numCodigoPostal"].stringValue
             Defaults[.academic_city] = direcciones["nbCiudad"].stringValue
@@ -368,8 +369,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     var data = picture["data"] as! [String : AnyObject]
                     let url = data["url"] as! String
                     
-                   
-                    
                     self.email.text = self.dict["email"] as? String
                     self.password.text = (self.dict["id"] as! String)
                     
@@ -379,13 +378,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     self.facebook_url = url
                     
                     self.is_click_facebook = 1
-                    
-                    
                     self.login_universidad(type:"facebook")
-                    
-                    /*
-                    
-                    */
  
                 }
             })

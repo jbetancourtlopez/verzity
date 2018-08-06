@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "verzity/DetailUniversityViewController.swift"
-            timestampString = "554883804.805643"
+            timestampString = "555272256.1984119"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "322"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "verzity/DetailFinanciamientoViewController.swift"
-            timestampString = "554883804.806365"
+            timestampString = "555272256.198596"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "131"
@@ -90,12 +90,12 @@
                   moduleName = "verzity"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jossuebetancourt/Desktop/verzity/verzity/DetailFinanciamientoViewController.swift"
-                  timestampString = "554973952.577608"
+                  timestampString = "555268484.934593"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "132"
                   endingLineNumber = "132"
-                  offsetFromSymbolStart = "1335">
+                  offsetFromSymbolStart = "968">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -105,12 +105,12 @@
                   moduleName = "verzity"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jossuebetancourt/Desktop/verzity/verzity/DetailFinanciamientoViewController.swift"
-                  timestampString = "554973952.583349"
+                  timestampString = "555268484.936945"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "132"
                   endingLineNumber = "132"
-                  offsetFromSymbolStart = "1405">
+                  offsetFromSymbolStart = "1020">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "verzity/LoginViewController.swift"
-            timestampString = "554884215.946511"
+            timestampString = "555272256.198666"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "156"

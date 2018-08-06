@@ -195,7 +195,7 @@ class DetailUniversityViewController: BaseViewController {
     
     @IBAction func on_click_postulate(_ sender: Any) {
         print("Postulado")
-        let alert = UIAlertController(title: "Seleccione programa academico", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Seleccione programa académico de interés.", message: nil, preferredStyle: .actionSheet)
         
         for i in 0 ..< list_licenciaturas.count {
             
@@ -288,33 +288,33 @@ class DetailUniversityViewController: BaseViewController {
         // Favorito
         let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
         button_favorit.setImage(image, for: .normal)
-        button_favorit.tintColor = Colors.green_dark
+        button_favorit.tintColor = hexStringToUIColor(hex: "#F7BF25")
         
         // DIreccion
         image_address.image = image_address.image?.withRenderingMode(.alwaysTemplate)
-        image_address.tintColor = Colors.gray
+        image_address.tintColor = hexStringToUIColor(hex: "#ff0106")
         // Phone
         image_phone.image = image_phone.image?.withRenderingMode(.alwaysTemplate)
         image_phone.tintColor = Colors.gray
         // Web
         image_web.image = image_web.image?.withRenderingMode(.alwaysTemplate)
-        image_web.tintColor = Colors.gray
+        image_web.tintColor = hexStringToUIColor(hex: "#1d47f1")
         // Beca
         image_beca.image = image_beca.image?.withRenderingMode(.alwaysTemplate)
-        image_beca.tintColor = Colors.gray
+        image_beca.tintColor = hexStringToUIColor(hex: "#32cb00")
         button_beca.setImage(image_visitar_web, for: .normal)
         button_beca.tintColor = Colors.gray
         // Email
         image_email.image = image_email.image?.withRenderingMode(.alwaysTemplate)
-        image_email.tintColor = Colors.gray
+        image_email.tintColor = hexStringToUIColor(hex: "#1d47f1")
         //Video
         image_video.image = image_video.image?.withRenderingMode(.alwaysTemplate)
-        image_video.tintColor = Colors.gray
+        image_video.tintColor = hexStringToUIColor(hex: "#ff0106")
         button_video.setImage(image_visitar_web, for: .normal)
         button_video.tintColor = Colors.gray
         // FInancimaineto
         image_financing.image = image_financing.image?.withRenderingMode(.alwaysTemplate)
-        image_financing.tintColor = Colors.gray
+        image_financing.tintColor = hexStringToUIColor(hex: "#ff7b25")
         button_financing.setImage(image_visitar_web, for: .normal)
         button_financing.tintColor = Colors.gray
        

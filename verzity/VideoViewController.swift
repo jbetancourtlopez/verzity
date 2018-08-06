@@ -90,8 +90,15 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let video_url = NSURL(string: url_multimedia)
             let avPlayer = AVPlayer(url: video_url as! URL)
             cell.playerView?.playerLayer.player = avPlayer
-            cell.playerView.player?.play()
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
+
+            cell.playerView.addGestureRecognizer(tapGesture)
+            
+            //cell.playerView.player?.play()
         }
+        
+        
        
         
         /*
@@ -111,9 +118,9 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
         
         cell.title.text = item["nbVideo"].stringValue
         cell.video_description.text = item["desVideo"].stringValue
-        cell.video_description.translatesAutoresizingMaskIntoConstraints = true
-        cell.video_description.sizeToFit()
-        cell.video_description.isScrollEnabled = false
+        //cell.video_description.translatesAutoresizingMaskIntoConstraints = true
+        //cell.video_description.sizeToFit()
+        //cell.video_description.isScrollEnabled = false
         
         //
         cell.layer.borderWidth = 3
@@ -123,7 +130,55 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    
+    @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
+        print("tap tap")
+        
+        var item = JSON(items[0])
+        var desRutaVideo = item["desRutaVideo"].stringValue
+        desRutaVideo = desRutaVideo.replacingOccurrences(of: "~", with: "")
+        desRutaVideo = desRutaVideo.replacingOccurrences(of: "\\", with: "")
+        
+        var url_multimedia = Defaults[.desRutaMultimedia]! + desRutaVideo
+        let video_url = NSURL(string: url_multimedia)
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "AVPlayerViewControllerID") as! AVPlayerViewController
+        vc.player = AVPlayer(url: video_url as! URL)
+        vc.player?.play()
+        
+        self.show(vc, sender: nil)
+        
+        
+        
+        
+       
 
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Entro 1")
+        if segue.identifier == "showVideoPlayer" {
+            print("Entro")
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                
+                var item = JSON(items[indexPath.row])
+                
+                
+                var desRutaVideo = item["desRutaVideo"].stringValue
+                desRutaVideo = desRutaVideo.replacingOccurrences(of: "~", with: "")
+                desRutaVideo = desRutaVideo.replacingOccurrences(of: "\\", with: "")
+                
+                var url_multimedia = Defaults[.desRutaMultimedia]! + desRutaVideo
+                
+                
+                let destination = segue.destination as! AVPlayerViewController
+                let video_url = NSURL(string: url_multimedia)
+                destination.player = AVPlayer(url: video_url as! URL)
+                destination.player?.play()
+            }
+        }
+    }
+    
 
 
 

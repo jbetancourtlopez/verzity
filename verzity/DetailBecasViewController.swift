@@ -41,7 +41,7 @@ class DetailBecasViewController: BaseViewController {
     func setup_ux(){
     
         let image_visitar_web  = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
-        let image_file_download  = UIImage(named: "ic_file_download")?.withRenderingMode(.alwaysTemplate)
+        let image_file_download  = UIImage(named: "ic_action_remove_red_eye")?.withRenderingMode(.alwaysTemplate)
     
         btn_university.setImage(image_visitar_web, for: .normal)
         btn_university.tintColor = Colors.gray
@@ -157,6 +157,8 @@ class DetailBecasViewController: BaseViewController {
         icon_file.image = icon_file.image?.withRenderingMode(.alwaysTemplate)
         icon_file.tintColor = Colors.gray
         
+        icon_person.image = icon_person.image?.withRenderingMode(.alwaysTemplate)
+        icon_person.tintColor = hexStringToUIColor(hex: "#1d47f1")
         //icon_file_right.image = icon_file_right.image?.withRenderingMode(.alwaysTemplate)
         icon_file_right.tintColor = Colors.gray
         

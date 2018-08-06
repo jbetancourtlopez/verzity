@@ -167,7 +167,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         cell.icon.image = UIImage(named: menu_item["image"].stringValue)
         cell.name.text = menu_item["name"].stringValue
         cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
-        cell.icon.tintColor = Colors.green_dark
+        cell.icon.tintColor = hexStringToUIColor(hex: menu_main[indexPath.section]["color"]!)
         return cell
     }
     

@@ -94,7 +94,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         if  type == "find_next_to_me" {
             
             var name_state = ""
-            if  (Defaults[.academic_state]?.isEmpty)! {
+            if  (!(Defaults[.academic_state]?.isEmpty)!) {
                 name_state = Defaults[.academic_state]!
             }else{
                 name_state = "Yucatán"
