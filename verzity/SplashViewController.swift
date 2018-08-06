@@ -20,13 +20,39 @@ class SplashViewController: BaseViewController {
         // Llamada a Firebase
         NotificationCenter.default.addObserver(self, selector: #selector(self.displayFCMToken(notification:)),
                                                name: Notification.Name("FCMToken"), object: nil)
+        
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("notificationFCM"), object: nil)
+        
+        
+        
         load_settings()
     }
     
     
+    @objc func methodOfReceivedNotification(notification: Notification){
+        
+        print("Notificacion recibida Splast")
+        print(notification)
+        
+        var userInfo = notification.userInfo
+        var object = notification.object
+
+        
+        //Take Action on Notification
+    }
+    
      // Firebase Event
     @objc func displayFCMToken(notification: NSNotification){
         guard let userInfo = notification.userInfo else {return}
+        
+        var o = notification.object
+        
+        print("Notificacion SPlach")
+        
+        debugPrint(o)
+        
+        debugPrint(userInfo)
         print("Debug-FirebaseToken Splash: \(userInfo["token"]!)")
         if let fcmToken = userInfo["token"] as? String {
             Defaults[.cvFirebase] = fcmToken

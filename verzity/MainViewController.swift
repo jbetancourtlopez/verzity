@@ -38,7 +38,59 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
             validate_package()
         }
         
+         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("notificationFCM"), object: nil)
         
+        
+    }
+    
+    @objc func methodOfReceivedNotification(notification: Notification){
+        
+        print("Notificacion recibida MAIN")
+        
+        /// Perosna
+        // 4, 10051, 35, 46
+        
+        // Beca
+        // 22, 23, 24
+      
+        var userInfo = notification.userInfo
+        
+        let datas = userInfo!["data"] as? NSDictionary
+        print("data")
+        print(datas)
+        
+        let msg = datas!["msg"] as! String
+        print("msg")
+        print(msg)
+        
+        
+        let dataToConvert = msg.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
+        
+        var encodedString : NSData = (msg as NSString).data(using: String.Encoding.utf8.rawValue)! as NSData
+
+        
+        let json = JSON(encodedString)
+        
+        print(json["idNotificacion"].intValue)
+        
+        
+        
+        var not = JSON(msg)
+        print("not")
+        print(not)
+        
+        var idNotificacion = json["idNotificacion"].intValue
+        print("idNotificacion")
+        print(idNotificacion)
+        
+ 
+
+        
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
+        vc.idNotificacion = idNotificacion
+        vc.type = "notificacion"
+        self.show(vc, sender: nil)
         
     }
     

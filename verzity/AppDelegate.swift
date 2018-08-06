@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         // If you are receiving a notification message while your app is in the background,
         // this callback will not be fired till the user taps on the notification launching the application.
-        
+        print("didReceiveRemoteNotification")
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
@@ -126,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
-        
+        print("didReceiveRemoteNotification")
         showAlert(withUserInfo: userInfo)
         completionHandler(UIBackgroundFetchResult.newData)
     }
@@ -136,6 +136,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let apsKey = "aps"
         let gcmMessage = "alert"
         let gcmLabel = "google.c.a.c_l"
+
+        let dataDict:[String: Any] = ["data": userInfo]
+        NotificationCenter.default.post(name: Notification.Name("notificationFCM"), object: nil, userInfo: dataDict)
         
         if let aps = userInfo[apsKey] as? NSDictionary {
             if let message = aps[gcmMessage] as? String {
@@ -211,6 +214,10 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         // Messaging.messaging().appDidReceiveMessage(userInfo)
         // Print message ID.
+        
+        print("NotificacionID")
+        debugPrint(userInfo)
+        
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
@@ -224,6 +231,8 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
+        
+        print("userNotificationCenter")
         showAlert(withUserInfo: userInfo)
         
         completionHandler()

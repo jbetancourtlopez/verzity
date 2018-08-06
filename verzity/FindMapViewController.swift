@@ -181,9 +181,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         } else {
             annotationView!.annotation = annotation
         }
-               
         return annotationView
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
