@@ -87,6 +87,54 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             
             let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
                 
+                
+                // Borramos los datos de session
+                self.setSettings(key: "profile_menu", value: "")
+                Defaults[.type_user] = 0
+                Defaults[.academic_idPersona] = 0
+                Defaults[.academic_idDireccion] = 0
+                
+                Defaults[.academic_name] = ""
+                Defaults[.academic_email] = ""
+                Defaults[.academic_phone] = ""
+                Defaults[.academic_pathFoto] = ""
+                
+                Defaults[.academic_nbPais] = ""
+                Defaults[.academic_cp] = ""
+                Defaults[.academic_city] = ""
+                Defaults[.academic_municipio] = ""
+                Defaults[.academic_state] = ""
+                Defaults[.academic_description] = ""
+                
+                Defaults[.academic_dcLatitud] = ""
+                Defaults[.academic_dcLongitud] = ""
+                
+                //Paquete
+                Defaults[.package_idUniveridad] = 0
+                Defaults[.package_idPaquete] = 0
+                
+                //Universidad
+                Defaults[.university_idUniveridad] = 0
+                Defaults[.university_pathLogo] = ""
+                Defaults[.university_nbUniversidad] = ""
+                Defaults[.university_nbReprecentante] = ""
+                Defaults[.university_desUniversidad] = ""
+                Defaults[.university_desSitioWeb] = ""
+                Defaults[.university_desTelefono] = ""
+                Defaults[.university_desCorreo] = ""
+                Defaults[.university_idPersona] = 0
+                
+                // Direccion Universidad
+                Defaults[.add_uni_idDireccion] = 0
+                Defaults[.add_uni_desDireccion] = ""
+                Defaults[.add_uni_numCodigoPostal] = ""
+                Defaults[.add_uni_nbPais] = ""
+                Defaults[.add_uni_nbEstado] = ""
+                Defaults[.add_uni_nbMunicipio] = ""
+                Defaults[.add_uni_nbCiudad] = ""
+                Defaults[.add_uni_dcLatitud] = 0.0
+                Defaults[.add_uni_dcLongitud] = 0.0
+                
                 _ = self.navigationController?.popToRootViewController(animated: false)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController
