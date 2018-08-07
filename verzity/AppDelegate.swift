@@ -114,7 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
-        showAlert(withUserInfo: userInfo)
+       // showAlert(withUserInfo: userInfo, type: "didReceiveRemoteNotification" )
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -132,13 +132,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    func showAlert(withUserInfo userInfo: [AnyHashable : Any]) {
+    func showAlert(withUserInfo userInfo: [AnyHashable : Any], type: String = "") {
         let apsKey = "aps"
         let gcmMessage = "alert"
         let gcmLabel = "google.c.a.c_l"
 
         let dataDict:[String: Any] = ["data": userInfo]
-        NotificationCenter.default.post(name: Notification.Name("notificationFCM"), object: nil, userInfo: dataDict)
+        NotificationCenter.default.post(name: Notification.Name("notificationFCM"), object: ["type": type], userInfo: dataDict)
         
         if let aps = userInfo[apsKey] as? NSDictionary {
             if let message = aps[gcmMessage] as? String {

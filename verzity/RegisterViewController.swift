@@ -129,7 +129,11 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         print("Callback")
         let data = UIImageJPEGRepresentation(img_profile.image!, 1.0)
         self.name_image = randomString(length: 11) + "_ios.jpg"
-        self.ftp.send(data: data!, with: name_image, success: success)
+        //self.ftp.send(data: data!, with: name_image, success: success)
+        
+        //upload
+        
+        webServiceController.upload_file(imageData:data, parameters: ["d": 0], doneFunction:upload_file)
     }
     
     func success(is_sucess: Bool){
@@ -137,6 +141,10 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         print(is_sucess)
     }
     
+    func upload_file(status: Int, response: AnyObject){
+         print("Imagen cargada con exito")
+    }
+        
     func setup_ux(){
         
         self.navigationItem.title = "Registro"

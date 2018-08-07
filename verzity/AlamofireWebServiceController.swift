@@ -57,5 +57,45 @@ class AlamofireWebServiceController {
                 
         }
     }
+    
+    // Upload File
+    func requestWith(endUrl: String, imageData: Data?, parameters: [String : Any], completionHandler: @escaping (Any?, Error?) -> ()){
+        
+        let url = endUrl //"http://google.com" /* your API url */
+        
+        let headers: HTTPHeaders = [
+            /* "Authorization": "your_access_token",  in case you need authorization header */
+            "Content-type": "multipart/form-data"
+        ]
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            for (key, value) in parameters {
+                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
+            }
+            
+            if let data = imageData{
+                multipartFormData.append(data, withName: "image", fileName: "image.png", mimeType: "image/png")
+            }
+            
+        }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers) { (result) in
+            switch result{
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    print("Succesfully uploaded")
+                    if let err = response.error{
+                        return
+                    }
+                    
+                    if let value = response.value {
+                        print("Exito")
+                        completionHandler(value, response.error)
+                    }
+                }
+            case .failure(let error):
+                print("Error in upload: \(error.localizedDescription)")
+               
+            }
+        }
+    }
 }
 

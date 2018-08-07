@@ -680,5 +680,30 @@ class WebServiceController: AlamofireWebServiceController{
             }
         }
     }
+    
+    // Upload File
+    func upload_file(imageData: Data?, parameters: [String : Any], doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        
+        print("Upload File")
+        let url =  "http://reservanty.com/upload.php"
+        
+        requestWith(endUrl: url, imageData: imageData, parameters: parameters){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    
+                    debugPrint(json)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+
 }
 
