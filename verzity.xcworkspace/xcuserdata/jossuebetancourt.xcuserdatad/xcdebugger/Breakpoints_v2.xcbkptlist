@@ -90,7 +90,7 @@
                   moduleName = "verzity"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jossuebetancourt/Desktop/verzity/verzity/DetailFinanciamientoViewController.swift"
-                  timestampString = "555304844.648725"
+                  timestampString = "555306626.8425781"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "132"
@@ -105,7 +105,7 @@
                   moduleName = "verzity"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jossuebetancourt/Desktop/verzity/verzity/DetailFinanciamientoViewController.swift"
-                  timestampString = "555304844.652379"
+                  timestampString = "555306626.8462729"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "132"
@@ -113,38 +113,6 @@
                   offsetFromSymbolStart = "1020">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "verzity/LoginViewController.swift"
-            timestampString = "555275811.331619"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
-            landmarkName = "IngresarAppUniversidad(status:response:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "verzity/SplashViewController.swift"
-            timestampString = "555304844.004717"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "methodOfReceivedNotification(notification:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         // If you are receiving a notification message while your app is in the background,
         // this callback will not be fired till the user taps on the notification launching the application.
-        print("didReceiveRemoteNotification")
+        print("didReceiveRemoteNotification 2")
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
@@ -126,8 +126,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
-        print("didReceiveRemoteNotification")
-        showAlert(withUserInfo: userInfo)
+        print("didReceiveRemoteNotification 1")
+       // showAlert(withUserInfo: userInfo)
         completionHandler(UIBackgroundFetchResult.newData)
     }
     
