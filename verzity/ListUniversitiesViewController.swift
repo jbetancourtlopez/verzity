@@ -15,7 +15,7 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    var webServiceController = WebServiceController()  //WebServiceController()
+    var webServiceController = WebServiceController()
     var type: String = ""
     var items:NSArray = []
     var list_licensature:[Any] = []

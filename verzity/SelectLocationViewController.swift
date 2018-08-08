@@ -145,17 +145,17 @@ class SelectLocationViewController: UIViewController, UISearchBarDelegate, CLLoc
         
         
         if let p = placemark.postalCode {
-            line += " " + p
+            line += p + " "
         }
         
         if let p = placemark.locality {
-            line += ", " + p
+            line += p + ", "
         }
         if let p = placemark.administrativeArea {
-            line += ", " + p
+            line += p + ", "
         }
         if let p = placemark.country {
-            line += ", " + p
+            line += p + " "
         }
  
         return line

@@ -65,4 +65,5 @@ final class Singleton {
     static let VerificarEstatusUniversidad = "VerificarEstatusUniversidad"  
     static let VerificarFavorito = "VerificarFavorito"
     static let CerrarSesion = "cerrarSesion"
+    static let verificarCuentaUniversitario = "verificarCuentaUniversitario"
 }

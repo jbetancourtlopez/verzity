@@ -67,6 +67,56 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         }
     }
     
+    @objc func emailDidChange(_ textField: UITextField) {
+        print("Email CP")
+        let cp = textField.text
+  
+        
+        // Email
+        if !FormValidate.isEmptyTextField(textField: email_profile){
+            if !FormValidate.validateEmail(email_profile.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) == false {
+                print("Email Valido")
+                showGifIndicator(view: self.view)
+                let array_parameter = [
+                    "desCorreo": email_profile.text!,
+                    "Dispositivos": [
+                        [
+                        "cvDispositivo": "",//Defaults[.cvDispositivo]!,
+                        "cvFirebase": "", //Defaults[.cvFirebase]!
+                        ]
+                    ]
+                ] as [String : Any]
+                
+                let parameter_json = JSON(array_parameter)
+                let parameter_json_string = parameter_json.rawString()
+                webServiceController.verificarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: verificarCuentaUniversitario)
+            }
+        }
+        
+    }
+    
+    
+    func verificarCuentaUniversitario(status: Int, response: AnyObject){
+        var json = JSON(response)
+        print("Respuesta")
+        debugPrint(json)
+        if status == 1{
+            print("Abro modal")
+            open_modal()
+        }else{
+            //showMessage(title: response as! String, automatic: true)
+        }
+        hiddenGifIndicator(view: self.view)
+    }
+    
+    func open_modal(){
+        let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "RetryAccountViewControllerID") as! RetryAccountViewController
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.delegate = self
+        self.present(customAlert, animated: true, completion: nil)
+    }
+    
     func BuscarCodigoPostal(status: Int, response: AnyObject){
         var json = JSON(response)
         debugPrint(json)
@@ -245,6 +295,10 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         cp_profile.addTarget(self, action: #selector(ProfileAcademicViewController.cpDidChange(_:)), for: UIControlEvents.editingChanged)
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
+        
+        
+        email_profile.addTarget(self, action: #selector(ProfileAcademicViewController.emailDidChange(_:)), for: UIControlEvents.editingChanged)
+
     }
     
     // Picker View
@@ -323,7 +377,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             }
         }
  
-        
+        // Email
         if FormValidate.isEmptyTextField(textField: email_profile){
             email_profile.setState(.FAILED, with: StringsLabel.required)
             count_error = count_error + 1
@@ -376,7 +430,17 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         textField.resignFirstResponder()
         return true;
     }
+
+}
+
+extension ProfileAcademicViewController: RetryAccountViewControllerDelegate {
+    func okButtonTapped() {
+      print("OK BUtton")
+    }
     
 
-
+    
+    func cancelButtonTapped() {
+        print("cancelButtonTapped")
+    }
 }

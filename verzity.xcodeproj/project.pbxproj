@@ -38,6 +38,7 @@
 		924132F520E4296C00CEBC81 /* iOSImageGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132F420E4296C00CEBC81 /* iOSImageGif.swift */; };
 		924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132F720E42E4F00CEBC81 /* Reachability.swift */; };
 		924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */; };
+		924924E4211ABFD200E86740 /* RetryAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924924E3211ABFD200E86740 /* RetryAccountViewController.swift */; };
 		9267011720D8462400E638A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267011620D8462400E638A1 /* AppDelegate.swift */; };
 		9267011920D8462400E638A1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267011820D8462400E638A1 /* LoginViewController.swift */; };
 		9267011C20D8462400E638A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9267011A20D8462400E638A1 /* Main.storyboard */; };
@@ -140,6 +141,7 @@
 		924132F420E4296C00CEBC81 /* iOSImageGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSImageGif.swift; sourceTree = "<group>"; };
 		924132F720E42E4F00CEBC81 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAcademicsViewController.swift; sourceTree = "<group>"; };
+		924924E3211ABFD200E86740 /* RetryAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryAccountViewController.swift; sourceTree = "<group>"; };
 		9267011320D8462400E638A1 /* verzity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = verzity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9267011620D8462400E638A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9267011820D8462400E638A1 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
 				922E647B210A6776005B1699 /* DetailPdfViewController.swift */,
+				924924E3211ABFD200E86740 /* RetryAccountViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				92682D3620DC317900E6C4A8 /* WebServiceController.swift in Sources */,
 				9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */,
 				92DD410420EBC8EE0035EF4E /* PostuladoViewController.swift in Sources */,
+				924924E4211ABFD200E86740 /* RetryAccountViewController.swift in Sources */,
 				92DD410820EC11560035EF4E /* Dates.swift in Sources */,
 				924132ED20E2F10900CEBC81 /* ListUniversitiesViewController.swift in Sources */,
 				9267011F20D8462400E638A1 /* verzity.xcdatamodeld in Sources */,

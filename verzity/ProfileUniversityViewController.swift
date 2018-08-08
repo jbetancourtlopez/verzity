@@ -22,21 +22,33 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     
     var data_form = NSMutableDictionary()
     var webServiceController = WebServiceController()
-   
+    var present_count = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         update_button()
         setup_ux()
+        print("viewDidLoad")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         update_button()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //next()
+        print("viewDidAppear")
+        //update_button()
+        //self.present_count += self.present_count + 1
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+         print("viewWillDisappear")
+        self.present_count += self.present_count + 1
         update_button()
+        
+       // let secondVC = self.container.currentViewController as? SecondFormViewController
+       // container.segueIdentifierReceivedFromParent("second")
     }
     
     // Cargar Imagen
@@ -67,6 +79,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     }
     
     @IBAction func on_click_next_save(_ sender: Any) {
+        print("next")
         next()
         update_button()
     }
@@ -76,7 +89,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
         let secondVC = self.container.currentViewController as? SecondFormViewController
         
         if self.state_form == "first"{
-            let validate_form_first = 0 //firstVC?.validate_form()
+            let validate_form_first = firstVC?.validate_form()
             if  validate_form_first == 0{
                 
                 data_form["first_name_university"] = firstVC?.first_name_university.text
@@ -91,7 +104,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
             
         }else if self.state_form == "second" {
             
-            let validate_form_second = 0 //secondVC?.validate_form()
+            let validate_form_second = secondVC?.validate_form()
             if  validate_form_second == 0{
                 
                 data_form["second_cp"] = secondVC?.second_cp.text
@@ -204,10 +217,20 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     }
    
     func update_button(){
+        
+        print("update button \(present_count)")
+        
+        if  present_count > 0{
+            self.state_form = "first"
+        }
+       
+        
         if  self.state_form == "first" {
+            self.present_count = 0
             button_back.isHidden = true
             button_next.setTitle("SIGUIENTE", for: .normal)
         }else if self.state_form == "second" {
+            
             button_back.isHidden = false
             button_next.setTitle("GUARDAR CAMBIOS", for: .normal)
         }
@@ -220,3 +243,5 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
         self.import_image.cornerRadius = 17.5
     }
 }
+
+

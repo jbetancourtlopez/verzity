@@ -58,6 +58,8 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
 
     }
     
+    
+    
     @IBAction func on_click_map(_ sender: Any) {
         let selectLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewControllerID") as! SelectLocationViewController
         
@@ -175,10 +177,10 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         // CP
         if  is_mexico == 1{
             if FormValidate.isEmptyTextField(textField: second_cp){
-                //second_cp.setState(.FAILED, with: StringsLabel.required)
+                second_cp.setState(.FAILED, with: StringsLabel.required)
                 count_error = count_error + 1
             }else{
-                //second_cp.setState(.DEFAULT, with: "")
+                second_cp.setState(.DEFAULT, with: "")
             }
         }
         
@@ -301,17 +303,17 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         
         
         if let p = placemark.postalCode {
-            line += " " + p
+            line += p + " "
         }
         
         if let p = placemark.locality {
-            line += ", " + p
+            line += p + ", "
         }
         if let p = placemark.administrativeArea {
-            line += ", " + p
+            line += p + ", "
         }
         if let p = placemark.country {
-            line += ", " + p
+            line += p + " "
         }
         
         return line
@@ -324,5 +326,6 @@ extension SecondFormViewController: SelectLocationViewControllerDelegate {
         second_location.text = address
         self.latitud = latitud
         self.longitud = longitud
+        
     }
 }

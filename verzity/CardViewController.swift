@@ -13,24 +13,39 @@ import SwiftyJSON
 import Kingfisher
 import SwiftyUserDefaults
 
-class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var webServiceController = WebServiceController()
     var type: String = ""
     var idUniversidad = 0
     var list_data: AnyObject!
     var items:NSArray = []
+    
+    var filtered:NSMutableArray = []
+    var filtered_array:NSArray = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         type = String(type)
         idUniversidad = idUniversidad as Int
-        
+        setup_ui()
+        setup_ux()
         load_data(type:type)
         
+    }
+    
+    func setup_ui(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        searchBar.delegate = self
+    }
+    
+    func setup_ux(){
+        if type == "coupons" {
+           searchBar.placeholder = "Buscar cupones"
+        }
     }
     
     func load_data(type: String){
@@ -81,14 +96,60 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         hiddenGifIndicator(view: self.view)
     }
     
+    // Search Bar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print("Buscando")
+        
+        self.filtered.removeAllObjects()
+        for item in items {
+            
+            if type == "coupons" {
+                var item_json = JSON(item)
+                var nbCupon = item_json["nbCupon"].stringValue
+                
+                var is_containt = nbCupon.lowercased().contains(searchText.lowercased())
+                if  (is_containt){
+                    print("Entro")
+                    self.filtered.add(item)
+                }
+            } else{
+                
+                var item_json = JSON(item)
+                var universidad = JSON(item_json["Universidades"])
+                let nbUniversidad = universidad["nbUniversidad"].stringValue
+                
+                var is_containt = nbUniversidad.lowercased().contains(searchText.lowercased())
+                if  (is_containt){
+                    print(nbUniversidad)
+                    print(searchText)
+                    
+                    print("Entro")
+                    self.filtered.add(item)
+                }
+            }
+        }
+        self.filtered_array = self.filtered
+        self.tableView.reloadData()
+        
+        print()
+    }
+    
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {
-       if self.items.count == 0 {
+        var count:Int
+        if (searchBar.text != ""){
+            count = self.filtered_array.count
+        }else{
+            count = self.items.count
+        }
+        
+        
+       if count == 0 {
             empty_data_tableview(tableView: tableView)
             return 0
         }else{
             tableView.backgroundView = nil
-            return self.items.count
+            return count
         }
     }
     
@@ -110,8 +171,15 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CardTableViewCell
-        var item = JSON(items[indexPath.section])
-        debugPrint(item)
+       
+        
+        var item:JSON
+        if (searchBar.text != ""){
+            item = JSON(filtered_array[indexPath.section])
+        }else{
+            item = JSON(items[indexPath.section])
+        }
+        
         var title = ""
         var name = ""
         var lblDescription = ""

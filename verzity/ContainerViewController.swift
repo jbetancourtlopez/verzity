@@ -36,6 +36,7 @@ open class ContainerViewController: UIViewController {
         
     }
     open override func viewDidAppear(_ animated: Bool) {
+        
         if let identifier = firstLinkedSubView{
             segueIdentifierReceivedFromParent(identifier)
         }

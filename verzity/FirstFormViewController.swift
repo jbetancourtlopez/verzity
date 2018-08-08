@@ -37,64 +37,61 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
         
         //Nombre universida
         if FormValidate.isEmptyTextField(textField: first_name_university){
-            //first_name_university.setState(.FAILED, with: StringsLabel.required)
+            first_name_university.setState(.FAILED, with: StringsLabel.required)
             count_error = count_error + 1
         }else{
-            //first_name_university.setState(.DEFAULT, with: "")
+            first_name_university.setState(.DEFAULT, with: "")
         }
         
      
         
         //Descripcion
         if FormValidate.isEmptyTextField(textField: first_description){
-            //first_description.setState(.FAILED, with: StringsLabel.required)
+            first_description.setState(.FAILED, with: StringsLabel.required)
             count_error = count_error + 1
         }else{
-            //first_description.setState(.DEFAULT, with: "")
+            first_description.setState(.DEFAULT, with: "")
         }
         
         //Sitio web
         if FormValidate.isEmptyTextField(textField: first_web){
-            //first_web.setState(.FAILED, with: StringsLabel.required)
+            first_web.setState(.FAILED, with: StringsLabel.required)
             count_error = count_error + 1
         }else{
             if !FormValidate.validateUrl(urlString: first_web.text! as NSString){
-                //first_web.setState(.FAILED, with: StringsLabel.no_website)
+                first_web.setState(.FAILED, with: StringsLabel.no_website)
                 count_error = count_error + 1
             }else{
-                //first_web.setState(.DEFAULT, with: "")
+                first_web.setState(.DEFAULT, with: "")
             }
             
         }
         
         //Telefono
         if FormValidate.isEmptyTextField(textField: first_phone){
-            //first_phone.setState(.FAILED, with: StringsLabel.phone_invalid)
+            first_phone.setState(.FAILED, with: StringsLabel.phone_invalid)
             count_error = count_error + 1
         }else{
             if FormValidate.validatePhone(textField: first_phone){
-                //first_phone.setState(.FAILED, with: StringsLabel.phone_invalid)
+                first_phone.setState(.FAILED, with: StringsLabel.phone_invalid)
                 count_error = count_error + 1
             }else{
-                //first_phone.setState(.DEFAULT, with: "")
+            first_phone.setState(.DEFAULT, with: "")
             }
         }
         
         // Email
         if FormValidate.isEmptyTextField(textField: first_email){
-            //first_email.setState(.FAILED, with: StringsLabel.required)
+            first_email.setState(.FAILED, with: StringsLabel.required)
             count_error = count_error + 1
         }else{
             if FormValidate.validateEmail(first_email.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) == false {
-                //first_email.setState(.FAILED, with: StringsLabel.email_invalid)
+                first_email.setState(.FAILED, with: StringsLabel.email_invalid)
                 count_error = count_error + 1
             }else{
-                //first_email.setState(.DEFAULT, with: "")
+                first_email.setState(.DEFAULT, with: "")
             }
         }
-        
-        
-        
         
         return count_error
     }

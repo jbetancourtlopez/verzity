@@ -45,14 +45,6 @@ class SplashViewController: BaseViewController {
      // Firebase Event
     @objc func displayFCMToken(notification: NSNotification){
         guard let userInfo = notification.userInfo else {return}
-        
-        var o = notification.object
-        
-        print("Notificacion SPlach")
-        
-        debugPrint(o)
-        
-        debugPrint(userInfo)
         print("Debug-FirebaseToken Splash: \(userInfo["token"]!)")
         if let fcmToken = userInfo["token"] as? String {
             Defaults[.cvFirebase] = fcmToken
@@ -73,7 +65,7 @@ class SplashViewController: BaseViewController {
         hiddenGifIndicator(view: self.view)
         var json = JSON(response)
         if status == 1{
-            
+            print("Recibo settings")
             // Guardamos las configuracion
             var data = JSON(json["Data"])
             
