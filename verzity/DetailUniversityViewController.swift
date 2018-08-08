@@ -219,9 +219,11 @@ class DetailUniversityViewController: BaseViewController {
         let idPersona = Defaults[.academic_idPersona]!
         let have_name = Defaults[.academic_name] != ""
         let have_email = Defaults[.academic_email] != ""
-        showGifIndicator(view: self.view)
         
+        
+        //if  (false){
         if  (idPersona > 0 && have_name && have_email){
+            showGifIndicator(view: self.view)
             let array_parameter = [
                 "idPostuladoUniversidad": 0,
                 "idUniversidad": idUniversidad,
@@ -234,6 +236,7 @@ class DetailUniversityViewController: BaseViewController {
             webServiceController.PostularseUniversidad(parameters: parameter_json_string!, doneFunction: PostularseLicenciatura)
         }else{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+            vc.is_postulate = 1
             self.show(vc, sender: nil)
         }
     }

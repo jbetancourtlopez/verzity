@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "verzity/DetailUniversityViewController.swift"
-            timestampString = "555275811.33134"
+            timestampString = "555444894.306458"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "322"
-            endingLineNumber = "322"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
             landmarkName = "DetailUniversityViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -65,54 +65,6 @@
             endingLineNumber = "28"
             landmarkName = "load_settings()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "verzity/DetailFinanciamientoViewController.swift"
-            timestampString = "555275811.331534"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "on_clic_request(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "verzity.DetailFinanciamientoViewController.on_clic_request(Any) -&gt; ()"
-                  moduleName = "verzity"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jossuebetancourt/Desktop/verzity/verzity/DetailFinanciamientoViewController.swift"
-                  timestampString = "555402914.919031"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "132"
-                  endingLineNumber = "132"
-                  offsetFromSymbolStart = "968">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "verzity.DetailFinanciamientoViewController.on_clic_request(Any) -&gt; ()"
-                  moduleName = "verzity"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jossuebetancourt/Desktop/verzity/verzity/DetailFinanciamientoViewController.swift"
-                  timestampString = "555402914.922182"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "132"
-                  endingLineNumber = "132"
-                  offsetFromSymbolStart = "1020">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -128,7 +128,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         
         let have_name = Defaults[.academic_name] != ""
         let have_email = Defaults[.academic_email] != ""
-        
+        //if(false){
         if  (idPersona > 0 && have_name && have_email){
             showGifIndicator(view: self.view)
             
@@ -145,6 +145,7 @@ class DetailFinanciamientoViewController: BaseViewController {
             
         }else{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+            vc.is_postulate = 1
             self.show(vc, sender: nil)
         }
     }

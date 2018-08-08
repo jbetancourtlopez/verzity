@@ -107,6 +107,7 @@ class DetailBecasViewController: BaseViewController {
             
         }else{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+             vc.is_postulate = 1
             self.show(vc, sender: nil)
         }
     }

@@ -9,6 +9,7 @@
 import UIKit
 import SystemConfiguration
 import SwiftyUserDefaults
+import Kingfisher
 
 class BaseViewController: UIViewController, UITextFieldDelegate{
     var alert = UIAlertController()
@@ -23,6 +24,28 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         
        // let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         // self.view.addGestureRecognizer(tap)
+    }
+    
+    func set_photo_profile(url:String, image: UIImageView){
+        // Formateo la Imagen
+        var url_image = url
+        url_image = url_image.replacingOccurrences(of: "~", with: "")
+        url_image = url_image.replacingOccurrences(of: "\\", with: "")
+        
+        let desRutaMultimedia = Defaults[.desRutaMultimedia]!
+        var desCarpetaMultimedia = Defaults[.desCarpetaMultimediaFTP]!
+        
+        desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "~", with: "")
+        desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "\\", with: "")
+        
+        let url =  "\(desRutaMultimedia)\(desCarpetaMultimedia)\(url_image)"
+        print("Image Url: \(url)")
+        let URL = Foundation.URL(string: url)
+       
+        
+        // Coloco la Imagen
+        let image_default = UIImage(named: "ic_user_profile.png")
+       image.kf.setImage(with: URL, placeholder: image_default)
     }
     
     // Abrir el navegador

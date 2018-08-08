@@ -16,7 +16,7 @@ protocol RetryAccountViewControllerDelegate: class {
     func cancelButtonTapped()
 }
 
-class RetryAccountViewController: UIViewController {
+class RetryAccountViewController: BaseViewController {
     
     @IBOutlet var alertView: UIView!
     @IBOutlet var image_profile: UIImageView!
@@ -25,6 +25,7 @@ class RetryAccountViewController: UIViewController {
     @IBOutlet var cancelButton: UIButton!
     
     var webServiceController = WebServiceController()
+    var info: AnyObject!
     
     var delegate: RetryAccountViewControllerDelegate?
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
@@ -37,6 +38,7 @@ class RetryAccountViewController: UIViewController {
         super.viewWillAppear(animated)
         setupView()
         animateView()
+        set_data()
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,6 +47,10 @@ class RetryAccountViewController: UIViewController {
     }
     
     func setupView() {
+        
+        self.image_profile.layer.masksToBounds = true
+        self.image_profile.cornerRadius = 40
+        
         alertView.layer.cornerRadius = 2
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
@@ -56,6 +62,14 @@ class RetryAccountViewController: UIViewController {
             self.alertView.alpha = 1.0;
             self.alertView.frame.origin.y = self.alertView.frame.origin.y - 50
         })
+    }
+    
+    func set_data(){
+        debugPrint(info)
+        var data = JSON(info)
+        name_profile.text = data["nbCompleto"].stringValue
+        
+        set_photo_profile(url: data["pathFoto"].stringValue, image: image_profile)
     }
     
     @IBAction func onTapCancelButton(_ sender: Any) {

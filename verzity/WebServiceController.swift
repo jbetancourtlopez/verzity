@@ -655,6 +655,28 @@ class WebServiceController: AlamofireWebServiceController{
             }
         }
     }
+
+
+    func ActualizarCuentaUniversitario(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.ActualizarCuentaUniversitario)"
+        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+
+
+    
     
     // getSettings
     func getSettings(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){

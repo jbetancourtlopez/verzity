@@ -34,11 +34,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     var is_mexico = 1;
     var name_country = ""
     var type = ""
-
-    /*
-    profile_representative
-    profile_academic
-    */
+    var is_postulate = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,9 +64,11 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     }
     
     @objc func emailDidChange(_ textField: UITextField) {
-        print("Email CP")
-        let cp = textField.text
-  
+        print("Email Change")
+        
+        if  is_postulate == 0 {
+            return
+        }
         
         // Email
         if !FormValidate.isEmptyTextField(textField: email_profile){
@@ -92,28 +90,25 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                 webServiceController.verificarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: verificarCuentaUniversitario)
             }
         }
-        
     }
     
-    
     func verificarCuentaUniversitario(status: Int, response: AnyObject){
+         hiddenGifIndicator(view: self.view)
         var json = JSON(response)
         print("Respuesta")
         debugPrint(json)
         if status == 1{
             print("Abro modal")
-            open_modal()
-        }else{
-            //showMessage(title: response as! String, automatic: true)
+            open_modal(info: json["Data"])
         }
-        hiddenGifIndicator(view: self.view)
     }
     
-    func open_modal(){
+    func open_modal(info:JSON){
         let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "RetryAccountViewControllerID") as! RetryAccountViewController
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.delegate = self
+        customAlert.info = info as AnyObject
         self.present(customAlert, animated: true, completion: nil)
     }
     
@@ -178,13 +173,11 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         image.sourceType = UIImagePickerControllerSourceType.photoLibrary
         image.allowsEditing = false
         self.present(image, animated: true){
-            
         }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
             img_profile.image = image
         }else{
             showMessage(title: "Error al cargar la imagen", automatic: true)
@@ -216,11 +209,8 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
 
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
-
             webServiceController.EditarPerfil(parameters: parameter_json_string!, doneFunction: EditarPerfil)
-          
         }
-        
     }
     
     func EditarPerfil(status: Int, response: AnyObject){
@@ -242,23 +232,24 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             Defaults[.academic_description] = direcciones["desDireccion"].stringValue
             
             print("Perfil Universitario")
-            
-            
             Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
-            
-            
             
         }else{
             showMessage(title: response as! String, automatic: true)
-            
-          
         }
         hiddenGifIndicator(view: self.view)
     }
     
     @objc func go_home(){
-        let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
-        self.show(vc, sender: nil)
+        if self.is_postulate == 0 {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
+            self.show(vc, sender: nil)
+        }
+        else{
+            print("Back")
+            _ = navigationController?.popViewController(animated: true)
+        }
+        
     }
     
     func get_data_profile(){
@@ -295,7 +286,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         cp_profile.addTarget(self, action: #selector(ProfileAcademicViewController.cpDidChange(_:)), for: UIControlEvents.editingChanged)
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
-        
         
         email_profile.addTarget(self, action: #selector(ProfileAcademicViewController.emailDidChange(_:)), for: UIControlEvents.editingChanged)
 
@@ -400,7 +390,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             }
         }
         
-        
         return count_error
     }
     
@@ -409,8 +398,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         if string.count == 0 {
             return true
         }
-        
-        
         
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
@@ -435,9 +422,56 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
 
 extension ProfileAcademicViewController: RetryAccountViewControllerDelegate {
     func okButtonTapped() {
-      print("OK BUtton")
+        print("OK BUtton")
+        showGifIndicator(view: self.view)
+        let array_parameter = [
+            "desCorreo": email_profile.text!,
+            "Dispositivos": [
+                [
+                    "cvDispositivo": Defaults[.cvDispositivo]!,
+                    "cvFirebase": Defaults[.cvFirebase]!
+                ]
+            ]
+            ] as [String : Any]
+        
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.ActualizarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: actualizarCuentaUniversitario)
     }
     
+    func actualizarCuentaUniversitario(status: Int, response: AnyObject){
+        hiddenGifIndicator(view: self.view)
+        print("Guardo Datos")
+        var json = JSON(response)
+        debugPrint(json)
+        if status == 1{
+            
+            var data = JSON(json["Data"])
+            let direcciones = JSON(data["Direcciones"])
+            let list_dispositivos = data["Dispositivos"].arrayValue
+            let dispositivo = JSON(list_dispositivos[0])
+            
+            Defaults[.academic_name] = data["nbCompleto"].stringValue
+            Defaults[.academic_email] = data["desCorreo"].stringValue
+            Defaults[.academic_phone] = data["desTelefono"].stringValue
+            Defaults[.academic_nbPais] = direcciones["nbPais"].stringValue
+            Defaults[.academic_cp] = direcciones["numCodigoPostal"].stringValue
+            Defaults[.academic_city] = direcciones["nbCiudad"].stringValue
+            Defaults[.academic_municipio] = direcciones["nbMunicipio"].stringValue
+            Defaults[.academic_state] = direcciones["nbEstado"].stringValue
+            Defaults[.academic_description] = direcciones["desDireccion"].stringValue
+            
+            Defaults[.academic_idPersona] = data["idPersona"].intValue
+            Defaults[.academic_idDireccion] = direcciones["idDireccion"].intValue
+            Defaults[.academic_idDireccion] = dispositivo["idDispositivo"].intValue
+            
+            print("Back")
+            _ = navigationController?.popViewController(animated: true)
+        }else{
+            showMessage(title: response as! String, automatic: true)
+        }
+        
+    }
 
     
     func cancelButtonTapped() {
