@@ -14,6 +14,7 @@ import SwiftyUserDefaults
 
 class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, FloatableTextFieldDelegate{
     
+    @IBOutlet var countryConstraintHeight: NSLayoutConstraint!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var topContraintDescription: NSLayoutConstraint!
     @IBOutlet var img_profile: UIImageView!
@@ -35,6 +36,8 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     var name_country = ""
     var type = ""
     var is_postulate = 0
+
+    var name_image = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +96,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     }
     
     func verificarCuentaUniversitario(status: Int, response: AnyObject){
-         hiddenGifIndicator(view: self.view)
+        hiddenGifIndicator(view: self.view)
         var json = JSON(response)
         print("Respuesta")
         debugPrint(json)
@@ -182,7 +185,22 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         }else{
             showMessage(title: "Error al cargar la imagen", automatic: true)
         }
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: upload_photo)
+
+
+    }
+
+    func upload_photo(){
+        print("Subiendo Foto")
+        let data = UIImageJPEGRepresentation(img_profile.image!, 1.0)
+        webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
+    }
+    
+    func upload_file(status: Int, response: AnyObject){
+         print("Imagen cargada con exito")
+
+        let json = JSON(response)
+        self.name_image = json["Data"].stringValue
     }
     
     @IBAction func on_click_continue(_ sender: Any) {
@@ -202,6 +220,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                 ],
                 "desTelefono": phone_profile.text!,
                 "nbCompleto": name_profile.text!,
+                "pathFoto": self.name_image,
                 "idDireccion": Defaults[.academic_idDireccion]!,
                 "idPersona": Defaults[.academic_idPersona]!
             ] as [String : Any]
@@ -232,7 +251,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             Defaults[.academic_description] = direcciones["desDireccion"].stringValue
             
             print("Perfil Universitario")
-            Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 5.1, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
             
         }else{
             showMessage(title: response as! String, automatic: true)
@@ -263,6 +282,26 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         municipio_profile.text = Defaults[.academic_municipio]
         state_profile.text = Defaults[.academic_state]
         description_profile.text = Defaults[.academic_description]
+
+        
+        set_photo_profile(url: Defaults[.academic_pathFoto]!, image: img_profile)
+        
+        if (self.type == "profile_representative"){
+        //if (true){
+            cp_profile.isHidden = true
+            state_profile.isHidden = true
+            municipio_profile.isHidden = true
+            city_profile.isHidden = true
+            
+            countryConstraintHeight.constant = 0; topContraintDescription.constant = -260
+            icon_country.isHidden = true
+            
+            countryPickerView.isHidden = true
+            description_profile.isHidden = true
+            
+            
+            
+        }
     }
     
     func setup_ux(){

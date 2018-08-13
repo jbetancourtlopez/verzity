@@ -62,8 +62,24 @@ class ForgetViewController: BaseViewController, FloatableTextFieldDelegate {
 
     @IBAction func onTapOkButton(_ sender: Any) {
         //email.resignFirstResponder()
-        delegate?.okButtonTapped(textFieldValue: email.text!)
-        self.dismiss(animated: true, completion: nil)
+        
+
+
+        if FormValidate.isEmptyTextField(textField: email){
+          
+            
+            updateAlert(title: "Error", message: StringsLabel.required, automatic: true)
+
+        }else{
+            if FormValidate.validateEmail(email.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) == false {
+          
+                updateAlert(title: "Error", message: StringsLabel.email_invalid, automatic: true)
+
+            }else{
+                delegate?.okButtonTapped(textFieldValue: email.text!)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
         
     }
     

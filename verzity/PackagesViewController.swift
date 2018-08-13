@@ -87,7 +87,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             
             let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
                 
-                
                 // Borramos los datos de session
                 self.setSettings(key: "profile_menu", value: "")
                 Defaults[.type_user] = 0
@@ -190,6 +189,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     }
     
     func setup_ux(){
+        self.title = "Paquetes"
         self.navigationItem.leftBarButtonItem?.title = ""
         showGifIndicator(view: self.view)
     }
@@ -297,7 +297,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         
         if item["idPaquete"].intValue == Defaults[.package_idPaquete]!{
             cell.button_buy.setTitle("PAQUETE ACTUAL", for: .normal)
-            cell.button_buy.isEnabled = false
+            cell.button_buy.isEnabled = true
         }else{
             cell.button_buy.setTitle("COMPRAR", for: .normal)
             cell.button_buy.isEnabled = true
@@ -365,6 +365,10 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
          hiddenGifIndicator(view: self.view)
         let json = JSON(response)
         if status == 1{
+            var data = JSON(json["Data"])
+            print("Guardando Paquete")
+            debugPrint(data)
+            Defaults[.package_idPaquete] = data["idPaquete"].intValue
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
             customAlert.info = json as AnyObject
             customAlert.providesPresentationContextTransitionStyle = true
@@ -379,15 +383,34 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     
     @objc func on_click_buy(sender: UIButton){
         let index = sender.tag
-        
-        let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
-            self.payment(index: index)
+        var package = JSON(self.items[index])
+        if package["idPaquete"].intValue == Defaults[.package_idPaquete]!{
+            
+            let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
+            customAlert.info = package as AnyObject
+            customAlert.is_summary = 1
+            
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.delegate = self
+            self.present(customAlert, animated: true, completion: nil)
+        }else{
+            if (Defaults[.package_idPaquete]! > 0){
+                let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
+                    self.payment(index: index)
+                }
+                
+                let cancelAction = UIAlertAction(title: "Cancelar", style: .default) { (action) -> Void in
+                }
+                
+                showAlert("Atención", message: "Ya cuenta con un paquete activo. ¿Desea actualizarlo?", okAction: yesAction, cancelAction: cancelAction, automatic: false)
+            }else{
+                self.payment(index: index)
+            }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancelar", style: .default) { (action) -> Void in
-        }
         
-        showAlert("Atención", message: "Ya cuenta con un paquete activo. ¿Desea actualizarlo?", okAction: yesAction, cancelAction: cancelAction, automatic: false)
+        
         
     }
     
@@ -428,30 +451,26 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         }
         else {
             print("Payment not processalbe: \(payment)")
-            
-          
         }
-        
-        
     }
-
-
 }
 
 extension PackagesViewController: DetailBuyViewControllerDelegate {
-    func okButtonTapped() {
-        
-        if  (Defaults[.university_idUniveridad]! <= 0 || Defaults[.university_desTelefono] == "" ||  Defaults[.university_desUniversidad] == ""){
-            
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
-            self.show(vc, sender: nil)
-            
-        }else{
-            
-            let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
-            self.show(vc, sender: nil)
-            
+    func okButtonTapped(is_summary:Int) {
+        if  is_summary == 0{
+            if  (Defaults[.university_idUniveridad]! <= 0 || Defaults[.university_desTelefono] == "" ||  Defaults[.university_desUniversidad] == ""){
+                
+                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
+                self.show(vc, sender: nil)
+                
+            }else{
+                
+                let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
+                self.show(vc, sender: nil)
+                
+            }
         }
+        
     }
     
 

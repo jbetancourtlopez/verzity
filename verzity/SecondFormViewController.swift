@@ -105,7 +105,7 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     }
     
     func load_countries(){
-        print("Carga de oaises")
+        print("Carga de paises")
         let array_parameter = ["": ""]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
@@ -183,6 +183,15 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
                 second_cp.setState(.DEFAULT, with: "")
             }
         }
+        
+        // Ubicación
+        if FormValidate.isEmptyTextField(textField: second_location){
+            second_location.setState(.FAILED, with: StringsLabel.required)
+            count_error = count_error + 1
+        }else{
+            second_location.setState(.DEFAULT, with: "")
+        }
+       
         
         return count_error
     }

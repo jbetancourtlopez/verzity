@@ -92,7 +92,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     @IBAction func on_click_login(_ sender: Any) {
         login_universidad(type:"normal")
         is_click_facebook = 0
-        password.text = ""
     }
     
     func login_universidad(type:String){
@@ -155,6 +154,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             
             var json = JSON(response)
             let data = JSON(json["Data"])
+            print("Ingresar App Universidad")
             
             let personas = JSON(data["Personas"])
             let universidades_list = personas["Universidades"].array
@@ -180,6 +180,12 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             //Paquete
             Defaults[.package_idUniveridad] = paquete["idUniversidad"].intValue
             Defaults[.package_idPaquete] = paquete["idPaquete"].intValue
+
+            Defaults[.package_feVenta] = paquete["feVenta"].stringValue
+            Defaults[.package_feVigencia] = paquete["feVigencia"].stringValue
+
+            
+
             
             //Universidad
             Defaults[.university_idUniveridad] = universidades["idUniversidad"].intValue
@@ -238,7 +244,8 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                 self.show(vc, sender: nil)
             }
             else{
-                showMessage(title: response as! String, automatic: true)
+                //showMessage(title: response as! String, automatic: true)
+                updateAlert(title: "Error", message: response as! String, automatic: true)
             }
             
         }

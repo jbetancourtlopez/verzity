@@ -722,13 +722,15 @@ class WebServiceController: AlamofireWebServiceController{
     func upload_file(imageData: Data?, parameters: [String : Any], doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         
         print("Upload File")
-        let url =  "http://reservanty.com/upload.php"
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.subirImagen)"
+        //let url = "http://reservanty.com/upload.php"
+        print(url)
         
         requestWith(endUrl: url, imageData: imageData, parameters: parameters){ response, error in
             if(error == nil){
                 if let value = response {
                     let json = JSON(value)
-                    
+                    print("Respuesta JSON \(json)")
                     debugPrint(json)
                     if(json["Estatus"].numberValue == 1){
                         doneFunction(1, json as AnyObject)

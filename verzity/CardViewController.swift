@@ -130,8 +130,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         self.filtered_array = self.filtered
         self.tableView.reloadData()
-        
-        print()
     }
     
     //Table View. -------------------
@@ -144,7 +142,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         
         
-       if count == 0 {
+        if count == 0 {
             empty_data_tableview(tableView: tableView)
             return 0
         }else{

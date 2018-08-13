@@ -67,7 +67,14 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         super.viewDidLoad()
         setup_ux()
         setup_textfield()
-        setdata_facebook()
+        
+        print("View Did Registro")
+        print("Facebook_id: \(facebook_id)")
+        if is_facebook == 1 {
+            print("Entro Facebook")
+            setdata_facebook()
+        }
+        //
         
         // Ftp
         ftp = FTPUpload(baseUrl: serverd, userName: ftp_usernamed, password: ftp_passwordd, directoryPath: "/")
@@ -102,7 +109,13 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             topConstrainsButtonRegister.constant = -70
         }
         
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(upload_photo), userInfo: nil, repeats: false)
+        
+        
+        
     }
+    
+  
     
     @IBAction func import_image(_ sender: Any) {
         let image = UIImagePickerController()
@@ -125,24 +138,16 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         self.dismiss(animated: true, completion: upload_photo)
     }
     
-    func upload_photo(){
-        print("Callback")
+    @objc func upload_photo(){
+        print("Subiendo Foto")
         let data = UIImageJPEGRepresentation(img_profile.image!, 1.0)
-        self.name_image = randomString(length: 11) + "_ios.jpg"
-        //self.ftp.send(data: data!, with: name_image, success: success)
-        
-        //upload
-        
-        webServiceController.upload_file(imageData:data, parameters: ["d": 0], doneFunction:upload_file)
-    }
-    
-    func success(is_sucess: Bool){
-        print("Imagen cargada con exito")
-        print(is_sucess)
+        webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
     }
     
     func upload_file(status: Int, response: AnyObject){
          print("Imagen cargada con exito")
+        let json = JSON(response)
+        self.name_image = json["Data"].stringValue
     }
         
     func setup_ux(){
@@ -198,7 +203,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             showGifIndicator(view: self.view)
             let cvDispositivo =  UIDevice.current.identifierForVendor!.uuidString
 
-            let array_parameter = [
+            var array_parameter = [
                     "pwdContrasenia": password.text!,
                     "idUsuario": 0,
                     "nbUsuario": email.text!,
@@ -225,7 +230,10 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
                     ]
                 ] as [String : Any]
             
-            
+            if is_facebook == 1{
+                array_parameter["pwdContrasenia"] = ""
+                array_parameter["cvFacebook"] = self.facebook_id
+            }
             
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()

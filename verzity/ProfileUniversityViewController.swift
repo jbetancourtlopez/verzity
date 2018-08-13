@@ -19,6 +19,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     
     var state_form = "first"
     var container : ContainerViewController!
+    var name_image = ""
     
     var data_form = NSMutableDictionary()
     var webServiceController = WebServiceController()
@@ -28,12 +29,17 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
         super.viewDidLoad()
         update_button()
         setup_ux()
+        set_data()
         print("viewDidLoad")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         update_button()
         
+    }
+
+    func set_data(){
+        set_photo_profile(url: Defaults[.university_pathLogo]!, image: img_profile)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,7 +75,21 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
         }else{
             showMessage(title: "Error al cargar la imagen", automatic: true)
         }
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: upload_photo)
+    }
+
+
+    func upload_photo(){
+        print("Subiendo Foto")
+        let data = UIImageJPEGRepresentation(img_profile.image!, 1.0)
+        webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
+    }
+    
+    func upload_file(status: Int, response: AnyObject){
+         print("Imagen cargada con exito")
+
+        let json = JSON(response)
+        self.name_image = json["Data"].stringValue
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -133,7 +153,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
             "desUniversidad": data_form["first_description"]!,
             "idUniversidad": Defaults[.university_idUniveridad]!,
             "idDireccion": Defaults[.add_uni_idDireccion]!,
-            "pathLogo": "",
+            "pathLogo": self.name_image,
             "Direcciones": [
                 "nbCiudad": data_form["second_city"],
                 "numCodigoPostal": data_form["second_cp"],

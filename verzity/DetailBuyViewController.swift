@@ -13,7 +13,7 @@ import SwiftyUserDefaults
 
 
 protocol DetailBuyViewControllerDelegate: class {
-    func okButtonTapped()
+    func okButtonTapped(is_summary:Int)
 }
 
 class DetailBuyViewController: BaseViewController {
@@ -27,7 +27,8 @@ class DetailBuyViewController: BaseViewController {
     
     // data
     var webServiceController = WebServiceController()
-     var info: AnyObject!
+    var info: AnyObject!
+    var is_summary = 0
     
     var delegate: DetailBuyViewControllerDelegate?
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
@@ -59,19 +60,32 @@ class DetailBuyViewController: BaseViewController {
         feVenta
         feVigencia
  */
-        var json = JSON(info)
-        var data = JSON(json["Data"])
-        
-        Defaults[.package_idPaquete] = data["idPaquete"].intValue
-        date_top.text = get_date_complete(date_complete_string: data["feVenta"].stringValue)
         
         
-        vigency.text = get_date_complete(date_complete_string: data["feVigencia"].stringValue)
+        if (is_summary == 1) {
+            var data = JSON(info)
+            Defaults[.package_idPaquete] = data["idPaquete"].intValue
+            
+            print(Defaults[.package_feVenta])
+            print(Defaults[.package_feVigencia])
+            
+            date_top.text = get_date_complete(date_complete_string: Defaults[.package_feVenta]!)
+            vigency.text = get_date_complete(date_complete_string: Defaults[.package_feVigencia]!)
+            
+            name.text = data["nbPaquete"].stringValue
+            price.text = String(format: "$ %.02f MXN", data["dcCosto"].doubleValue)
+          
+        } else{
+            var json = JSON(info)
+            var data = JSON(json["Data"])
+            Defaults[.package_idPaquete] = data["idPaquete"].intValue
+            date_top.text = get_date_complete(date_complete_string: data["feVenta"].stringValue)
+            vigency.text = get_date_complete(date_complete_string: data["feVigencia"].stringValue)
+            var paquete = JSON(data["Paquete"])
+            name.text = paquete["nbPaquete"].stringValue
+            price.text = String(format: "$ %.02f MXN", paquete["dcCosto"].doubleValue)
+        }
         
-        var paquete = JSON(data["Paquete"])
-        
-        name.text = paquete["nbPaquete"].stringValue
-        price.text = String(format: "$ %.02f MXN", paquete["dcCosto"].doubleValue)
     }
     
     func setupView() {
@@ -90,7 +104,7 @@ class DetailBuyViewController: BaseViewController {
 
     
     @IBAction func on_click_ok(_ sender: Any) {
-        delegate?.okButtonTapped()
+        delegate?.okButtonTapped(is_summary: is_summary)
         self.dismiss(animated: true, completion: nil)
     }
     

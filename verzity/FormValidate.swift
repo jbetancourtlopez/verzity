@@ -39,7 +39,7 @@ class FormValidate{
     
     // Validar Télefono
     static func validatePhone(textField: UITextField)->Bool{
-        if (textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count)! < 15 {
+        if (textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count)! > 9 {
             return false
         }else{
             return true

@@ -20,6 +20,9 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     var items:NSArray = []
     var list_licensature:[Any] = []
     
+    var filtered:NSMutableArray = []
+    var filtered_array:NSArray = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = String(type)
@@ -27,10 +30,8 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         setup_table()
         setup_search_bar()
         setup_ux()
-        alterLayout()
         load_data()
     }
-
 
     func setup_table(){
         tableView.delegate = self
@@ -41,22 +42,13 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         searchBar.delegate = self
     }
     
-    func alterLayout(){
-        //tableView.tableHeaderView = UIView()
-    }
-    
     func setup_ux(){
-        
-        // Title
         if  type == "find_favorit" {
             self.title = "Favoritos"
         } else if type == "find_university" {
             self.title = "Universidades"
         }
-        
-        
         self.navigationItem.leftBarButtonItem?.title = ""
-        
     }
     
     func load_data(name_university: String = ""){
@@ -64,12 +56,10 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         if  type == "find_favorit" {
             let idPersona = Defaults[.academic_idPersona]
             let array_parameter = ["idPersona": idPersona]
-          
             debugPrint(array_parameter)
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetFavoritos(parameters: parameter_json_string!, doneFunction: GetListGeneral)
-            
         } else if type == "find_university" {
             
             var array_parameter:[String: Any] = ["": ""]
@@ -80,14 +70,11 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             
             if list_licensature.count > 0{
                 
-                //let string_licensatures = JSON(self.list_licensature).rawString()
                 array_parameter = [
                     "nombreUniversidad": name_university,
                     "Licenciaturas": list_licensature
                     ]
             }
-            
-            
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             
@@ -111,19 +98,47 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     
     // Search Bar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        load_data(name_university: searchText)
+        //Buscando
+        //load_data(name_university: searchText)
+        
+        self.filtered.removeAllObjects()
+        for item in items {
+            var item_json = JSON(item)
+            let nbUniversidad = item_json["nbUniversidad"].stringValue
+            
+            var is_containt = nbUniversidad.lowercased().contains(searchText.lowercased())
+            if  (is_containt){
+                print(nbUniversidad)
+                print(searchText)
+                
+                print("Entro")
+                self.filtered.add(item)
+            }
+        }
+        
+        self.filtered_array = self.filtered
+        self.tableView.reloadData()
     }
     
     
     //Table View. -------------------
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if self.items.count == 0 {
+        
+        
+        var count:Int
+        if (searchBar.text != ""){
+            count = self.filtered_array.count
+        }else{
+            count = self.items.count
+        }
+        
+        if count == 0 {
             empty_data_tableview(tableView: tableView)
             return 0
         }else{
             tableView.backgroundView = nil
-            return self.items.count
+            return count
         }
         
     }
@@ -147,7 +162,16 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        var item_university = JSON(items[indexPath.section])
+        //var item_university = JSON(items[indexPath.section])
+        
+        
+        var item_university:JSON
+        if (searchBar.text != ""){
+            item_university = JSON(filtered_array[indexPath.section])
+        }else{
+            item_university = JSON(items[indexPath.section])
+        }
+        
         
         //Nombre
         cell.name.text  = item_university["nbUniversidad"].stringValue

@@ -59,7 +59,6 @@ func get_date_complete(date_complete_string: String) -> String {
     
     //2018-07-02T19:11:55.8529371-05:00
     
-    
     var date_complete_array = date_complete_string.components(separatedBy: "T")
     let date_string = date_complete_array[0]
     
@@ -72,7 +71,7 @@ func get_date_complete(date_complete_string: String) -> String {
     formatter.dateFormat = "yyyy-MM-dd"
     let myString = date_string // string purpose I add here
     let yourDate = formatter.date(from: myString)
-    formatter.dateFormat = "dd-MMM-yyyy"
+    formatter.dateFormat = "dd/MM/yyyy"
     let myStringafd = formatter.string(from: yourDate!)
     
     

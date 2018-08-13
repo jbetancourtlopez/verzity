@@ -99,7 +99,6 @@ class DetailUniversityViewController: BaseViewController {
     }
    
     func GetDetallesUniversidad(status: Int, response: AnyObject){
-        
         var json = JSON(response)
         if status == 1{
             self.detail_data = JSON(json["Data"]) as AnyObject
@@ -154,7 +153,6 @@ class DetailUniversityViewController: BaseViewController {
             let url =  "\(desRutaMultimedia)\(pathImage)"
             let URL = Foundation.URL(string: url)
             let image_default = UIImage(named: "default.png")
-            
             self.image_slider.kf.setImage(with: URL, placeholder: image_default)
         }
     }
@@ -169,7 +167,6 @@ class DetailUniversityViewController: BaseViewController {
     
     @IBAction func on_click_beca(_ sender: Any) {
         print("beca")
-        
         let vc = storyboard?.instantiateViewController(withIdentifier: "CardViewControllerID") as! CardViewController
         vc.idUniversidad = idUniversidad
         vc.type = "becas"
@@ -190,7 +187,6 @@ class DetailUniversityViewController: BaseViewController {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailMapViewControllerID") as! DetailMapViewController
         vc.info = university_json as AnyObject
         self.show(vc, sender: nil)
-        
     }
     
     @IBAction func on_click_postulate(_ sender: Any) {
@@ -215,11 +211,9 @@ class DetailUniversityViewController: BaseViewController {
     func selected_postulate(name: String, idLicenciatura: Int){
         print("Postulado Metodo: \(name)")
         
-        
         let idPersona = Defaults[.academic_idPersona]!
         let have_name = Defaults[.academic_name] != ""
         let have_email = Defaults[.academic_email] != ""
-        
         
         //if  (false){
         if  (idPersona > 0 && have_name && have_email){
@@ -284,6 +278,21 @@ class DetailUniversityViewController: BaseViewController {
         hiddenGifIndicator(view: self.view)
     }
     
+    func VerificarFavorito(status: Int, response: AnyObject){
+        
+        var json = JSON(response)
+        var data = JSON(json["Data"])
+        debugPrint(json)
+        if status == 1{
+            let image = UIImage(named: "ic_action_star")?.withRenderingMode(.alwaysTemplate)
+            button_favorit.setImage(image, for: .normal)
+        }else{
+            let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
+            button_favorit.setImage(image, for: .normal)
+        }
+        hiddenGifIndicator(view: self.view)
+    }
+    
     func setup_ux(){
         
         let image_visitar_web  = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
@@ -336,7 +345,6 @@ class DetailUniversityViewController: BaseViewController {
         
         if  paquete_array.count > 0 {
             var paquete_json = JSON(paquete_array[0])
-            print("Paquete")
             
             var paquete = JSON(paquete_json["Paquete"])
             debugPrint(paquete)
@@ -411,9 +419,9 @@ class DetailUniversityViewController: BaseViewController {
             image_beca.frame = CGRect(x: 0, y: 0, width: 50, height: 0)
             button_beca.frame = CGRect(x: 0, y: 0, width: 50, height: 0)
             label_beca.frame = CGRect(x: 0, y: 0, width: 50, height: 0)
- 
+             */
             
-           */ image_financing_top_contrain.constant = -35
+            image_financing_top_contrain.constant = -35
             button_financing_top_contrains.constant = -35
             label_financing_top_constrains.constant = -35
  
@@ -426,14 +434,13 @@ class DetailUniversityViewController: BaseViewController {
         let array_parameter = [
             "idUniversidad": idUniversidad as Int,
             "idPersona": Defaults[.academic_idPersona]! as Int
-            ]  as [String : Any]
+        ]  as [String : Any]
         
-       // "idPersona": 86, "idUniversidad": 40
         
         debugPrint(array_parameter)
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.VerificarFavorito(parameters: parameter_json_string!, doneFunction: SetFavorito)
+        webServiceController.VerificarFavorito(parameters: parameter_json_string!, doneFunction: VerificarFavorito)
     }
 
 

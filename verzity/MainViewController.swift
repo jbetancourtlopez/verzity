@@ -413,10 +413,13 @@ extension MainViewController: SidebarViewDelegate {
     }
     
     func cerrarSesion(status: Int, response: AnyObject){
+        print("Cerrar Sesion")
+        hiddenGifIndicator(view: self.view)
+        debugPrint(response)
         if status == 1{
             sigout(type: 1)
         }
-        sigout(type: 1)
+        //sigout(type: 1)
     }
     
 }

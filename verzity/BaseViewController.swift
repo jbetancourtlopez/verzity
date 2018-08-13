@@ -65,7 +65,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     }
     
     //Tabla Vacia
-    func empty_data_tableview(tableView: UITableView, string: String? = "No se encontrarón elementos."){
+    func empty_data_tableview(tableView: UITableView, string: String? = "No se encontraron elementos."){
         let view: UIView     = UIView(frame: CGRect(x: 0, y: 0, width: 21, height: 21))
         let title: UILabel     = UILabel(frame: CGRect(x: 0, y:(tableView.frame.size.height/2), width: self.view.frame.width, height: 21))
         let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (self.view.frame.width/2) - 30, y: (tableView.frame.height/2) - 65, width: 60, height: 60))
@@ -341,6 +341,12 @@ extension DefaultsKeys {
     //Paquete
     static let package_idUniveridad = DefaultsKey<Int?>("package_idUniveridad")
     static let package_idPaquete = DefaultsKey<Int?>("package_idPaquete")
+
+    static let package_feVenta = DefaultsKey<String?>("package_feVenta")
+    static let package_feVigencia = DefaultsKey<String?>("package_feVigencia")
+
+    
+
     
     //Universidad
     static let university_idPersona = DefaultsKey<Int?>("university_idPersona")

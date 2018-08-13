@@ -123,6 +123,10 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
                 cellImg_sigout.layer.masksToBounds=true
                 cellImg_sigout.contentMode = .scaleAspectFill
                 cellImg_sigout.layer.masksToBounds=true
+                
+                // Set Foto
+                set_photo_profile(url:Defaults[.academic_pathFoto]!, image:cellImg_sigout)
+                
                 cellImg_sigout.image = UIImage(named:  item_menu["image"].stringValue)
                 cellImg_sigout.image = cellImg_sigout.image?.withRenderingMode(.alwaysTemplate)
                 cellImg_sigout.tintColor = Colors.gray
@@ -175,6 +179,28 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
               return 50
             }
         }
+    }
+    
+    func set_photo_profile(url:String, image: UIImageView){
+        // Formateo la Imagen
+        var url_image = url
+        url_image = url_image.replacingOccurrences(of: "~", with: "")
+        url_image = url_image.replacingOccurrences(of: "\\", with: "")
+        
+        let desRutaMultimedia = Defaults[.desRutaMultimedia]!
+        var desCarpetaMultimedia = Defaults[.desCarpetaMultimediaFTP]!
+        
+        desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "~", with: "")
+        desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "\\", with: "")
+        
+        let url =  "\(desRutaMultimedia)\(desCarpetaMultimedia)\(url_image)"
+        print("Image Url: \(url)")
+        let URL = Foundation.URL(string: url)
+        
+        
+        // Coloco la Imagen
+        let image_default = UIImage(named: "ic_user_profile.png")
+        image.kf.setImage(with: URL, placeholder: image_default)
     }
     
     func setupViews() {

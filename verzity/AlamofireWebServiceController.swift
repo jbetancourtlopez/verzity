@@ -61,7 +61,7 @@ class AlamofireWebServiceController {
     // Upload File
     func requestWith(endUrl: String, imageData: Data?, parameters: [String : Any], completionHandler: @escaping (Any?, Error?) -> ()){
         
-        let url = endUrl //"http://google.com" /* your API url */
+        let url = endUrl
         
         let headers: HTTPHeaders = [
             /* "Authorization": "your_access_token",  in case you need authorization header */
@@ -74,15 +74,16 @@ class AlamofireWebServiceController {
             }
             
             if let data = imageData{
-                multipartFormData.append(data, withName: "image", fileName: "image.png", mimeType: "image/png")
+                multipartFormData.append(data, withName: "file", fileName: "file", mimeType: "image/jpg")
             }
             
         }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers) { (result) in
             switch result{
             case .success(let upload, _, _):
                 upload.responseJSON { response in
-                    print("Succesfully uploaded")
+
                     if let err = response.error{
+                        debugPrint(err)
                         return
                     }
                     
