@@ -30,12 +30,38 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
         update_button()
         setup_ux()
         set_data()
+        setup_back_button()
         print("viewDidLoad")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         update_button()
         
+    }
+
+    func setup_back_button(){
+        let image = UIImage(named: "back")?.withRenderingMode(.alwaysOriginal)
+        
+        
+        let button_back = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(on_click_back))
+        
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "back"), for: .normal)
+        button.setTitle("Inicio", for: .normal)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(on_click_back), for: .touchUpInside)
+
+        
+        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(customView: button)
+        
+        self.navigationItem.leftBarButtonItem = button_back
+    }
+
+    @objc func on_click_back(sender: AnyObject) {
+            _ = self.navigationController?.popToRootViewController(animated: false)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
+            UIApplication.shared.keyWindow?.rootViewController = vc
     }
 
     func set_data(){

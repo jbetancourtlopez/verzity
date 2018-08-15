@@ -380,13 +380,18 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     self.password.text = (self.dict["id"] as! String)
                     
                     self.facebook_name = self.dict["name"] as! String
-                    self.facebook_email = self.dict["email"] as! String
-                    self.facebook_id = self.dict["id"] as! String
-                    self.facebook_url = url
                     
-                    self.is_click_facebook = 1
-                    self.login_universidad(type:"facebook")
- 
+                    let keyExists = self.dict["email"] != nil
+                    if (keyExists){
+                        self.facebook_email = self.dict["email"] as! String
+                        self.facebook_id = self.dict["id"] as! String
+                        self.facebook_url = url
+                        self.is_click_facebook = 1
+                        self.login_universidad(type:"facebook")
+                    }
+                    else{
+                        self.updateAlert(title: "Error", message: "Cuenta de correo electrónico no valida para facebook.", automatic: true)
+                    }
                 }
             })
         }

@@ -369,6 +369,8 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             print("Guardando Paquete")
             debugPrint(data)
             Defaults[.package_idPaquete] = data["idPaquete"].intValue
+            Defaults[.package_feVenta] = data["feVenta"].stringValue
+            Defaults[.package_feVigencia] = data["feVigencia"].stringValue
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
             customAlert.info = json as AnyObject
             customAlert.providesPresentationContextTransitionStyle = true
@@ -408,10 +410,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
                 self.payment(index: index)
             }
         }
-        
-        
-        
-        
     }
     
     func payment(index:Int){

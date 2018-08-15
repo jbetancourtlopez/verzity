@@ -32,6 +32,10 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         setup_ux()
         load_data()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        load_data()
+    }
 
     func setup_table(){
         tableView.delegate = self

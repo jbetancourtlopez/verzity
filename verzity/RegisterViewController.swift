@@ -140,7 +140,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     
     @objc func upload_photo(){
         print("Subiendo Foto")
-        let data = UIImageJPEGRepresentation(img_profile.image!, 1.0)
+        let data = UIImageJPEGRepresentation(img_profile.image!, 0.4)
         webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
     }
     

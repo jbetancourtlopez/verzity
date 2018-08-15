@@ -74,7 +74,7 @@ class AlamofireWebServiceController {
             }
             
             if let data = imageData{
-                multipartFormData.append(data, withName: "file", fileName: "file", mimeType: "image/jpg")
+                multipartFormData.append(data, withName: "fileToUpload", fileName: "fileToUpload", mimeType: "image/jpg")
             }
             
         }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers) { (result) in
