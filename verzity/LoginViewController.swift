@@ -245,7 +245,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             }
             else{
                 //showMessage(title: response as! String, automatic: true)
-                updateAlert(title: "Error", message: response as! String, automatic: true)
+                updateAlert(title: "", message: response as! String, automatic: true)
             }
             
         }
@@ -376,21 +376,30 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     var data = picture["data"] as! [String : AnyObject]
                     let url = data["url"] as! String
                     
-                    self.email.text = self.dict["email"] as? String
+                    
                     self.password.text = (self.dict["id"] as! String)
                     
-                    self.facebook_name = self.dict["name"] as! String
                     
-                    let keyExists = self.dict["email"] != nil
-                    if (keyExists){
+                    
+                    let keyExistsEmail = self.dict["email"] != nil
+                    let keyExistsName = self.dict["name"] != nil
+                    if (keyExistsEmail && keyExistsName){
+                        self.email.text = self.dict["email"] as? String
                         self.facebook_email = self.dict["email"] as! String
+                        self.facebook_name = self.dict["name"] as! String
                         self.facebook_id = self.dict["id"] as! String
                         self.facebook_url = url
                         self.is_click_facebook = 1
                         self.login_universidad(type:"facebook")
                     }
                     else{
-                        self.updateAlert(title: "Error", message: "Cuenta de correo electrónico no valida para facebook.", automatic: true)
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
+                        vc.facebook_name = self.facebook_name
+                        vc.facebook_email = self.facebook_email
+                        vc.facebook_id = self.facebook_id
+                        vc.facebook_url = self.facebook_url
+                        vc.is_facebook = 1
+                        self.show(vc, sender: nil)
                     }
                 }
             })
