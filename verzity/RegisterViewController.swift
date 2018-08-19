@@ -147,7 +147,17 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     func upload_file(status: Int, response: AnyObject){
          print("Imagen cargada con exito")
         let json = JSON(response)
-        self.name_image = json["Data"].stringValue
+        self.name_image = json["data"].stringValue
+        
+        print(response)
+     
+        self.name_image = json["data"].stringValue
+        
+        if status == 1{
+            toast(title:StringsLabel.upload_image)
+        }else{
+            toast(title: response as! String)
+        }
     }
         
     func setup_ux(){

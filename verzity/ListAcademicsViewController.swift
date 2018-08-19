@@ -20,15 +20,30 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     var list_licensature_array:[Any] = []
     
     var button_find = UIBarButtonItem()
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         setup_ux()
         load_data()
+        
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        self.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        load_data()
+        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     func load_data(){

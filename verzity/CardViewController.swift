@@ -25,6 +25,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     var filtered:NSMutableArray = []
     var filtered_array:NSArray = []
+    
+    var refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,20 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         setup_ux()
         load_data(type:type)
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        self.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        load_data(type:type)
+        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     func setup_ui(){
@@ -107,7 +123,16 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 var item_json = JSON(item)
                 var nbCupon = item_json["nbCupon"].stringValue
                 
-                var is_containt = nbCupon.lowercased().contains(searchText.lowercased())
+                
+                let name = nbCupon.lowercased()
+                let sear = searchText.lowercased()
+                
+                let name_clean = name.folding(options: .diacriticInsensitive, locale: .current)
+                let sear_clean = sear.folding(options: .diacriticInsensitive, locale: .current)
+                
+                var is_containt = name_clean.contains(sear_clean)
+                
+           
                 if  (is_containt){
                     print("Entro")
                     self.filtered.add(item)
@@ -118,7 +143,15 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 var universidad = JSON(item_json["Universidades"])
                 let nbUniversidad = universidad["nbUniversidad"].stringValue
                 
-                var is_containt = nbUniversidad.lowercased().contains(searchText.lowercased())
+                let name = nbUniversidad.lowercased()
+                let sear = searchText.lowercased()
+                
+                
+                let name_clean = name.folding(options: .diacriticInsensitive, locale: .current)
+                let sear_clean = sear.folding(options: .diacriticInsensitive, locale: .current)
+                
+                var is_containt = name_clean.contains(sear_clean)
+
                 if  (is_containt){
                     print(nbUniversidad)
                     print(searchText)
@@ -170,7 +203,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CardTableViewCell
        
-        
         var item:JSON
         if (searchBar.text != ""){
             item = JSON(filtered_array[indexPath.section])
@@ -216,7 +248,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             lblDescription = universidades["nbUniversidad"].stringValue
             cell.name.font = UIFont.systemFont(ofSize: CGFloat(size_letter))
            
-           
             cell.lblDescription.font =  UIFont.boldSystemFont(ofSize: 14.0)
             
             pathImage = item["pathArchivo"].stringValue
@@ -241,7 +272,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 pathImage = pathImage.replacingOccurrences(of: "~", with: "")
                 pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
             }
-            
         }
         
         // ------

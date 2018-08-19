@@ -716,10 +716,68 @@ class WebServiceController: AlamofireWebServiceController{
         }
     }
     
-    
+    func generateBoundaryString() -> String
+    {
+        return "Boundary-\(NSUUID().uuidString)"
+    }
     
     // Upload File
     func upload_file(imageData: Data?, parameters: [String : Any], doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let strURL = "http://verzity.dwmedios.com/SITE/UniversidadView/UploadFoto"
+        
+        let url = URL(string: strURL)
+        var urlRequest = URLRequest(url: url!)
+        let boundary = generateBoundaryString()
+        
+        urlRequest.httpMethod = "POST"
+        urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        let body = NSMutableData()
+        
+        let fname = "test.png"
+        let mimetype = "image/jpeg"
+        
+        body.append("--\(boundary)\r\n".data(using:String.Encoding.utf8)!)
+        body.append("Content-Disposition:form-data; name=\"test\"\r\n\r\n".data(using:String.Encoding.utf8)!)
+        body.append("hi\r\n".data(using:String.Encoding.utf8)!)
+        
+        
+        
+        body.append("--\(boundary)\r\n".data(using:String.Encoding.utf8)!)
+        body.append("Content-Disposition:form-data; name=\"file\"; filename=\"\(fname)\"\r\n".data(using:String.Encoding.utf8)!)
+        body.append("Content-Type: \(mimetype)\r\n\r\n".data(using:String.Encoding.utf8)!)
+        body.append(imageData!)
+        body.append("\r\n".data(using:String.Encoding.utf8)!)
+        
+        
+        body.append("--\(boundary)--\r\n".data(using:String.Encoding.utf8)!)
+        urlRequest.httpBody = body as Data
+        
+        let session = URLSession.shared
+        
+        
+        let task = session.dataTask(with: urlRequest) {
+            (
+            data,  response,  error) in
+            
+            guard let _:NSData = data! as NSData, let _:URLResponse = response, error == nil else {
+                print("error")
+                return
+            }
+            
+            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            let json = JSON(data)
+            doneFunction(1, json as AnyObject)
+            
+        }
+        
+        task.resume()
+        
+        
+    }
+    
+    
+    // Upload File
+    func upload_file_alamore(imageData: Data?, parameters: [String : Any], doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         
         print("Upload File")
         let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.subirImagen)"

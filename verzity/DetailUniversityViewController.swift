@@ -334,6 +334,7 @@ class DetailUniversityViewController: BaseViewController {
     
     func set_data(){
       
+        
         var university_json = JSON(self.detail_data)
         var address = JSON(university_json["Direcciones"])
         
@@ -380,6 +381,7 @@ class DetailUniversityViewController: BaseViewController {
             label_phone_text = StringsLabel.no_phone
         }
         
+        self.title = name_uniersity_text
         name_universitity.text = name_uniersity_text
         description_university.text = university_json["desUniversidad"].stringValue
         description_university.translatesAutoresizingMaskIntoConstraints = true
@@ -387,7 +389,7 @@ class DetailUniversityViewController: BaseViewController {
         var height = description_university.frame.height
         
         scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 700 + height)
-        //contentBottomView.frame.
+        contentBottomView.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:800 + height)
         
         label_address.text = label_address_text
         label_web.text = label_web_text
@@ -424,18 +426,13 @@ class DetailUniversityViewController: BaseViewController {
             image_financing_top_contrain.constant = -35
             button_financing_top_contrains.constant = -35
             label_financing_top_constrains.constant = -35
- 
-            
         }
         
         // Set Favorito
-       
-        
         let array_parameter = [
             "idUniversidad": idUniversidad as Int,
             "idPersona": Defaults[.academic_idPersona]! as Int
         ]  as [String : Any]
-        
         
         debugPrint(array_parameter)
         let parameter_json = JSON(array_parameter)

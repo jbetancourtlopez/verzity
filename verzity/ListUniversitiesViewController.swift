@@ -22,6 +22,7 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     
     var filtered:NSMutableArray = []
     var filtered_array:NSArray = []
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,22 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         setup_table()
         setup_search_bar()
         setup_ux()
+        //load_data()
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        self.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
         load_data()
+        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -110,7 +126,13 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             var item_json = JSON(item)
             let nbUniversidad = item_json["nbUniversidad"].stringValue
             
-            var is_containt = nbUniversidad.lowercased().contains(searchText.lowercased())
+            let name = nbUniversidad.lowercased()
+            let sear = searchText.lowercased()
+            
+            let name_clean = name.folding(options: .diacriticInsensitive, locale: .current)
+            let sear_clean = sear.folding(options: .diacriticInsensitive, locale: .current)
+            
+            var is_containt = name_clean.contains(sear_clean)
             if  (is_containt){
                 print(nbUniversidad)
                 print(searchText)

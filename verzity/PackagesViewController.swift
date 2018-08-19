@@ -39,11 +39,12 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     }
     //End Paypal
     
+    var refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
         
         tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0)
         
@@ -53,6 +54,22 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         load_data()
         setup_paypal()
         setup_back_button()
+    
+    
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        self.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        load_data()
+        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     override func viewWillAppear(_ animated: Bool) {

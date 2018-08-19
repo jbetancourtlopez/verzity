@@ -38,7 +38,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "~", with: "")
         desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "\\", with: "")
         
-        let url =  "\(desRutaMultimedia)\(desCarpetaMultimedia)\(url_image)"
+        let url =  "\(desRutaMultimedia)\(url_image)"
         print("Image Url: \(url)")
         let URL = Foundation.URL(string: url)
        
@@ -87,8 +87,21 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         self.present(alert, animated: true, completion: nil)
         
         if automatic{
-            Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(BaseViewController.dismissAlert), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(BaseViewController.dismissAlert), userInfo: nil, repeats: false)
         }
+    }
+
+    func toast(title:String)->Void{
+        let alert = UIAlertController(title: "", message: title, preferredStyle: .actionSheet)
+        self.present(alert, animated: true, completion: nil)
+        
+        // change to desired number of seconds (in this case 5 seconds)
+        let when = DispatchTime.now() + 5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            alert.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     // Alerts
@@ -107,13 +120,17 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     }
     
     func updateAlert(title: String, message: String, automatic: Bool){
-        alert.title = title
+        alert.title = "" // title
         alert.message = message
         self.present(alert, animated: true, completion: nil)
         
         if automatic{
             Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(BaseViewController.dismissAlert), userInfo: nil, repeats: false)
         }
+    }
+    
+    func generateBoundaryString() -> String {
+        return "Boundary-\(NSUUID().uuidString)"
     }
     
     @objc func dismissAlert(){

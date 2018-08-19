@@ -116,6 +116,13 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
 
         let json = JSON(response)
         self.name_image = json["Data"].stringValue
+
+        if status == 1{
+            toast(title:StringsLabel.upload_image)
+        }else{
+            toast(title: response as! String)
+        }
+        
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -215,6 +222,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
             var data = JSON(json["Data"])
             var direccion = JSON(data["Direcciones"])
            
+            Defaults[.university_pathLogo] = self.name_image
             
             //Universidad
             Defaults[.university_idUniveridad] = data["idUniversidad"].intValue

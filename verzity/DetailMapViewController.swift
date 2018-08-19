@@ -44,6 +44,10 @@ class DetailMapViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         locManager.requestWhenInUseAuthorization()
         mapView.showsUserLocation = true
         mapView.delegate = self
+        
+        let university_json = JSON(info)
+        
+        self.title = university_json["nbUniversidad"].stringValue
     }
     
     

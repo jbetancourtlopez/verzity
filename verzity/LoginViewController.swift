@@ -231,10 +231,9 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             Defaults[.academic_dcLongitud] = direccion_rep["dcLongitud"].stringValue
 
             performSegue(withIdentifier: "showSplash", sender: self)
-            
-            
         }else{
             if  is_click_facebook == 1{
+                print("Registro Login Incorrecto")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
                 vc.facebook_name = self.facebook_name
                 vc.facebook_email = self.facebook_email
@@ -375,30 +374,48 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     var picture = self.dict["picture"] as! [String : AnyObject]
                     var data = picture["data"] as! [String : AnyObject]
                     let url = data["url"] as! String
-                    
-                    
                     self.password.text = (self.dict["id"] as! String)
-                    
-                    
                     
                     let keyExistsEmail = self.dict["email"] != nil
                     let keyExistsName = self.dict["name"] != nil
+                    
+                    
+                    self.facebook_id = self.dict["id"] as! String
+                    self.facebook_url = url
+                    self.is_click_facebook = 1
+                    
+                    var email = ""
+                    if (keyExistsEmail){
+                        email = (self.dict["email"] as? String)!
+                    }
+                    
+                    var name = ""
+                    if (keyExistsName){
+                        name = self.dict["name"] as! String
+                    }
+                    
                     if (keyExistsEmail && keyExistsName){
-                        self.email.text = self.dict["email"] as? String
-                        self.facebook_email = self.dict["email"] as! String
-                        self.facebook_name = self.dict["name"] as! String
-                        self.facebook_id = self.dict["id"] as! String
-                        self.facebook_url = url
-                        self.is_click_facebook = 1
+                        self.email.text = email
+                        self.facebook_email = email
+                        self.facebook_name = name
+                        
+              
+                    
+                        
                         self.login_universidad(type:"facebook")
                     }
                     else{
+                        print("Registro Falta de Datos")
+                        print("name: \(name)")
+                        print("email: \(email)" )
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
-                        vc.facebook_name = self.facebook_name
-                        vc.facebook_email = self.facebook_email
+                        vc.facebook_name = name
+                        vc.facebook_email = email
+                        
                         vc.facebook_id = self.facebook_id
                         vc.facebook_url = self.facebook_url
                         vc.is_facebook = 1
+                        
                         self.show(vc, sender: nil)
                     }
                 }

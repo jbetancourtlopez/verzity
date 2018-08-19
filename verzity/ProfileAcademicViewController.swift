@@ -30,6 +30,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     @IBOutlet var email_profile: FloatableTextField!
     @IBOutlet var state_profile: FloatableTextField!
     
+    @IBOutlet var button_save: UIButton!
     var webServiceController = WebServiceController()
     var countries:NSArray = []
     var is_mexico = 1;
@@ -192,16 +193,24 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
 
     func upload_photo(){
         print("Subiendo Foto")
-        let data = UIImageJPEGRepresentation(img_profile.image!, 1.0)
+        let data = UIImageJPEGRepresentation(img_profile.image!, 0.5)
         webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
     }
     
     func upload_file(status: Int, response: AnyObject){
          print("Imagen cargada con exito")
-
-        let json = JSON(response)
-        self.name_image = json["Data"].stringValue
+         print(response)
+         let json = JSON(response)
+         self.name_image = json["data"].stringValue
+        
+        if status == 1{
+            toast(title:StringsLabel.upload_image)
+        }else{
+            toast(title: response as! String)
+        }
     }
+    
+   
     
     @IBAction func on_click_continue(_ sender: Any) {
         print("Continuar")
@@ -250,8 +259,16 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             Defaults[.academic_state] = direcciones["nbEstado"].stringValue
             Defaults[.academic_description] = direcciones["desDireccion"].stringValue
             
+            
+            Defaults[.academic_pathFoto] = self.name_image
+            if (self.type == "profile_representative"){
+               //Defaults[.representative_pathFoto] = self.name_image
+            }else{
+              // Defaults[.academic_pathFoto] = self.name_image
+            }
+            
             print("Perfil Universitario")
-            Timer.scheduledTimer(timeInterval: 5.1, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 5.4, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
             
         }else{
             showMessage(title: response as! String, automatic: true)
@@ -299,8 +316,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             countryPickerView.isHidden = true
             description_profile.isHidden = true
             
-            
-            
         }
     }
     
@@ -309,6 +324,13 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         self.img_profile.cornerRadius = 60
         self.import_image.layer.masksToBounds = true
         self.import_image.cornerRadius = 17.5
+        
+        if is_postulate == 0 {
+            button_save.setTitle("Guardar cambios", for: .normal)
+        }else{
+            button_save.setTitle("Continuar", for: .normal)
+            
+        }
     }
     
     func setup_textfield(){

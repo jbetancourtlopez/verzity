@@ -75,21 +75,19 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
             cellImg.layer.cornerRadius = 50
             cellImg.layer.masksToBounds=true
             cellImg.contentMode = .scaleAspectFill
-            cellImg.image = UIImage(named: "ic_user_profile")
-            cell.addSubview(cellImg)
-            
+             cell.addSubview(cellImg)
             
             var name_profile = ""
             var email_profile = ""
-            if Defaults[.type_user] == 1 {
-                name_profile = Defaults[.academic_name]!
-                email_profile = Defaults[.academic_email]!
-            }else{
-                
-            }
+           
+            // Set Foto
+            print("Foto SideBar")
+            set_photo_profile(url: Defaults[.academic_pathFoto]!, image: cellImg)
+            name_profile = Defaults[.academic_name]!
+            email_profile = Defaults[.academic_email]!
             
-
-            
+            //cellImg.image = UIImage(named: "ic_user_profile")
+           
             
             // Nombre
             let cellLbl = UILabel(frame: CGRect(x: 15, y: 115, width: 250, height: 30))
@@ -123,9 +121,6 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
                 cellImg_sigout.layer.masksToBounds=true
                 cellImg_sigout.contentMode = .scaleAspectFill
                 cellImg_sigout.layer.masksToBounds=true
-                
-                // Set Foto
-                set_photo_profile(url:Defaults[.academic_pathFoto]!, image:cellImg_sigout)
                 
                 cellImg_sigout.image = UIImage(named:  item_menu["image"].stringValue)
                 cellImg_sigout.image = cellImg_sigout.image?.withRenderingMode(.alwaysTemplate)
@@ -193,7 +188,7 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
         desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "~", with: "")
         desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "\\", with: "")
         
-        let url =  "\(desRutaMultimedia)\(desCarpetaMultimedia)\(url_image)"
+        let url =  "\(desRutaMultimedia)\(url_image)"
         print("Image Url: \(url)")
         let URL = Foundation.URL(string: url)
         

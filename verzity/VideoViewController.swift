@@ -21,19 +21,37 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
     var items:NSArray = []
     var idUniversidad: Int = 0
     @IBOutlet var tableView: UITableView!
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         idUniversidad = idUniversidad as Int
+        load_data()
         
+
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        self.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        load_data()
+        tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
+    func load_data(){
         let array_parameter = ["idUniversidad": idUniversidad]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.GetVideos(parameters: parameter_json_string!, doneFunction: GetVideo)
-
     }
-    
     func GetVideo(status: Int, response: AnyObject){
         var json = JSON(response)
         debugPrint(json)
