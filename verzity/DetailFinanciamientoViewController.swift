@@ -89,6 +89,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         
         // Web
         var desSitioWeb = detail["urlSitio"].stringValue
+        label_web.text = desSitioWeb
         if desSitioWeb.isEmpty {
             label_web.isHidden = true
             icon_web.isHidden = true
@@ -111,7 +112,8 @@ class DetailFinanciamientoViewController: BaseViewController {
          var pathImage = detail["pathImagen"].stringValue
          pathImage = pathImage.replacingOccurrences(of: "~", with: "")
          pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-         let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
+         let url =  "\(Defaults[.desRutaMultimedia]!)\(pathImage)"
+        print(url)
          let URL = Foundation.URL(string: url)
          let image_default = UIImage(named: "default.png")
          image_caratule.kf.setImage(with: URL, placeholder: image_default)

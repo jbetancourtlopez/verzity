@@ -26,6 +26,20 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         // self.view.addGestureRecognizer(tap)
     }
     
+    func adjustUITextViewHeight(arg : UITextView){
+        
+        
+        arg.translatesAutoresizingMaskIntoConstraints = true
+        arg.sizeToFit()
+        arg.isScrollEnabled = false
+        
+
+        /*
+        let fixedWidth = arg.frame.size.width
+        let newSize = arg.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        arg.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)*/
+    }
+
     func set_photo_profile(url:String, image: UIImageView){
         // Formateo la Imagen
         var url_image = url

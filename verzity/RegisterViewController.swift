@@ -101,7 +101,12 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         img_profile.kf.setImage(with: URL, placeholder: image_default)
         
         if is_facebook == 1{
+            
             email.isEnabled = false
+            if  (self.facebook_email.isEmpty){
+               email.isEnabled = true
+            }
+            
             password.isHidden = true
             confirm_password.isHidden = true
             topContrainstLabelTerminos.constant = -100
@@ -110,8 +115,6 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         }
         
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(upload_photo), userInfo: nil, repeats: false)
-        
-        
         
     }
     

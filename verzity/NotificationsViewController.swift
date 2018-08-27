@@ -18,21 +18,36 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     @IBOutlet var tableView: UITableView!
     var webServiceController = WebServiceController()
     var items: NSArray = []
+    var refreshControl = UIRefreshControl()
     
    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
+
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        self.refreshControl = refreshControl
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
     
     override func viewDidAppear(_ animated: Bool) {
-        items = []
-        tableView.reloadData()
+        self.items = []
+        self.tableView.reloadData()
         load_notifications()
+    }
+
+    @objc func handleRefresh() {
+        self.items = []
+        self.tableView.reloadData()
+        load_notifications()
+        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     func load_notifications(){
@@ -71,16 +86,17 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     func ConsultarNotificaciones(status: Int, response: AnyObject){
         var json = JSON(response)
         print(json)
+        hiddenGifIndicator(view: self.view)
         if status == 1{
             items = json["Data"].arrayValue as NSArray
-            
         }
         tableView.reloadData()
-        hiddenGifIndicator(view: self.view)
+        
     }
     
     func setup_ux(){
         showGifIndicator(view: self.view)
+        self.title = "Notificaciones"
     }
     
     //Table View. -------------------
@@ -127,12 +143,16 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         var hourRegistro_array = hourRegistro.components(separatedBy: ".")
         hourRegistro = hourRegistro_array[0]
         
-        let date = get_date(date_string: feRegistro_array[0])
-        cell.title_notification.text = item["desAsunto"].stringValue + " " + date + " " + hourRegistro
+        let date = get_date_complete(date_complete_string: item["feRegistro"].stringValue)
+        cell.title_notification.text = item["desAsunto"].stringValue + " " + date
         
         if status["desEstatus"].stringValue == "PENDIENTE"{
             cell.title_notification.font = UIFont.boldSystemFont(ofSize: 14.0)
             cell.image_notification.image = UIImage(named: "ic_notification_green")
+        }else{
+            cell.title_notification.font = UIFont.systemFont(ofSize: 14.0)
+            cell.image_notification.image = UIImage(named: "ic_action_notifications")
+            
         }
         
         cell.description_notificaction.text = item["desMensaje"].stringValue

@@ -71,7 +71,6 @@ class DetailUniversityViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         idUniversidad = idUniversidad as Int
-       
         setup_ux()
         load_data()
         
@@ -86,7 +85,6 @@ class DetailUniversityViewController: BaseViewController {
             image_slider.isUserInteractionEnabled = true
             image_slider.isMultipleTouchEnabled = true
         }
-
     }
     
     func load_data(){
@@ -100,6 +98,7 @@ class DetailUniversityViewController: BaseViewController {
    
     func GetDetallesUniversidad(status: Int, response: AnyObject){
         var json = JSON(response)
+        hiddenGifIndicator(view: self.view)
         if status == 1{
             self.detail_data = JSON(json["Data"]) as AnyObject
             let data = JSON(json["Data"])
@@ -111,7 +110,7 @@ class DetailUniversityViewController: BaseViewController {
         }else{
             // Mensaje de Error
         }
-        hiddenGifIndicator(view: self.view)
+        
     }
     
     // FotosUniversidades
@@ -361,10 +360,24 @@ class DetailUniversityViewController: BaseViewController {
             name_uniersity_text = StringsLabel.no_university_name
         }
         
-        var label_address_text = "\(address["desDireccion"].stringValue), \(address["nbCiudad"].stringValue), \(address["nbEstado"].stringValue), \(address["nbPais"].stringValue)"
-        if (address["desDireccion"].stringValue).isEmpty {
-            label_address_text = StringsLabel.no_address
+        var label_address_text = ""
+        
+        if !(address["desDireccion"].stringValue).isEmpty {
+            label_address_text += address["desDireccion"].stringValue
         }
+        
+        if label_address_text.count > 0 && !(address["nbCiudad"].stringValue).isEmpty {
+            label_address_text += ", " + address["nbCiudad"].stringValue
+        }
+        
+        if label_address_text.count > 0 && !(address["nbEstado"].stringValue).isEmpty {
+            label_address_text += ", " + address["nbEstado"].stringValue
+        }
+        
+        if label_address_text.count > 0 && !(address["nbPais"].stringValue).isEmpty {
+            label_address_text += ", " + address["nbPais"].stringValue
+        }
+        
         
         var label_web_text = university_json["desSitioWeb"].stringValue
         if  label_web_text.isEmpty{

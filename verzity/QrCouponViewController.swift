@@ -24,6 +24,10 @@ class QrCouponViewController: BaseViewController {
     @IBOutlet var button_canjear: UIButton!
     @IBOutlet var coupon_description: UITextView!
     
+    @IBOutlet var top_cont_coupon_validez: NSLayoutConstraint!
+    
+    @IBOutlet var right_cont_view_head: NSLayoutConstraint!
+    
     var idCupon: Int = 0
     var webServiceController = WebServiceController()
     var data: AnyObject!
@@ -36,7 +40,6 @@ class QrCouponViewController: BaseViewController {
        
         load_data(idCupon:idCupon)
         setup_ux()
-        //generate_qr(qr:"BK002")
     }
     
     func load_data(idCupon:Int){
@@ -58,16 +61,15 @@ class QrCouponViewController: BaseViewController {
             // Código
             code_coupon.text = data["cvCupon"].stringValue
             // Fecha
-            let feInicio = data["feInicio"].stringValue
-            let feInicio_array = feInicio.components(separatedBy: "T")
-            let feFin = data["feFin"].stringValue
-            let feFin_array = feFin.components(separatedBy: "T")
-            
-            let validez = "Validez: \(format_date_dmy(date_string: feInicio_array[0])) al \(format_date_dmy(date_string:feFin_array[0]))"
+            let validez = "Validez: \(get_date_complete_date(date_complete_string:data["feInicio"].stringValue)) al \(get_date_complete_date(date_complete_string:data["feFin"].stringValue))"
             coupon_validez.text = validez
             
             // Descripcion
             coupon_description.text = data["desCupon"].stringValue
+            adjustUITextViewHeight(arg: coupon_description)
+            
+            top_cont_coupon_validez.constant = coupon_description.frame.height + 30
+            right_cont_view_head.constant = coupon_description.frame.height + 50
             
             // Imagen
             var imagenesCupones = data["ImagenesCupones"].arrayValue
@@ -77,7 +79,8 @@ class QrCouponViewController: BaseViewController {
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
             
-            let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(pathImage)"
+            let url =  "\(Defaults[.desRutaMultimedia]!)\(pathImage)"
+            print(url)
             let URL = Foundation.URL(string: url)
             let image = UIImage(named: "default.png")
             
@@ -96,7 +99,6 @@ class QrCouponViewController: BaseViewController {
     
     
     @IBAction func on_click_canjear_cupon(_ sender: Any) {
-        
         showGifIndicator(view: self.view)
         
         let array_parameter = [
@@ -106,7 +108,6 @@ class QrCouponViewController: BaseViewController {
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.CanjearCupon(parameters: parameter_json_string!, doneFunction: CanjearCupon)
-        
    
     }
     

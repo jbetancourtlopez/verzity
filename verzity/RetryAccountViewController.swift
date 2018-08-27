@@ -32,13 +32,13 @@ class RetryAccountViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        set_data()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupView()
         animateView()
-        set_data()
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,7 +47,6 @@ class RetryAccountViewController: BaseViewController {
     }
     
     func setupView() {
-        
         self.image_profile.layer.masksToBounds = true
         self.image_profile.cornerRadius = 40
         

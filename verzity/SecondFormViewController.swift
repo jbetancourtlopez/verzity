@@ -117,7 +117,16 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         var json = JSON(response)
         let selected_name_country = Defaults[.add_uni_nbPais]!
         if status == 1{
-            countries = json["Data"].arrayValue as NSArray
+            var countries_aux = json["Data"].arrayObject
+            print(countries)
+            let default_c = [
+                "cvPais" : "SP",
+                "nbPais" : "-Seleccionar país.-",
+                "idPais" : 0
+                ] as [String : Any]
+            
+            countries_aux?.insert(default_c, at: 0)
+            countries = countries_aux! as NSArray
         }else{
             countries = []
             showMessage(title: response as! String, automatic: true)

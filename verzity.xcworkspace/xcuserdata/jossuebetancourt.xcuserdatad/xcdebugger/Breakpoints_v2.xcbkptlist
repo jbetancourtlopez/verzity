@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "verzity/DetailUniversityViewController.swift"
-            timestampString = "556398227.274627"
+            timestampString = "557041808.1335649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
             landmarkName = "DetailUniversityViewController"
             landmarkType = "3">
          </BreakpointContent>

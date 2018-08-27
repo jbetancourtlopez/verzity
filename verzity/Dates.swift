@@ -30,7 +30,7 @@ func get_day_of_week(today: String) -> String {
     let day = components.weekday
 
     
-    var array_days = ["", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+    var array_days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
     
     
     return array_days[day! - 1]
@@ -75,7 +75,39 @@ func get_date_complete(date_complete_string: String) -> String {
     let myStringafd = formatter.string(from: yourDate!)
     
     
-    return  "\(myStringafd) \(hourRegistro)"
+    let dateAsString = hourRegistro
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm:ss"
+    let date = dateFormatter.date(from: dateAsString)
+    
+    dateFormatter.dateFormat = "h:mm:ss a"
+    let date12 = dateFormatter.string(from: date!)
+    
+    return  "\(myStringafd) \(date12)"
+}
+
+
+func get_date_complete_date(date_complete_string: String) -> String {
+    
+    //2018-07-02T19:11:55.8529371-05:00
+    
+    var date_complete_array = date_complete_string.components(separatedBy: "T")
+    let date_string = date_complete_array[0]
+    
+    var hourRegistro = date_complete_array[1]
+    var hourRegistro_array = hourRegistro.components(separatedBy: ".")
+    hourRegistro = hourRegistro_array[0]
+    
+    
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    let myString = date_string // string purpose I add here
+    let yourDate = formatter.date(from: myString)
+    formatter.dateFormat = "dd/MM/yyyy"
+    let myStringafd = formatter.string(from: yourDate!)
+    
+    
+    return  "\(myStringafd)"
 }
 
 

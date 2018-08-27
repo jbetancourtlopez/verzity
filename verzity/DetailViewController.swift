@@ -177,20 +177,9 @@ class DetailViewController: BaseViewController {
             text_location = location_json["nbPais"].stringValue
         }
         postulate_location.text = text_location
+        
         // Imagen
-        
-        var pathImage = persona["pathFoto"].stringValue
-        pathImage = pathImage.replacingOccurrences(of: "~", with: "")
-        pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-        
-        var folder = Defaults[.desCarpetaMultimediaFTP]
-        folder = folder?.replacingOccurrences(of: "~", with: "")
-        
-        var url_multimedia = Defaults[.desRutaMultimedia]! + folder! + pathImage
-        
-        let URL = Foundation.URL(string: url_multimedia)
-        let image_default = UIImage(named: "ic_user_profile.png")
-        postulate_image.kf.setImage(with: URL, placeholder: image_default)
+        set_photo_profile(url: persona["pathFoto"].stringValue, image: postulate_image)
         
     }
 
@@ -201,7 +190,7 @@ class DetailViewController: BaseViewController {
         var persona = JSON(data_json["person"])
         var type = JSON(data_json["type"])
         
-        let type_name = JSON(data_json["type_name"])
+        let type_name = data_json["type_name"].stringValue
         
         // Fecha
         let fechaPostulacion = data_json["fechaPostulacion"].stringValue
@@ -212,30 +201,27 @@ class DetailViewController: BaseViewController {
         postulate_date.text = day + " " + date
         
         // Titulo
-        let nbLicenciatura = type["nbLicenciatura"].stringValue
-        
+        var postulate_name_text = ""
         var type_text = ""
         
         if  type_name == "licenciatura" {
             type_text = " Se ha postulado al programa académico "
+            postulate_name_text = type["nbLicenciatura"].stringValue
         } else if  type_name == "beca" {
             type_text = " Se ha postulado a al beca "
+            postulate_name_text = type["nbBeca"].stringValue
         } else if  type_name == "financiamiento" {
             type_text = " Se ha postulado al financiamiento "
+            postulate_name_text = type["nbFinanciamiento"].stringValue
         }
         
-        let postulate_description_text = persona["nbCompleto"].stringValue + type_text + nbLicenciatura
+        let postulate_description_text = persona["nbCompleto"].stringValue + type_text + postulate_name_text
         
+        self.title = persona["nbCompleto"].stringValue
         
         
         // Descripcion
         postulate_name_postulate.text = postulate_description_text
-        
-        
-        
-        
-        
-        
         
         // Datos de la Persona
         postulate_description.text = ""
@@ -276,19 +262,7 @@ class DetailViewController: BaseViewController {
         
         
         // Imagen
-        
-        var pathImage = persona["pathFoto"].stringValue
-        pathImage = pathImage.replacingOccurrences(of: "~", with: "")
-        pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
-        
-        var folder = Defaults[.desCarpetaMultimediaFTP]
-        folder = folder?.replacingOccurrences(of: "~", with: "")
-        
-        var url_multimedia = Defaults[.desRutaMultimedia]! + folder! + pathImage
-        
-        let URL = Foundation.URL(string: url_multimedia)
-        let image_default = UIImage(named: "ic_user_profile.png")
-        postulate_image.kf.setImage(with: URL, placeholder: image_default)
+        set_photo_profile(url: persona["pathFoto"].stringValue, image: postulate_image)
     }
     
     @IBAction func on_click_email(_ sender: Any) {

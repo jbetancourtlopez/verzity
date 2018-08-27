@@ -65,7 +65,7 @@ class DetailBecasViewController: BaseViewController {
         var file_path = detail["desRutaArchivo"].stringValue
         file_path = file_path.replacingOccurrences(of: "~", with: "")
         file_path = file_path.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(file_path)"
+        let url =  "\(Defaults[.desRutaMultimedia]!)\(file_path)"
         
         if  !file_path.isEmpty{
             openUrl(scheme: url)

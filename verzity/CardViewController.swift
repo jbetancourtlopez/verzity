@@ -258,11 +258,11 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         //Cupones
         if type == "coupons" {
             title = item["nbCupon"].stringValue
-            name = "Vencimiento:"
-            let feInicio = (item["feInicio"].stringValue).components(separatedBy: "T")
-            let feFin = (item["feFin"].stringValue).components(separatedBy: "T")
-            lblDescription = "\(feFin[0])"
             
+            
+            let feFin = get_date_complete_date(date_complete_string: item["feFin"].stringValue)
+            lblDescription = ""
+            name =  "Vencimiento:\(feFin)"
             var imagenesCupones = item["ImagenesCupones"].arrayValue
             pathImage = ""
             if imagenesCupones.count > 0{

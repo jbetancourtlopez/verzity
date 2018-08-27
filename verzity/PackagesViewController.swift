@@ -183,6 +183,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     func GetPaquetesDisponibles(status: Int, response: AnyObject){
         var json = JSON(response)
         if status == 1{
+            self.items = []
             let list_items = json["Data"].arrayValue
             for i in 0..<list_items.count{
                 var item = JSON(list_items[i])

@@ -25,6 +25,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     var list_postulate: [Any] = []
     var list_sections: [String] = []
     
+     var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,22 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         tableView.estimatedRowHeight = 60
         setup_ux()
         load_data()
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        self.refreshControl = refreshControl
+    }
+    
+    
+    @objc func handleRefresh() {
+        load_data()
+        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     func load_data(){
@@ -46,7 +63,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     
     func GetList(status: Int, response: AnyObject){
         var json = JSON(response)
-        //debugPrint(json)
+        debugPrint(json)
         if status == 1{
             items = json["Data"].arrayValue as NSArray
             
@@ -157,6 +174,9 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         let fecha_postulacion = row_json["fechaPostulacion"].stringValue
         let person = JSON(row_json["person"])
         let type = JSON(row_json["type"])
+        let type_name = JSON(row_json["type_name"])
+        
+        
         
         
         var postulate_date_array = fecha_postulacion.components(separatedBy: "T")
@@ -166,7 +186,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         cell.postulate_name_academic.text = person["nbCompleto"].stringValue
         
         var postulate_name = ""
-        if indexPath.section == 0 {
+        if type_name == "licenciatura"{
             debugPrint(type)
             var catNivelEstudios = JSON(type["CatNivelEstudios"])
             
@@ -177,9 +197,9 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
             
             print(postulate_name)
             
-        } else  if indexPath.section == 1 {
+        } else  if type_name == "beca" {
             postulate_name = type["nbBeca"].stringValue
-        } else  if indexPath.section == 2 {
+        } else  if type_name == "financiamiento" {
             postulate_name = type["nbFinanciamiento"].stringValue
         }
         
