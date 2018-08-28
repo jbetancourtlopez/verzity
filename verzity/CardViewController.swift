@@ -210,6 +210,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             item = JSON(items[indexPath.section])
         }
         
+        print(item)
+        
         var title = ""
         var name = ""
         var lblDescription = ""
@@ -250,7 +252,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
            
             cell.lblDescription.font =  UIFont.boldSystemFont(ofSize: 14.0)
             
-            pathImage = item["pathArchivo"].stringValue
+            pathImage = item["pathImagen"].stringValue
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
         }
