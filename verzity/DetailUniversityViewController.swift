@@ -42,17 +42,13 @@ class DetailUniversityViewController: BaseViewController {
     @IBOutlet var image_beca: UIImageView!
     @IBOutlet var label_beca: UITextView!
     @IBOutlet var button_beca: UIButton!
-    
-    
     // Financiamiento
     @IBOutlet var image_financing: UIImageView!
     @IBOutlet var label_financing: UITextView!
     @IBOutlet var button_financing: UIButton!
     
-    
     @IBOutlet var image_financing_top_contrain: NSLayoutConstraint!
     @IBOutlet var button_financing_top_contrains: NSLayoutConstraint!
-    
     @IBOutlet var label_financing_top_constrains: NSLayoutConstraint!
     
     var swipeGesture  = UISwipeGestureRecognizer()
@@ -110,7 +106,6 @@ class DetailUniversityViewController: BaseViewController {
         }else{
             // Mensaje de Error
         }
-        
     }
     
     // FotosUniversidades
@@ -139,7 +134,6 @@ class DetailUniversityViewController: BaseViewController {
     }
     
     func set_image_slider(){
-        
         if self.list_images.count > 0 {
             let image_item = self.list_images[self.count_current]
             var image = JSON(image_item)
@@ -182,7 +176,7 @@ class DetailUniversityViewController: BaseViewController {
     
     @IBAction func on_click_map(_ sender: Any) {
         print("mapa")
-        var university_json = JSON(self.detail_data)
+        let university_json = JSON(self.detail_data)
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailMapViewControllerID") as! DetailMapViewController
         vc.info = university_json as AnyObject
         self.show(vc, sender: nil)
@@ -192,19 +186,24 @@ class DetailUniversityViewController: BaseViewController {
         print("Postulado")
         let alert = UIAlertController(title: "Seleccione programa académico de interés.", message: nil, preferredStyle: .actionSheet)
         
-        for i in 0 ..< list_licenciaturas.count {
-            
-            let item = JSON(self.list_licenciaturas[i])
-            let nbLicenciatura = item["nbLicenciatura"].stringValue
-            let idLicenciatura = item["idLicenciatura"].intValue
-            
-            let action = UIAlertAction(title: nbLicenciatura, style: .default, handler: {(action) in
-                self.selected_postulate(name:nbLicenciatura, idLicenciatura: idLicenciatura )
-            })
-            alert.addAction(action)
+        if (list_licenciaturas.count > 0){
+            for i in 0 ..< list_licenciaturas.count {
+                
+                let item = JSON(self.list_licenciaturas[i])
+                let nbLicenciatura = item["nbLicenciatura"].stringValue
+                let idLicenciatura = item["idLicenciatura"].intValue
+                
+                let action = UIAlertAction(title: nbLicenciatura, style: .default, handler: {(action) in
+                    self.selected_postulate(name:nbLicenciatura, idLicenciatura: idLicenciatura )
+                })
+                alert.addAction(action)
+            }
+            alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
-        alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        else {
+            showMessage(title: "No se cuenta con programas académicos para postularse", automatic: true)
+        }
     }
     
     func selected_postulate(name: String, idLicenciatura: Int){
@@ -328,12 +327,10 @@ class DetailUniversityViewController: BaseViewController {
         image_financing.tintColor = hexStringToUIColor(hex: "#ff7b25")
         button_financing.setImage(image_visitar_web, for: .normal)
         button_financing.tintColor = Colors.gray
-       
     }
     
     func set_data(){
       
-        
         var university_json = JSON(self.detail_data)
         var address = JSON(university_json["Direcciones"])
         
@@ -378,7 +375,6 @@ class DetailUniversityViewController: BaseViewController {
             label_address_text += ", " + address["nbPais"].stringValue
         }
         
-        
         var label_web_text = university_json["desSitioWeb"].stringValue
         if  label_web_text.isEmpty{
             label_web_text = StringsLabel.no_website
@@ -396,13 +392,23 @@ class DetailUniversityViewController: BaseViewController {
         
         self.title = name_uniersity_text
         name_universitity.text = name_uniersity_text
+        
         description_university.text = university_json["desUniversidad"].stringValue
-        description_university.translatesAutoresizingMaskIntoConstraints = true
+    description_university.translatesAutoresizingMaskIntoConstraints = true
         description_university.sizeToFit()
-        var height = description_university.frame.height
+        let height = description_university.frame.height
         
         scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 700 + height)
-        contentBottomView.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:800 + height)
+        
+        let h = scrollView.frame.height
+        print(height)
+        print(h)
+        
+        contentBottomView.sizeToFit()
+        contentBottomView.autoresizesSubviews = true
+        contentBottomView.layoutIfNeeded()
+        contentBottomView.frame = CGRect(x:0, y:232, width:self.view.frame.width, height:5000)
+        
         
         label_address.text = label_address_text
         label_web.text = label_web_text
@@ -443,8 +449,8 @@ class DetailUniversityViewController: BaseViewController {
         
         // Set Favorito
         let array_parameter = [
-            "idUniversidad": idUniversidad as Int,
-            "idPersona": Defaults[.academic_idPersona]! as Int
+            "idUniversidad": idUniversidad!,
+            "idPersona": Defaults[.academic_idPersona]!
         ]  as [String : Any]
         
         debugPrint(array_parameter)

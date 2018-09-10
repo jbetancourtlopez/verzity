@@ -161,8 +161,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             }
             
             showAlert("¿Desea cancelar la compra?", message: StringsLabel.cancel_buy, okAction: yesAction, cancelAction: cancelAction, automatic: false)
-            
-            
+
         }else{
             _ = self.navigationController?.popToRootViewController(animated: false)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -184,6 +183,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         var json = JSON(response)
         if status == 1{
             self.items = []
+            tableView.reloadData()
             let list_items = json["Data"].arrayValue
             for i in 0..<list_items.count{
                 var item = JSON(list_items[i])
