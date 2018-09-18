@@ -46,8 +46,9 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     // FTP
     let server = Defaults[.desRutaFTP]!
     let ftp_username = Defaults[.nbUsuarioFTP]!
-    let ftp_password = Defaults[.desCarpetaMultimediaFTP]!
-    let path_folder = Defaults[.pdwContraseniaFTP]!
+    let ftp_password = Defaults[.pdwContraseniaFTP]!
+    let path_folder = Defaults[.desCarpetaMultimediaFTP]!
+    
     
     
     /*
@@ -93,29 +94,24 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         confirm_password.text = self.facebook_id
         password.text = String(describing: self.facebook_id)
 
-        
         // Foto Profile
         let url = self.facebook_url
         let URL = Foundation.URL(string: url)
         let image_default = UIImage(named: "ic_user_profile.png")
         img_profile.kf.setImage(with: URL, placeholder: image_default)
-        
         if is_facebook == 1{
             
             email.isEnabled = false
             if  (self.facebook_email.isEmpty){
                email.isEnabled = true
             }
-            
             password.isHidden = true
             confirm_password.isHidden = true
             topContrainstLabelTerminos.constant = -100
             topConstrainsSwich.constant = -100
             topConstrainsButtonRegister.constant = -70
         }
-        
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(upload_photo), userInfo: nil, repeats: false)
-        
     }
     
   
@@ -230,7 +226,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
                                 ]
                         ],
                         "idPersona": 0,
-                        "pathFoto": self.path_folder + self.name_image,
+                        "pathFoto": self.name_image,
                         "nbCompleto": name_representative.text!,
                         "desTelefono": phone_representative.text! as String,
                         "Universidades": [
@@ -248,6 +244,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
                 array_parameter["cvFacebook"] = self.facebook_id
             }
             
+            print(array_parameter)
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.CrearCuentaAcceso(parameters: parameter_json_string!, doneFunction: CrearCuentaAcceso)

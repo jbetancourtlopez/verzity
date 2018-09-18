@@ -34,11 +34,18 @@ class DetailFinanciamientoViewController: BaseViewController {
     
     @IBOutlet var button_request: UIButton!
     
+    // COntrains
+    
+    @IBOutlet var top_contrain_button_university: NSLayoutConstraint!
+    @IBOutlet var top_contraint_label_university: NSLayoutConstraint!
+    @IBOutlet var top_contraint_icon_university: NSLayoutConstraint!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         septup_ux()
         detail = detail as AnyObject
-        
+        self.title = "Financiamientos"
         debugPrint(detail)
         set_data();
 
@@ -93,6 +100,10 @@ class DetailFinanciamientoViewController: BaseViewController {
         if desSitioWeb.isEmpty {
             label_web.isHidden = true
             icon_web.isHidden = true
+            
+            top_contraint_icon_university.constant = -21
+            top_contraint_label_university.constant = -28
+            top_contrain_button_university.constant = -28
         }
 
         // Name universidad
@@ -104,9 +115,16 @@ class DetailFinanciamientoViewController: BaseViewController {
       
         // Descripcion
         financing_descripction.text = detail["desFinancimiento"].stringValue
+        
+        /*
         let amountOfLinesToBeShown:CGFloat = 6
         let maxHeight:CGFloat = financing_descripction.font!.lineHeight * amountOfLinesToBeShown
         financing_descripction.sizeThatFits(CGSize(width: financing_descripction.frame.size.width, height:maxHeight))
+        */
+        
+        financing_descripction.translatesAutoresizingMaskIntoConstraints = true
+        financing_descripction.sizeToFit()
+        financing_descripction.isScrollEnabled = false
         
          // Imagen
          var pathImage = detail["pathImagen"].stringValue

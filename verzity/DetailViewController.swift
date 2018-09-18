@@ -131,6 +131,10 @@ class DetailViewController: BaseViewController {
         
         postulate_description.text = postulate_description_text
         
+    postulate_description.translatesAutoresizingMaskIntoConstraints = true
+        postulate_description.sizeToFit()
+        postulate_description.isScrollEnabled = false
+        
         //Fecha de Postulacion
         var fechaPostulacion = data_json["fechaPostulacion"].stringValue
         var date_complete_array = fechaPostulacion.components(separatedBy: "T")

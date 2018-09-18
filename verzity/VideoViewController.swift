@@ -25,7 +25,7 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "Videos"
         idUniversidad = idUniversidad as Int
         load_data()
         
@@ -150,16 +150,16 @@ class VideoViewController: BaseViewController, UITableViewDelegate, UITableViewD
          print(url_multimedia)
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "AVPlayerViewControllerID") as! AVPlayerViewController
+     
+       
+        
+     vc.navigationItem.backBarButtonItem =
+            UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         vc.player = AVPlayer(url: video_url as! URL)
         vc.player?.play()
         
         self.show(vc, sender: nil)
-        
-        
-        
-        
-       
-
+        //super.showDetailViewController(vc, sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

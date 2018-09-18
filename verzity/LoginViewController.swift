@@ -64,6 +64,11 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         btnHere.addGestureRecognizer(tap_here)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear")
+        email.text = ""
+        password.text = ""
+    }
     override func viewDidAppear(_ animated: Bool) {
         setup_ux()
     }

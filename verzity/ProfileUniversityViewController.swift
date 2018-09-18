@@ -114,8 +114,10 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     func upload_file(status: Int, response: AnyObject){
          print("Imagen cargada con exito")
 
+        print(response)
         let json = JSON(response)
-        self.name_image = json["Data"].stringValue
+        print(json["data"].stringValue)
+        self.name_image = json["data"].stringValue
 
         if status == 1{
             toast(title:StringsLabel.upload_image)
@@ -176,7 +178,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     }
     
     func save_data(){
-        
+        print(self.name_image)
         debugPrint(data_form)
         print("Guardar Datos")
         showGifIndicator(view: self.view)
@@ -192,7 +194,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
                 "numCodigoPostal": data_form["second_cp"],
                 "desDireccion": data_form["second_description"],
                 "nbEstado": data_form["second_state"],
-                "idDireccion": Defaults[.add_uni_idUniversidad],
+                "idDireccion": Defaults[.add_uni_idDireccion]!,
                 "nbMunicipio": data_form["second_municipio"],
                 "nbPais": data_form["second_pais"],
                 "dcLatitud": data_form["latitud"] ,

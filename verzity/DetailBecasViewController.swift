@@ -36,6 +36,7 @@ class DetailBecasViewController: BaseViewController {
         detail = detail as AnyObject
         set_data();
         setup_ux()
+        self.title = "Becas"
     }
     
     func setup_ux(){
@@ -135,16 +136,21 @@ class DetailBecasViewController: BaseViewController {
         detail_name.text = universidad["nbUniversidad"].stringValue
         detail_description.text = detail["desBeca"].stringValue
         
-        /*
+        /**/
         detail_description.translatesAutoresizingMaskIntoConstraints = true
         detail_description.sizeToFit()
-        detail_description.isScrollEnabled = true
-         */
+        detail_description.isScrollEnabled = false
+ 
         
+
         
+        /*
         let amountOfLinesToBeShown:CGFloat = 6
         let maxHeight:CGFloat = detail_description.font!.lineHeight * amountOfLinesToBeShown
         detail_description.sizeThatFits(CGSize(width: detail_description.frame.size.width, height:maxHeight))
+         */
+        
+        
         if  !file_path.isEmpty{
              detail_file.text = "Ver documento adjunto"
         }else{
