@@ -138,6 +138,14 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     }
     
     @objc func upload_photo(){
+        //
+        self.view.isUserInteractionEnabled = false
+        let when = DispatchTime.now()
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            self.view.isUserInteractionEnabled = false
+        }
+        
         print("Subiendo Foto")
         let data = UIImageJPEGRepresentation(img_profile.image!, 0.4)
         webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
@@ -149,9 +157,16 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         self.name_image = json["data"].stringValue
         
         print(response)
+       //
+        let when = DispatchTime.now()+5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            print("Disabled")
+            self.view.isUserInteractionEnabled = true
+        }
      
         self.name_image = json["data"].stringValue
-        
+        print("Toast")
         if status == 1{
             toast(title:StringsLabel.upload_image)
         }else{
