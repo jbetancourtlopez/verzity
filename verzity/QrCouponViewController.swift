@@ -58,6 +58,8 @@ class QrCouponViewController: BaseViewController {
             
             // Titulo
             coupon_title.text = data["nbCupon"].stringValue
+            
+            self.title = data["nbCupon"].stringValue
             // Código
             code_coupon.text = data["cvCupon"].stringValue
             // Fecha

@@ -45,7 +45,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         super.viewDidLoad()
         septup_ux()
         detail = detail as AnyObject
-        self.title = "Financiamientos"
+       
         debugPrint(detail)
         set_data();
 
@@ -94,6 +94,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         // Titulo
         financing_title.text = detail["nbFinanciamiento"].stringValue
         
+         self.title = detail["nbFinanciamiento"].stringValue
         // Web
         var desSitioWeb = detail["urlSitio"].stringValue
         label_web.text = desSitioWeb

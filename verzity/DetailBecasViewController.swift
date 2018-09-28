@@ -36,7 +36,6 @@ class DetailBecasViewController: BaseViewController {
         detail = detail as AnyObject
         set_data();
         setup_ux()
-        self.title = "Becas"
     }
     
     func setup_ux(){
@@ -133,6 +132,9 @@ class DetailBecasViewController: BaseViewController {
         var universidad = JSON(detail["Universidades"])
         
         detail_title.text = detail["nbBeca"].stringValue
+        
+        self.title = detail["nbBeca"].stringValue
+        
         detail_name.text = universidad["nbUniversidad"].stringValue
         detail_description.text = detail["desBeca"].stringValue
         
