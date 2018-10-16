@@ -37,6 +37,8 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     var facebook_id = ""
     var facebook_url = ""
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_uicontrols()
@@ -51,7 +53,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         //button_facaebook.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (image_facebook?.frame.width)!)
         
         // Llamada a Firebase
-       
+        
         
         // Forget Event
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.on_click_forget))
@@ -68,6 +70,12 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         print("viewWillAppear")
         email.text = ""
         password.text = ""
+        
+        
+        let loginManager = LoginManager()
+        
+        loginManager.logOut()
+        //loginManager.
     }
     override func viewDidAppear(_ animated: Bool) {
         setup_ux()

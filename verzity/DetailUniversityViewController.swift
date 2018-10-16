@@ -390,7 +390,7 @@ class DetailUniversityViewController: BaseViewController {
             label_phone_text = StringsLabel.no_phone
         }
         
-        self.title = name_uniersity_text
+        self.title = "Univ"//name_uniersity_text
         name_universitity.text = name_uniersity_text
         
         description_university.text = university_json["desUniversidad"].stringValue

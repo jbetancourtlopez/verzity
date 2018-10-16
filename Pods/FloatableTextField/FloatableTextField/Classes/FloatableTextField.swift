@@ -23,7 +23,7 @@ import UIKit
 @IBDesignable open class FloatableTextField: UITextField {
     open var floatableDelegate: FloatableTextFieldDelegate?
     
-    public enum State {
+    public enum State2 {
         case SUCCESS, FAILED, DEFAULT
     }
     
@@ -75,7 +75,7 @@ import UIKit
     
     var overlayView = UIView(frame: .zero)
     
-    open var currentState: State = .DEFAULT {
+    open var currentState: State2 = .DEFAULT {
         didSet {
             switch currentState {
             case .DEFAULT:
@@ -310,7 +310,7 @@ extension FloatableTextField {
         }
     }
     
-    open func setState(_ state: State, with message: String = "") {
+    open func setState(_ state: State2, with message: String = "") {
         animateFooterImage {
             self.currentState = state
         }

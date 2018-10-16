@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9205102420E1FA9C00234F16 /* Menus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9205102320E1FA9C00234F16 /* Menus.swift */; };
-		92226FD420F4354A00ED30E0 /* ic_action_mail_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD320F4354700ED30E0 /* ic_action_mail_gray.png */; };
 		92226FD620F4362000ED30E0 /* ic_action_estado_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */; };
 		92226FD820F4367700ED30E0 /* ic_action_ciudad_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */; };
 		92226FDA20F4371600ED30E0 /* ic_school_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD920F4371300ED30E0 /* ic_school_gray.png */; };
@@ -111,7 +110,6 @@
 
 /* Begin PBXFileReference section */
 		9205102320E1FA9C00234F16 /* Menus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menus.swift; sourceTree = "<group>"; };
-		92226FD320F4354700ED30E0 /* ic_action_mail_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_mail_gray.png; sourceTree = "<group>"; };
 		92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_estado_gray.png; sourceTree = "<group>"; };
 		92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_ciudad_gray.png; sourceTree = "<group>"; };
 		92226FD920F4371300ED30E0 /* ic_school_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_school_gray.png; sourceTree = "<group>"; };
@@ -432,7 +430,6 @@
 				9267015420DAB3D600E638A1 /* ic_action_ic_contrasea.png */,
 				92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */,
 				92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */,
-				92226FD320F4354700ED30E0 /* ic_action_mail_gray.png */,
 				9267014A20D9994700E638A1 /* ic_action_mail.png */,
 				92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */,
 				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
@@ -535,7 +532,6 @@
 				9267015720DAB3D900E638A1 /* ic_action_ic_contrasea.png in Resources */,
 				92226FD820F4367700ED30E0 /* ic_action_ciudad_gray.png in Resources */,
 				92682D3820DD62A700E6C4A8 /* default.png in Resources */,
-				92226FD420F4354A00ED30E0 /* ic_action_mail_gray.png in Resources */,
 				928C1C0D21142D4300B1E131 /* logo_verde.png in Resources */,
 				92DD410A20EC218F0035EF4E /* PayPal.jpg in Resources */,
 				9267012420D8462600E638A1 /* LaunchScreen.storyboard in Resources */,
